@@ -38,6 +38,7 @@
     <string name="phone_number">手机号码</string>
     <string name="create_time">创建时间</string>
     <string name="email_text">邮箱</string>
+    <string name="dynamic">动态</string>
     <string name="over_operation_warning">休息一下再操作吧</string>
     <string name="comment">评论</string>
     <string name="like">点赞</string>

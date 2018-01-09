@@ -72,7 +72,7 @@ class HotFragment : Fragment() {
                             toast("点击用户" + p0[position].author!!.username)
                         }
 
-                        override fun onContentClicked(view: View, position: Int) {
+                        override fun onPostClicked(view: View, position: Int) {
                             toast("点击内容")
                         }
 
