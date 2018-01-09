@@ -3,6 +3,7 @@ package com.zzapp.confessionwall.data
 import cn.bmob.v3.BmobObject
 import cn.bmob.v3.datatype.BmobRelation
 import com.zzapp.confessionwall.utils.User
+import java.io.Serializable
 
 /**
  * Project ConfessionWall
@@ -10,7 +11,7 @@ import com.zzapp.confessionwall.utils.User
  *
  * @author zzzz
  */
-class Post : BmobObject() {
+class Post : BmobObject(), Serializable{
     var content : String? = null
     var author : User? = null
     var collections : BmobRelation? = null

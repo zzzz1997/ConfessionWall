@@ -4,10 +4,10 @@ import android.app.AlertDialog
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
-import android.widget.Toast
 import com.zzapp.confessionwall.R
 import com.zzapp.confessionwall.presenter.UserPresenter
 import com.zzapp.confessionwall.view.IUserView
+import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.register.*
 import java.util.regex.Pattern
 
@@ -81,12 +81,12 @@ class RegisterActivity : AppCompatActivity(), IUserView {
     }
 
     override fun onSuccess() {
-        toast(getString(R.string.register_success))
+        Toasty.success(this@RegisterActivity, getString(R.string.register_success)).show()
         finish()
     }
 
     override fun onFailure(string: String) {
-        toast(string)
+        Toasty.error(this@RegisterActivity, string).show()
     }
 
     override fun newDialog() {
@@ -100,9 +100,5 @@ class RegisterActivity : AppCompatActivity(), IUserView {
 
     override fun dismissDialog() {
         dialog.dismiss()
-    }
-
-    private fun toast(string: String){
-        Toast.makeText(applicationContext, string, Toast.LENGTH_SHORT).show()
     }
 }

@@ -1,7 +1,6 @@
 package com.zzapp.confessionwall.utils
 
 import android.content.Context
-import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -57,8 +56,8 @@ class PostAdapter(private val context: Context, private val posts: MutableList<P
 
         holder.user.tag = position
         holder.user.setOnClickListener(this)
-        holder.post.tag = position
-        holder.post.setOnClickListener(this)
+        holder.content.tag = position
+        holder.content.setOnClickListener(this)
         holder.comment.tag = position
         holder.comment.setOnClickListener(this)
         holder.like.tag = position
@@ -80,7 +79,7 @@ class PostAdapter(private val context: Context, private val posts: MutableList<P
             R.id.post_user -> onPostClickListener.onUserClicked(p0, p0.tag as Int)
             R.id.post_comment -> onPostClickListener.onCommentClicked(p0, p0.tag as Int)
             R.id.post_like -> onPostClickListener.onLikesClicked(p0, p0.tag as Int)
-            else -> onPostClickListener.onPostClicked(p0, p0.tag as Int)
+            else -> onPostClickListener.onContentClicked(p0, p0.tag as Int)
         }
     }
 
@@ -95,12 +94,11 @@ class PostAdapter(private val context: Context, private val posts: MutableList<P
         val content = itemView.findViewById<TextView>(R.id.post_content)!!
         val comment = itemView.findViewById<TextView>(R.id.post_comment)!!
         val like = itemView.findViewById<TextView>(R.id.post_like)!!
-        val post = itemView.findViewById<CardView>(R.id.post)!!
     }
 
     interface MyOnPostClickListener{
         fun onUserClicked(view: View, position: Int)
-        fun onPostClicked(view: View, position: Int)
+        fun onContentClicked(view: View, position: Int)
         fun onCommentClicked(view: View, position: Int)
         fun onLikesClicked(view: View, position: Int)
     }

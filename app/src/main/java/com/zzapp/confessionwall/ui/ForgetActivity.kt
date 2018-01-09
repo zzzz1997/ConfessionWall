@@ -6,11 +6,11 @@ import android.content.ClipboardManager
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
-import android.widget.Toast
 import com.zzapp.confessionwall.R
 import com.zzapp.confessionwall.presenter.UserPresenter
 import com.zzapp.confessionwall.utils.MD5
 import com.zzapp.confessionwall.view.IUserView
+import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.forget.*
 import org.mindrot.jbcrypt.BCrypt
 import java.util.regex.Pattern
@@ -83,18 +83,18 @@ class ForgetActivity : AppCompatActivity(), IUserView {
             val cb = this.getSystemService(android.app.Service.CLIPBOARD_SERVICE) as ClipboardManager
             val clipData = ClipData.newPlainText(null, encryption_text.text.toString())
             cb.primaryClip = clipData
-            toast(getString(R.string.copy_success))
+            Toasty.success(this@ForgetActivity, getString(R.string.copy_success)).show()
             true
         }
     }
 
     override fun onSuccess() {
-        toast(getString(R.string.reset_success))
+        Toasty.success(this@ForgetActivity, getString(R.string.reset_success)).show()
         finish()
     }
 
     override fun onFailure(string: String) {
-        toast(string)
+        Toasty.error(this@ForgetActivity, string).show()
     }
 
     override fun newDialog() {
@@ -108,9 +108,5 @@ class ForgetActivity : AppCompatActivity(), IUserView {
 
     override fun dismissDialog() {
         dialog.dismiss()
-    }
-
-    private fun toast(string: String){
-        Toast.makeText(applicationContext, string, Toast.LENGTH_SHORT).show()
     }
 }

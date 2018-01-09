@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import cn.bmob.v3.BmobQuery
 import cn.bmob.v3.BmobUser
 import cn.bmob.v3.datatype.BmobRelation
@@ -20,6 +19,7 @@ import com.zzapp.confessionwall.R
 import com.zzapp.confessionwall.data.Post
 import com.zzapp.confessionwall.utils.PostAdapter
 import com.zzapp.confessionwall.utils.User
+import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.hot_frag.*
 
 /**
@@ -69,15 +69,19 @@ class HotFragment : Fragment() {
                     val adapter = PostAdapter(context!!, p0!!, user)
                     adapter.setOnPostClickListener(object: PostAdapter.MyOnPostClickListener{
                         override fun onUserClicked(view: View, position: Int) {
-                            toast("点击用户" + p0[position].author!!.username)
+                            Toasty.info(context!!, "点击用户" + p0[position].author!!.username).show()
                         }
 
-                        override fun onPostClicked(view: View, position: Int) {
-                            toast("点击内容")
+                        override fun onContentClicked(view: View, position: Int) {
+                            val intent = Intent(context, DynamicActivity::class.java)
+                            val bundle = Bundle()
+                            bundle.putSerializable("post", p0[position])
+                            intent.putExtras(bundle)
+                            startActivity(intent)
                         }
 
                         override fun onCommentClicked(view: View, position: Int) {
-                            toast("点击评论")
+                            Toasty.info(context!!, "点击评论").show()
                         }
 
                         override fun onLikesClicked(view: View, position: Int) {
@@ -100,13 +104,13 @@ class HotFragment : Fragment() {
                                         override fun done(e: BmobException?) {
                                             if(e == null){
                                                 if(isLike){
-                                                    toast(getString(R.string.like_success))
+                                                    Toasty.success(context!!, getString(R.string.like_success)).show()
                                                     button.text = getString(R.string.liked) + p0[position].likesNum
                                                 } else {
                                                     button.text = getString(R.string.like) + p0[position].likesNum
                                                 }
                                             } else {
-                                                toast(e.message!!)
+                                                Toasty.error(context!!, e.message!!).show()
                                             }
                                             isOperation = false
                                         }
@@ -115,19 +119,15 @@ class HotFragment : Fragment() {
                                     startActivity(Intent(context, LoginActivity::class.java))
                                 }
                             } else {
-                                toast(getString(R.string.over_operation_warning))
+                                Toasty.warning(context!!, getString(R.string.over_operation_warning)).show()
                             }
                         }
                     })
                     hot_recycler.adapter = adapter
                 } else {
-                    toast("失败")
+                    Toasty.error(context!!, p1.message as CharSequence).show()
                 }
             }
         })
-    }
-
-    private fun toast(string: String){
-        Toast.makeText(activity!!.applicationContext, string, Toast.LENGTH_SHORT).show()
     }
 }

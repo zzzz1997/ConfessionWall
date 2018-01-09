@@ -5,7 +5,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.support.v7.app.AppCompatActivity
-import android.widget.Toast
 import cn.bmob.v3.BmobUser
 import com.zzapp.confessionwall.R
 import com.zzapp.confessionwall.utils.User
@@ -25,6 +24,7 @@ import cn.bmob.v3.listener.UpdateListener
 import cn.bmob.v3.listener.UploadFileListener
 import com.zzapp.confessionwall.data.Comment
 import com.zzapp.confessionwall.data.Post
+import es.dmoral.toasty.Toasty
 import java.io.FileOutputStream
 
 
@@ -62,7 +62,7 @@ class UserActivity : AppCompatActivity() {
         if (icon.exists()){
             user_icon.setImageURI(Uri.fromFile(icon))
         } else {
-            toast(getString(R.string.load_icon_failed))
+            Toasty.error(this@UserActivity, getString(R.string.load_icon_failed)).show()
         }
 
         user_name.text = user.username
@@ -86,9 +86,9 @@ class UserActivity : AppCompatActivity() {
             query.findObjects(object: FindListener<Comment>(){
                 override fun done(p0: MutableList<Comment>?, p1: BmobException?) {
                     if(p1 == null){
-                        toast("" + p0!!.size)
+                        Toasty.info(this@UserActivity, "" + p0!!.size).show()
                     } else {
-                        toast("失败")
+                        Toasty.error(this@UserActivity, p1.message as CharSequence).show()
                     }
                 }
             })
@@ -115,19 +115,19 @@ class UserActivity : AppCompatActivity() {
                                     post.update(object: UpdateListener(){
                                         override fun done(p0: BmobException?) {
                                             if(p0 == null){
-                                                toast("成功")
+                                                Toasty.success(this@UserActivity,"成功").show()
                                             } else {
-                                                toast("失败")
+                                                Toasty.error(this@UserActivity, p0.message as CharSequence).show()
                                             }
                                         }
                                     })
                                 } else {
-                                    toast("失败")
+                                    Toasty.error(this@UserActivity, p1.message as CharSequence).show()
                                 }
                             }
                         })
                     } else {
-                        toast("失败")
+                        Toasty.error(this@UserActivity, p1.message as CharSequence).show()
                     }
                 }
             })
@@ -142,9 +142,9 @@ class UserActivity : AppCompatActivity() {
             query.findObjects(object: FindListener<Post>(){
                 override fun done(p0: MutableList<Post>?, p1: BmobException?) {
                     if(p1 == null){
-                        toast("" + p0!!.size)
+                        Toasty.info(this@UserActivity, "" + p0!!.size).show()
                     } else {
-                        toast("失败")
+                        Toasty.error(this@UserActivity, p1.message as CharSequence).show()
                     }
                 }
             })
@@ -158,9 +158,9 @@ class UserActivity : AppCompatActivity() {
             post.save(object: SaveListener<String>(){
                 override fun done(p0: String?, p1: BmobException?) {
                     if(p1 == null){
-                        toast("成功")
+                        Toasty.success(this@UserActivity, "成功").show()
                     } else {
-                        toast("失败")
+                        Toasty.error(this@UserActivity, p1.message as CharSequence).show()
                     }
                 }
             })
@@ -176,9 +176,9 @@ class UserActivity : AppCompatActivity() {
             post.update(object: UpdateListener(){
                 override fun done(p0: BmobException?) {
                     if(p0 == null){
-                        toast("成功")
+                        Toasty.success(this@UserActivity, "成功").show()
                     } else {
-                        toast("失败")
+                        Toasty.error(this@UserActivity, p0.message as CharSequence).show()
                     }
                 }
             })
@@ -218,20 +218,16 @@ class UserActivity : AppCompatActivity() {
                                         bitmap.compress(Bitmap.CompressFormat.PNG, 100, FileOutputStream(cacheDir.absolutePath + "/bmob/${user.username}.png"))
                                         user_icon.setImageURI(Uri.parse(cacheDir.absolutePath + "/bmob/${user.username}.png"))
                                     } else {
-                                        toast(p0.message!!)
+                                        Toasty.error(this@UserActivity, p0.message as CharSequence).show()
                                     }
                                 }
                             })
                         } else {
-                            toast(p0.message!!)
+                            Toasty.error(this@UserActivity, p0.message as CharSequence).show()
                         }
                     }
                 })
             }
         }
-    }
-
-    private fun toast(string: String){
-        Toast.makeText(applicationContext, string, Toast.LENGTH_SHORT).show()
     }
 }

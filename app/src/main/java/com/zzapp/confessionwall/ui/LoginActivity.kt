@@ -5,11 +5,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
-import android.widget.Toast
 import com.zzapp.confessionwall.R
 import kotlinx.android.synthetic.main.login.*
 import com.zzapp.confessionwall.presenter.UserPresenter
 import com.zzapp.confessionwall.view.IUserView
+import es.dmoral.toasty.Toasty
 
 /**
  * Project ConfessionWall
@@ -69,13 +69,13 @@ class LoginActivity : AppCompatActivity(), IUserView {
     }
 
     override fun onSuccess() {
-        toast(getString(R.string.login_success))
+        Toasty.success(this@LoginActivity, getString(R.string.login_success)).show()
         setResult(AppCompatActivity.RESULT_OK)
         finish()
     }
 
     override fun onFailure(string: String) {
-        toast(string)
+        Toasty.error(this@LoginActivity, string).show()
     }
 
     override fun newDialog() {
@@ -89,9 +89,5 @@ class LoginActivity : AppCompatActivity(), IUserView {
 
     override fun dismissDialog() {
         dialog.dismiss()
-    }
-
-    private fun toast(string: String){
-        Toast.makeText(applicationContext, string, Toast.LENGTH_SHORT).show()
     }
 }

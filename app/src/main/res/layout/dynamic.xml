@@ -47,6 +47,4 @@
         android:padding="@dimen/text_padding"
         android:textIsSelectable="true"/>
 
-    
-
 </LinearLayout>

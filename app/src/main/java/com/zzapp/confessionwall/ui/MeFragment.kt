@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import cn.bmob.v3.BmobUser
 import cn.bmob.v3.datatype.BmobFile
 import cn.bmob.v3.exception.BmobException
@@ -16,6 +15,7 @@ import cn.bmob.v3.listener.DownloadFileListener
 import com.zzapp.confessionwall.R
 import com.zzapp.confessionwall.utils.User
 import com.zzapp.confessionwall.view.IBaseView
+import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.me_frag.*
 import java.io.File
 
@@ -77,7 +77,7 @@ class MeFragment : Fragment(), IBaseView {
                         if(p1 == null){
                             me_image.setImageURI(Uri.fromFile(icon))
                         } else {
-                            toast(getString(R.string.load_icon_failed))
+                            Toasty.error(context!!, getString(R.string.load_icon_failed)).show()
                         }
                     }
                 })
@@ -96,9 +96,5 @@ class MeFragment : Fragment(), IBaseView {
         if(requestCode == 1 && resultCode == AppCompatActivity.RESULT_OK) {
             fresh()
         }
-    }
-
-    private fun toast(string: String){
-        Toast.makeText(activity!!.applicationContext, string, Toast.LENGTH_SHORT).show()
     }
 }
