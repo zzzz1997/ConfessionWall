@@ -1,0 +1,46 @@
+<resources>
+    <string name="skip">跳过</string>
+    <string name="app_name">ConfessionWall</string>
+    <string name="follow">关注</string>
+    <string name="message">消息</string>
+    <string name="hot">热门</string>
+    <string name="me">我</string>
+    <string name="exit_login">退出登录</string>
+    <string name="login">登录</string>
+    <string name="log_in">登录中。。。</string>
+    <string name="login_success">登录成功</string>
+    <string name="retrieve">忘记密码？</string>
+    <string name="forget_email">请输入注册的邮箱</string>
+    <string name="reset">重置密码</string>
+    <string name="resetting">重置中。。。</string>
+    <string name="reset_success">重置密码请求成功，请到邮箱重置密码</string>
+    <string name="encryption_text">***\n为了用户隐私安全，在去邮箱重置密码前需要用以下工具加密密码，
+        并将结果粘贴在邮箱邮重置密码框中，否则将无法登录\n生成后长按复制</string>
+    <string name="encryption_password">请输入加密密码</string>
+    <string name="encryption">加密密码</string>
+    <string name="copy_success">复制成功，请到邮箱粘贴重置</string>
+    <string name="quick_register">快捷注册</string>
+    <string name="register">注册</string>
+    <string name="registering">注册中。。。</string>
+    <string name="name">用户名</string>
+    <string name="password">密码</string>
+    <string name="name_too_short">用户名太短</string>
+    <string name="password_too_short">密码太短</string>
+    <string name="password_again">请再次输入密码</string>
+    <string name="password_not_matching">两次密码不匹配</string>
+    <string name="email">邮箱（用于找回密码）</string>
+    <string name="email_wrong_format">邮箱格式不正确</string>
+    <string name="register_success">注册请求成功，请到邮箱确认注册</string>
+    <string name="default_icon">http://bmob-cdn-15551.b0.upaiyun.com/2017/12/12/9ed135bf40caa8ee809748322132596a.png</string>
+    <string name="load_icon_failed">加载头像失败</string>
+    <string name="detailed">详细信息</string>
+    <string name="head_icon">头像</string>
+    <string name="phone_number">手机号码</string>
+    <string name="create_time">创建时间</string>
+    <string name="email_text">邮箱</string>
+    <string name="over_operation_warning">休息一下再操作吧</string>
+    <string name="comment">评论</string>
+    <string name="like">点赞</string>
+    <string name="liked">已点赞</string>
+    <string name="like_success">点赞成功</string>
+</resources>
