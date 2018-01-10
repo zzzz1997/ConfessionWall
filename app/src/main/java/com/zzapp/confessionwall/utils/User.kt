@@ -1,6 +1,7 @@
 package com.zzapp.confessionwall.utils
 
 import cn.bmob.v3.BmobUser
+import cn.bmob.v3.datatype.BmobRelation
 
 /**
  * Project ConfessionWall
@@ -10,4 +11,6 @@ import cn.bmob.v3.BmobUser
  */
 class User : BmobUser() {
     var icon: String? = null
+    var follow: BmobRelation? = null
+    var followNum = 0
 }

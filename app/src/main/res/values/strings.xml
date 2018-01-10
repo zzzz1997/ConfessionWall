@@ -39,9 +39,18 @@
     <string name="create_time">创建时间</string>
     <string name="email_text">邮箱</string>
     <string name="dynamic">动态</string>
+    <string name="add_follow">+关注</string>
+    <string name="followed">已关注</string>
+    <string name="oneself">本人</string>
+    <string name="cancel_follow">取消关注</string>
+    <string name="success_followed">关注成功</string>
     <string name="over_operation_warning">休息一下再操作吧</string>
     <string name="comment">评论</string>
     <string name="like">点赞</string>
     <string name="liked">已点赞</string>
-    <string name="like_success">点赞成功</string>
+    <string name="success_liked">点赞成功</string>
+    <string name="cancel_like">取消赞</string>
+    <string name="is_you">介系你寄几哦~</string>
+    <string name="please_login">请登录查看关注信息</string>
+    <string name="no_post_warning">没有帖子哦，赶紧发表一条吧！</string>
 </resources>

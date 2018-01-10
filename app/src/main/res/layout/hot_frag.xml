@@ -5,11 +5,19 @@
               android:orientation="vertical"
     android:gravity="center_horizontal">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/text_padding"
-        android:text="@string/hot"/>
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:background="@color/colorPrimary"
+        android:elevation="@dimen/elevation">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/hot"
+            android:textColor="@android:color/white"/>
+
+    </android.support.v7.widget.Toolbar>
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/hot_refresh"

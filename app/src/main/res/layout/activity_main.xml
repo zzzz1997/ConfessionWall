@@ -8,20 +8,6 @@
     android:orientation="vertical"
     tools:context="com.zzapp.confessionwall.MainActivity">
 
-    <android.support.v7.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/toolbar_height"
-        android:background="@color/colorPrimary"
-        android:elevation="@dimen/elevation">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/app_name"
-            android:textColor="@android:color/white"/>
-
-    </android.support.v7.widget.Toolbar>
-
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"

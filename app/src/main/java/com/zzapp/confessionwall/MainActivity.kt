@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
+import android.view.KeyEvent
 import cn.bmob.v3.Bmob
 import com.zzapp.confessionwall.utils.MyFragmentPagerAdapter
+import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_main.*
 
 /**
@@ -17,6 +19,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     private val titles: ArrayList<String> = ArrayList()
+    private var first = 0L
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -62,5 +66,20 @@ class MainActivity : AppCompatActivity() {
                         ContextCompat.getColor(this@MainActivity, R.color.colorAccent))
             }
         })
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        val second = System.currentTimeMillis()
+        if(keyCode == KeyEvent.KEYCODE_BACK){
+            if(second - first < 2000){
+                System.exit(0)
+            } else {
+                Toasty.warning(this, "再点一次退出程序哦").show()
+                first = System.currentTimeMillis()
+            }
+            return true
+        }
+
+        return super.onKeyDown(keyCode, event)
     }
 }

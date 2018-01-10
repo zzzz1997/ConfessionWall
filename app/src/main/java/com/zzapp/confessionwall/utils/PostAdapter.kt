@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import cn.bmob.v3.BmobQuery
@@ -31,6 +32,28 @@ class PostAdapter(private val context: Context, private val posts: MutableList<P
                 .load(posts[position].author!!.icon)
                 .into(holder!!.icon)
         holder.name.text = posts[position].author!!.username
+        if(user == null){
+            holder.follow.text = context.getString(R.string.add_follow)
+        } else if(posts[position].author!!.objectId == user.objectId){
+            holder.follow.text = context.getString(R.string.oneself)
+        } else {
+            val query = BmobQuery<User>()
+            query.addWhereRelatedTo("follow", BmobPointer(user))
+            query.findObjects(object: FindListener<User>(){
+                override fun done(p0: MutableList<User>?, p1: BmobException?) {
+                    if(p1 == null){
+                        if(p0!!.any { it.objectId == posts[position].author!!.objectId }){
+                            holder.follow.text = context.getString(R.string.followed)
+                        } else {
+                            holder.follow.text = context.getString(R.string.add_follow)
+                        }
+                    } else {
+                        holder.follow.text = context.getString(R.string.add_follow)
+                    }
+                }
+            })
+        }
+
         holder.content.text = posts[position].content
         holder.comment.text = context.getString(R.string.comment) + posts[position].commentsNum
         val query = BmobQuery<User>()
@@ -56,6 +79,10 @@ class PostAdapter(private val context: Context, private val posts: MutableList<P
 
         holder.user.tag = position
         holder.user.setOnClickListener(this)
+        holder.follow.tag = position
+        holder.follow.setOnClickListener(this)
+        holder.menu.tag = position
+        holder.menu.setOnClickListener(this)
         holder.content.tag = position
         holder.content.setOnClickListener(this)
         holder.comment.tag = position
@@ -77,6 +104,8 @@ class PostAdapter(private val context: Context, private val posts: MutableList<P
     override fun onClick(p0: View?) {
         when(p0!!.id){
             R.id.post_user -> onPostClickListener.onUserClicked(p0, p0.tag as Int)
+            R.id.post_follow -> onPostClickListener.onFollowClicked(p0, p0.tag as Int)
+            R.id.post_menu -> onPostClickListener.onMenuClicked(p0, p0.tag as Int)
             R.id.post_comment -> onPostClickListener.onCommentClicked(p0, p0.tag as Int)
             R.id.post_like -> onPostClickListener.onLikesClicked(p0, p0.tag as Int)
             else -> onPostClickListener.onContentClicked(p0, p0.tag as Int)
@@ -91,6 +120,8 @@ class PostAdapter(private val context: Context, private val posts: MutableList<P
         val user = itemView.findViewById<LinearLayout>(R.id.post_user)!!
         val icon = itemView.findViewById<CircleImageView>(R.id.post_icon)!!
         val name = itemView.findViewById<TextView>(R.id.post_name)!!
+        val follow = itemView.findViewById<TextView>(R.id.post_follow)!!
+        val menu = itemView.findViewById<ImageView>(R.id.post_menu)!!
         val content = itemView.findViewById<TextView>(R.id.post_content)!!
         val comment = itemView.findViewById<TextView>(R.id.post_comment)!!
         val like = itemView.findViewById<TextView>(R.id.post_like)!!
@@ -98,6 +129,8 @@ class PostAdapter(private val context: Context, private val posts: MutableList<P
 
     interface MyOnPostClickListener{
         fun onUserClicked(view: View, position: Int)
+        fun onFollowClicked(view: View, position: Int)
+        fun onMenuClicked(view: View, position: Int)
         fun onContentClicked(view: View, position: Int)
         fun onCommentClicked(view: View, position: Int)
         fun onLikesClicked(view: View, position: Int)

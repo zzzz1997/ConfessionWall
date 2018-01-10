@@ -2,11 +2,42 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-    android:gravity="center">
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:background="@color/colorPrimary"
+        android:elevation="@dimen/elevation">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/follow"
+            android:textColor="@android:color/white"/>
+
+    </android.support.v7.widget.Toolbar>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/follow_warning"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/follow"/>
+        android:gravity="center"
+        android:paddingTop="@dimen/toolbar_height"
+        android:visibility="gone"/>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/follow_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/follow_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </android.support.v7.widget.RecyclerView>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </LinearLayout>
