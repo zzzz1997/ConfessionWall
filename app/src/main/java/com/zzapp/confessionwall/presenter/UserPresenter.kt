@@ -5,10 +5,8 @@ import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.LogInListener
 import cn.bmob.v3.listener.SaveListener
 import cn.bmob.v3.listener.UpdateListener
-import com.zzapp.confessionwall.utils.MD5
 import com.zzapp.confessionwall.utils.User
 import com.zzapp.confessionwall.view.IUserView
-import org.mindrot.jbcrypt.BCrypt
 
 /**
  * Project ConfessionWall
@@ -20,9 +18,7 @@ class UserPresenter(private val activity: IUserView) : IUserPresenter {
 
     override fun login(name: String, password: String) {
         activity.newDialog()
-        BmobUser.loginByAccount<User>(name,
-                BCrypt.hashpw(password, "$2a$12$" + MD5.md5(name)),
-                object : LogInListener<User>() {
+        BmobUser.loginByAccount<User>(name, password, object : LogInListener<User>() {
                     override fun done(user: User?, e: BmobException?) {
                         activity.dismissDialog()
                         if (e == null) {
@@ -38,7 +34,7 @@ class UserPresenter(private val activity: IUserView) : IUserPresenter {
         activity.newDialog()
         val bmobUser = User()
         bmobUser.username = name
-        bmobUser.setPassword(BCrypt.hashpw(password, "$2a$12$" + MD5.md5(name)))
+        bmobUser.setPassword(password)
         bmobUser.email = email
         bmobUser.icon = icon
         bmobUser.signUp(object : SaveListener<User>() {

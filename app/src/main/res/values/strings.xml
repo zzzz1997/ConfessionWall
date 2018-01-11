@@ -14,11 +14,6 @@
     <string name="reset">重置密码</string>
     <string name="resetting">重置中。。。</string>
     <string name="reset_success">重置密码请求成功，请到邮箱重置密码</string>
-    <string name="encryption_text">***\n为了用户隐私安全，在去邮箱重置密码前需要用以下工具加密密码，
-        并将结果粘贴在邮箱邮重置密码框中，否则将无法登录\n生成后长按复制</string>
-    <string name="encryption_password">请输入加密密码</string>
-    <string name="encryption">加密密码</string>
-    <string name="copy_success">复制成功，请到邮箱粘贴重置</string>
     <string name="quick_register">快捷注册</string>
     <string name="register">注册</string>
     <string name="registering">注册中。。。</string>
@@ -53,4 +48,11 @@
     <string name="is_you">介系你寄几哦~</string>
     <string name="please_login">请登录查看关注信息</string>
     <string name="no_post_warning">没有帖子哦，赶紧发表一条吧！</string>
+    <string name="cancel">取消</string>
+    <string name="publish">发表</string>
+    <string name="edit_comment">编辑评论</string>
+    <string name="comment_cannot_be_null">评论不能为空</string>
+    <string name="success_commented">评论成功</string>
+    <string name="collection">收藏</string>
+    <string name="delete">删除</string>
 </resources>

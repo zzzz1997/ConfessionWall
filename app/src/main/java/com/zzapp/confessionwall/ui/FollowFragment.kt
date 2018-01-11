@@ -51,7 +51,9 @@ class FollowFragment : Fragment() {
 
     private fun refresh(user: User?){
         if(user == null){
-            Toasty.warning(context!!, getString(R.string.please_login)).show()
+            follow_warning.visibility = View.VISIBLE
+            follow_warning.text = getString(R.string.please_login)
+            follow_recycler.visibility = View.GONE
         } else {
             val query = BmobQuery<User>()
             query.addWhereRelatedTo("follow", BmobPointer(user))

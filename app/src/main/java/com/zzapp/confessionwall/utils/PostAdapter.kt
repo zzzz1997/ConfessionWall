@@ -32,26 +32,26 @@ class PostAdapter(private val context: Context, private val posts: MutableList<P
                 .load(posts[position].author!!.icon)
                 .into(holder!!.icon)
         holder.name.text = posts[position].author!!.username
-        if(user == null){
-            holder.follow.text = context.getString(R.string.add_follow)
-        } else if(posts[position].author!!.objectId == user.objectId){
-            holder.follow.text = context.getString(R.string.oneself)
-        } else {
-            val query = BmobQuery<User>()
-            query.addWhereRelatedTo("follow", BmobPointer(user))
-            query.findObjects(object: FindListener<User>(){
-                override fun done(p0: MutableList<User>?, p1: BmobException?) {
-                    if(p1 == null){
-                        if(p0!!.any { it.objectId == posts[position].author!!.objectId }){
-                            holder.follow.text = context.getString(R.string.followed)
+        when {
+            user == null -> holder.follow.text = context.getString(R.string.add_follow)
+            posts[position].author!!.objectId == user.objectId -> holder.follow.text = context.getString(R.string.oneself)
+            else -> {
+                val query = BmobQuery<User>()
+                query.addWhereRelatedTo("follow", BmobPointer(user))
+                query.findObjects(object: FindListener<User>(){
+                    override fun done(p0: MutableList<User>?, p1: BmobException?) {
+                        if(p1 == null){
+                            if(p0!!.any { it.objectId == posts[position].author!!.objectId }){
+                                holder.follow.text = context.getString(R.string.followed)
+                            } else {
+                                holder.follow.text = context.getString(R.string.add_follow)
+                            }
                         } else {
                             holder.follow.text = context.getString(R.string.add_follow)
                         }
-                    } else {
-                        holder.follow.text = context.getString(R.string.add_follow)
                     }
-                }
-            })
+                })
+            }
         }
 
         holder.content.text = posts[position].content

@@ -18,6 +18,8 @@ import kotlinx.android.synthetic.main.activity_main.*
  */
 class MainActivity : AppCompatActivity() {
 
+    val appkey = "0609b5cda2401bf3d1c4bae43b834950"
+
     private val titles: ArrayList<String> = ArrayList()
     private var first = 0L
 
@@ -29,7 +31,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        Bmob.initialize(this, "0609b5cda2401bf3d1c4bae43b834950")
+        Bmob.initialize(this, appkey)
 
         titles.add(getString(R.string.follow))
         titles.add(getString(R.string.message))

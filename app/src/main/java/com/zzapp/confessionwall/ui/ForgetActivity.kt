@@ -1,18 +1,14 @@
 package com.zzapp.confessionwall.ui
 
 import android.app.AlertDialog
-import android.content.ClipData
-import android.content.ClipboardManager
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
 import com.zzapp.confessionwall.R
 import com.zzapp.confessionwall.presenter.UserPresenter
-import com.zzapp.confessionwall.utils.MD5
 import com.zzapp.confessionwall.view.IUserView
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.forget.*
-import org.mindrot.jbcrypt.BCrypt
 import java.util.regex.Pattern
 
 /**
@@ -54,37 +50,6 @@ class ForgetActivity : AppCompatActivity(), IUserView {
             forget_email.isErrorEnabled = false
 
             userPresenter.reset(emailEdit.text.toString())
-        }
-
-        encryption_password.hint = getString(R.string.encryption_password)
-        val passwordEdit = encryption_password.editText!!
-
-        encryption_name.hint = getString(R.string.name)
-        val nameEdit = encryption_name.editText!!
-
-        encryption.setOnClickListener {
-            if(nameEdit.text.toString().length < 2){
-                encryption_name.error = getString(R.string.name_too_short)
-                encryption_name.isErrorEnabled = true
-                return@setOnClickListener
-            }
-            encryption_name.isErrorEnabled = false
-            if(passwordEdit.text.toString().length < 6){
-                encryption_password.error = getString(R.string.password_too_short)
-                encryption_password.isErrorEnabled = true
-                return@setOnClickListener
-            }
-            encryption_password.isErrorEnabled = false
-
-            encryption_text.text = BCrypt.hashpw(passwordEdit.text.toString(), "$2a$12$" + MD5.md5(nameEdit.text.toString()))
-        }
-
-        encryption_text.setOnLongClickListener{
-            val cb = this.getSystemService(android.app.Service.CLIPBOARD_SERVICE) as ClipboardManager
-            val clipData = ClipData.newPlainText(null, encryption_text.text.toString())
-            cb.primaryClip = clipData
-            Toasty.success(this@ForgetActivity, getString(R.string.copy_success)).show()
-            true
         }
     }
 

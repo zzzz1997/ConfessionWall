@@ -34,5 +34,4 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.2.0'
     implementation 'com.github.GrenderG:Toasty:1.2.8'
     implementation files('libs/bmob-sdk-3.5.8.aar')
-    implementation files('libs/jBCrypt-0.4.jar')
 }
