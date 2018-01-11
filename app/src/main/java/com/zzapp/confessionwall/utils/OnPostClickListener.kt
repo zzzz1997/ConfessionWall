@@ -10,7 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.ImageView
 import android.widget.TextView
 import cn.bmob.v3.BmobQuery
 import cn.bmob.v3.datatype.BmobPointer
@@ -25,7 +24,6 @@ import com.zzapp.confessionwall.data.Post
 import com.zzapp.confessionwall.ui.DynamicActivity
 import com.zzapp.confessionwall.ui.LoginActivity
 import es.dmoral.toasty.Toasty
-import kotlinx.android.synthetic.main.post.view.*
 
 /**
  * Project ConfessionWall
