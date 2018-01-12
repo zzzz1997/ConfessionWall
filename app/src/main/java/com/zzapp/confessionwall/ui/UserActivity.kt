@@ -88,7 +88,7 @@ class UserActivity : AppCompatActivity() {
                     if(p1 == null){
                         Toasty.info(this@UserActivity, "" + p0!!.size).show()
                     } else {
-                        Toasty.error(this@UserActivity, p1.message as CharSequence).show()
+                        Toasty.error(this@UserActivity, p1.message!!).show()
                     }
                 }
             })
@@ -100,7 +100,7 @@ class UserActivity : AppCompatActivity() {
             post.objectId = "32c3d29268"
             val comment = Comment()
             comment.content = "测试评论"
-            comment.user = user
+            comment.author = user
             comment.post = post
             comment.save(object: SaveListener<String>(){
                 override fun done(p0: String?, p1: BmobException?) {
@@ -117,17 +117,17 @@ class UserActivity : AppCompatActivity() {
                                             if(p0 == null){
                                                 Toasty.success(this@UserActivity,"成功").show()
                                             } else {
-                                                Toasty.error(this@UserActivity, p0.message as CharSequence).show()
+                                                Toasty.error(this@UserActivity, p0.message!!).show()
                                             }
                                         }
                                     })
                                 } else {
-                                    Toasty.error(this@UserActivity, p1.message as CharSequence).show()
+                                    Toasty.error(this@UserActivity, p1.message!!).show()
                                 }
                             }
                         })
                     } else {
-                        Toasty.error(this@UserActivity, p1.message as CharSequence).show()
+                        Toasty.error(this@UserActivity, p1.message!!).show()
                     }
                 }
             })
@@ -144,7 +144,7 @@ class UserActivity : AppCompatActivity() {
                     if(p1 == null){
                         Toasty.info(this@UserActivity, "" + p0!!.size).show()
                     } else {
-                        Toasty.error(this@UserActivity, p1.message as CharSequence).show()
+                        Toasty.error(this@UserActivity, p1.message!!).show()
                     }
                 }
             })
@@ -160,7 +160,7 @@ class UserActivity : AppCompatActivity() {
                     if(p1 == null){
                         Toasty.success(this@UserActivity, "成功").show()
                     } else {
-                        Toasty.error(this@UserActivity, p1.message as CharSequence).show()
+                        Toasty.error(this@UserActivity, p1.message!!).show()
                     }
                 }
             })
@@ -178,7 +178,7 @@ class UserActivity : AppCompatActivity() {
                     if(p0 == null){
                         Toasty.success(this@UserActivity, "成功").show()
                     } else {
-                        Toasty.error(this@UserActivity, p0.message as CharSequence).show()
+                        Toasty.error(this@UserActivity, p0.message!!).show()
                     }
                 }
             })
@@ -218,12 +218,12 @@ class UserActivity : AppCompatActivity() {
                                         bitmap.compress(Bitmap.CompressFormat.PNG, 100, FileOutputStream(cacheDir.absolutePath + "/bmob/${user.username}.png"))
                                         user_icon.setImageURI(Uri.parse(cacheDir.absolutePath + "/bmob/${user.username}.png"))
                                     } else {
-                                        Toasty.error(this@UserActivity, p0.message as CharSequence).show()
+                                        Toasty.error(this@UserActivity, p0.message!!).show()
                                     }
                                 }
                             })
                         } else {
-                            Toasty.error(this@UserActivity, p0.message as CharSequence).show()
+                            Toasty.error(this@UserActivity, p0.message!!).show()
                         }
                     }
                 })

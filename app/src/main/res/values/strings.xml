@@ -55,4 +55,5 @@
     <string name="success_commented">评论成功</string>
     <string name="collection">收藏</string>
     <string name="delete">删除</string>
+    <string name="find_no_comment">没有评论哦，评价一下吧</string>
 </resources>

@@ -15,4 +15,6 @@
     <dimen name="me_image_size">150dp</dimen>
     <dimen name="divider_width">1dp</dimen>
     <dimen name="text_title_size">15sp</dimen>
+    <dimen name="post_user_icon_width">40dp</dimen>
+    <dimen name="comment_user_icon_width">30dp</dimen>
 </resources>

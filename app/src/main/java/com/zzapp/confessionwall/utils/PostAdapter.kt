@@ -23,9 +23,12 @@ import com.zzapp.confessionwall.view.CircleImageView
  *
  * @author zzzz
  */
-class PostAdapter(private val context: Context, private val posts: MutableList<Post>, private val user: User?) : RecyclerView.Adapter<PostAdapter.PostViewHolder>(), View.OnClickListener {
+class PostAdapter(private val context: Context, private val posts: MutableList<Post>, private val user: User?)
+    : RecyclerView.Adapter<PostAdapter.PostViewHolder>(), View.OnClickListener {
 
     private lateinit var onPostClickListener: MyOnPostClickListener
+
+    private var query = BmobQuery<User>()
 
     override fun onBindViewHolder(holder: PostViewHolder?, position: Int) {
         Glide.with(context)
@@ -36,7 +39,7 @@ class PostAdapter(private val context: Context, private val posts: MutableList<P
             user == null -> holder.follow.text = context.getString(R.string.add_follow)
             posts[position].author!!.objectId == user.objectId -> holder.follow.text = context.getString(R.string.oneself)
             else -> {
-                val query = BmobQuery<User>()
+                query = BmobQuery()
                 query.addWhereRelatedTo("follow", BmobPointer(user))
                 query.findObjects(object: FindListener<User>(){
                     override fun done(p0: MutableList<User>?, p1: BmobException?) {
@@ -56,7 +59,7 @@ class PostAdapter(private val context: Context, private val posts: MutableList<P
 
         holder.content.text = posts[position].content
         holder.comment.text = context.getString(R.string.comment) + posts[position].commentsNum
-        val query = BmobQuery<User>()
+        query = BmobQuery()
         query.addWhereRelatedTo("likes", BmobPointer(posts[position]))
         query.include("likes")
         query.findObjects(object: FindListener<User>(){

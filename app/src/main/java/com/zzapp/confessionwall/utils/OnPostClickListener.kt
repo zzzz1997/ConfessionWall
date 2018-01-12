@@ -76,12 +76,12 @@ class OnPostClickListener(private val context: Context, private val user: User?,
                                                 Toasty.success(context, context.getString(R.string.success_followed)).show()
                                             }
                                         } else {
-                                            Toasty.error(context, p0.message as CharSequence).show()
+                                            Toasty.error(context, p0.message!!).show()
                                         }
                                     }
                                 })
                             } else {
-                                Toasty.error(context, p1.message as CharSequence).show()
+                                Toasty.error(context, p1.message!!).show()
                             }
                             isOperation = false
                         }
@@ -145,7 +145,7 @@ class OnPostClickListener(private val context: Context, private val user: User?,
                         Toasty.warning(context, context.getString(R.string.comment_cannot_be_null)).show()
                     } else {
                         val comment = Comment()
-                        comment.user = user
+                        comment.author = user
                         comment.content = content
                         comment.post = posts[position]
                         comment.save(object: SaveListener<String>(){
@@ -158,12 +158,12 @@ class OnPostClickListener(private val context: Context, private val user: User?,
                                                 text.text = context.getString(R.string.comment) + posts[position].commentsNum
                                                 Toasty.success(context, context.getString(R.string.success_commented)).show()
                                             } else {
-                                                Toasty.error(context, p0.message as CharSequence).show()
+                                                Toasty.error(context, p0.message!!).show()
                                             }
                                         }
                                     })
                                 } else {
-                                    Toasty.error(context, p1.message as CharSequence).show()
+                                    Toasty.error(context, p1.message!!).show()
                                 }
                             }
                         })
@@ -188,28 +188,38 @@ class OnPostClickListener(private val context: Context, private val user: User?,
 
             val like = view.findViewById<TextView>(R.id.post_like)
             if(user != null){
-                val relation = BmobRelation()
-                val isLike = context.getString(R.string.like) == like.text.substring(0, 2)
-                if (isLike){
-                    relation.add(user)
-                    posts[position].likesNum++
-                } else {
-                    relation.remove(user)
-                    posts[position].likesNum--
-                }
-                posts[position].likes = relation
-                posts[position].update(object: UpdateListener(){
-                    override fun done(e: BmobException?) {
-                        if(e == null){
+                val query = BmobQuery<User>()
+                query.addWhereRelatedTo("likes", BmobPointer(posts[position]))
+                query.findObjects(object: FindListener<User>(){
+                    override fun done(p0: MutableList<User>?, p1: BmobException?) {
+                        if(p1 == null){
+                            val likes = BmobRelation()
+                            val isLike = p0 != null && p0.any { it.objectId == user.objectId }
                             if(isLike){
-                                Toasty.success(context, context.getString(R.string.success_liked)).show()
-                                like.text = context.getString(R.string.liked) + posts[position].likesNum
+                                likes.remove(user)
+                                posts[position].likesNum--
                             } else {
-                                Toasty.info(context, context.getString(R.string.cancel_like)).show()
-                                like.text = context.getString(R.string.like) + posts[position].likesNum
+                                likes.add(user)
+                                posts[position].likesNum++
                             }
+                            posts[position].likes = likes
+                            posts[position].update(object: UpdateListener(){
+                                override fun done(p0: BmobException?) {
+                                    if (p0 == null){
+                                        if(isLike){
+                                            Toasty.success(context, context.getString(R.string.success_liked)).show()
+                                            like.text = context.getString(R.string.liked) + posts[position].likesNum
+                                        } else {
+                                            Toasty.info(context, context.getString(R.string.cancel_like)).show()
+                                            like.text = context.getString(R.string.like) + posts[position].likesNum
+                                        }
+                                    } else {
+                                        Toasty.error(context, p0.message!!).show()
+                                    }
+                                }
+                            })
                         } else {
-                            Toasty.error(context, e.message!!).show()
+                            Toasty.error(context, p1.message!!).show()
                         }
                         isOperation = false
                     }

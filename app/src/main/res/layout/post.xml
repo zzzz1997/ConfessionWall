@@ -21,8 +21,8 @@
 
             <com.zzapp.confessionwall.view.CircleImageView
                 android:id="@+id/post_icon"
-                android:layout_width="40dp"
-                android:layout_height="40dp"/>
+                android:layout_width="@dimen/post_user_icon_width"
+                android:layout_height="@dimen/post_user_icon_width"/>
 
             <TextView
                 android:id="@+id/post_name"

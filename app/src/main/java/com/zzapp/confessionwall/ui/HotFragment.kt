@@ -61,7 +61,7 @@ class HotFragment : Fragment() {
                     hot_recycler.adapter = adapter
                     hot_recycler.layoutManager = LinearLayoutManager(context)
                 } else {
-                    Toasty.error(context!!, p1.message as CharSequence).show()
+                    Toasty.error(context!!, p1.message!!).show()
                 }
             }
         })
