@@ -2,9 +2,14 @@ package com.zzapp.confessionwall.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import cn.bmob.v3.BmobQuery
@@ -13,6 +18,7 @@ import cn.bmob.v3.datatype.BmobPointer
 import cn.bmob.v3.datatype.BmobRelation
 import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.FindListener
+import cn.bmob.v3.listener.SaveListener
 import cn.bmob.v3.listener.UpdateListener
 import com.bumptech.glide.Glide
 import com.zzapp.confessionwall.R
@@ -30,6 +36,11 @@ import kotlinx.android.synthetic.main.dynamic.*
  * @author zzzz
  */
 class DynamicActivity : AppCompatActivity() {
+
+    private lateinit var adapter: CommentAdapter
+
+    private var isOperation = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dynamic)
@@ -41,6 +52,22 @@ class DynamicActivity : AppCompatActivity() {
         val user = BmobUser.getCurrentUser(User::class.java)
         val post = intent.getSerializableExtra("post") as Post
 
+        val query = BmobQuery<User>()
+        query.addWhereRelatedTo("likes", BmobPointer(post))
+        query.findObjects(object: FindListener<User>(){
+            override fun done(p0: MutableList<User>?, p1: BmobException?) {
+                if(p1 == null){
+                    if(p0!!.any { it.objectId == user.objectId }){
+                        dynamic_like.text = getString(R.string.liked)
+                    } else {
+                        dynamic_like.text = getString(R.string.like)
+                    }
+                } else {
+                    Toasty.error(this@DynamicActivity, p1.message!!).show()
+                }
+            }
+        })
+
         dynamic_toolbar.setNavigationOnClickListener {
             finish()
         }
@@ -49,6 +76,104 @@ class DynamicActivity : AppCompatActivity() {
                 android.R.color.holo_orange_light, android.R.color.holo_green_light)
         dynamic_refresh.setOnRefreshListener {
             refresh(post, user)
+        }
+
+        dynamic_comment.setOnClickListener {
+            val editView = LayoutInflater.from(this).inflate(R.layout.add_comment, null)
+            val dialog = AlertDialog.Builder(this)
+                    .setView(editView)
+                    .show()
+            dialog.window.setGravity(Gravity.BOTTOM)
+            dialog.window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+
+            editView.findViewById<TextView>(R.id.add_comment_cancel).setOnClickListener {
+                dialog.dismiss()
+            }
+
+            editView.findViewById<TextView>(R.id.add_comment_publish).setOnClickListener {
+                val content = editView.findViewById<EditText>(R.id.add_comment_edit).text.toString()
+                if(content.isEmpty()){
+                    Toasty.warning(this, getString(R.string.comment_cannot_be_null)).show()
+                } else {
+                    val comment = Comment()
+                    comment.author = user
+                    comment.content = content
+                    comment.post = post
+                    comment.save(object: SaveListener<String>(){
+                        override fun done(p0: String?, p1: BmobException?) {
+                            if(p1 == null){
+                                post.commentsNum++
+                                post.update(object: UpdateListener(){
+                                    override fun done(p0: BmobException?) {
+                                        if(p0 == null){
+                                            try {
+                                                adapter.insert(comment, 0)
+                                                dynamic_recycler.scrollToPosition(0)
+                                                Toasty.success(this@DynamicActivity, getString(R.string.success_commented)).show()
+                                            } catch (e: Exception){
+                                                Toasty.error(this@DynamicActivity, e.message!!).show()
+                                            }
+                                        } else {
+                                            Toasty.error(this@DynamicActivity, p0.message!!).show()
+                                        }
+                                    }
+                                })
+                            } else {
+                                Toasty.error(this@DynamicActivity, p1.message!!).show()
+                            }
+                        }
+                    })
+                }
+                dialog.dismiss()
+            }
+        }
+
+        dynamic_like.setOnClickListener {
+            if(!isOperation){
+                isOperation = true
+
+                if(user != null){
+                    val likeQuery = BmobQuery<User>()
+                    likeQuery.addWhereRelatedTo("likes", BmobPointer(post))
+                    likeQuery.findObjects(object: FindListener<User>(){
+                        override fun done(p0: MutableList<User>?, p1: BmobException?) {
+                            if(p1 == null){
+                                val likes = BmobRelation()
+                                val isLike = p0!!.any { it.objectId == user.objectId }
+                                if(isLike){
+                                    likes.remove(user)
+                                    post.likesNum--
+                                } else {
+                                    likes.add(user)
+                                    post.likesNum++
+                                }
+                                post.likes = likes
+                                post.update(object: UpdateListener(){
+                                    override fun done(p0: BmobException?) {
+                                        if (p0 == null){
+                                            if(isLike){
+                                                dynamic_like.text = getString(R.string.like) + post.likesNum
+                                            } else {
+                                                dynamic_like.text = getString(R.string.liked) + post.likesNum
+                                                Toasty.success(this@DynamicActivity, getString(R.string.success_liked)).show()
+                                            }
+                                        } else {
+                                            Toasty.error(this@DynamicActivity, p0.message!!).show()
+                                        }
+                                    }
+                                })
+                            } else {
+                                Toasty.error(this@DynamicActivity, p1.message!!).show()
+                            }
+                            isOperation = false
+                        }
+                    })
+                } else {
+                    startActivity(Intent(this@DynamicActivity, LoginActivity::class.java))
+                }
+            } else {
+                Toasty.warning(this@DynamicActivity, getString(R.string.over_operation_warning)).show()
+            }
         }
 
         dynamic_refresh.isRefreshing = true
@@ -72,15 +197,18 @@ class DynamicActivity : AppCompatActivity() {
                     if(comments!!.isEmpty()){
                         dynamic_warning.visibility = View.VISIBLE
                         dynamic_warning.text = getString(R.string.find_no_comment)
-                        dynamic_comments.visibility = View.GONE
-                    } else {
-                        val adapter = CommentAdapter(this@DynamicActivity, comments, user)
-                        adapter.setOnCommentClickListener(object : CommentAdapter.MyOnCommentClickListener {
-                            override fun onUserClicked(view: View, position: Int) {
-                                Toasty.info(this@DynamicActivity, "点击用户" + comments[position].author!!.username).show()
-                            }
+                        dynamic_recycler.visibility = View.GONE
+                    }
+                    adapter = CommentAdapter(this@DynamicActivity, comments, user)
+                    adapter.setOnCommentClickListener(object : CommentAdapter.MyOnCommentClickListener {
+                        override fun onUserClicked(view: View, position: Int) {
+                            Toasty.info(this@DynamicActivity, "点击用户" + comments[position].author!!.username).show()
+                        }
 
-                            override fun onLikeClicked(view: View, position: Int) {
+                        override fun onLikeClicked(view: View, position: Int) {
+                            if(!isOperation) {
+                                isOperation = true
+
                                 if (user == null) {
                                     this@DynamicActivity.startActivity(Intent(this@DynamicActivity, LoginActivity::class.java))
                                 } else {
@@ -91,7 +219,7 @@ class DynamicActivity : AppCompatActivity() {
                                         override fun done(p0: MutableList<User>?, p1: BmobException?) {
                                             if (p1 == null) {
                                                 val likes = BmobRelation()
-                                                val isLiked = p0 != null && p0.any { it.objectId == user.objectId }
+                                                val isLiked = p0!!.any { it.objectId == user.objectId }
                                                 if (isLiked) {
                                                     likes.remove(user)
                                                     comments[position].likesNum--
@@ -121,13 +249,16 @@ class DynamicActivity : AppCompatActivity() {
                                         }
                                     })
                                 }
+                                isOperation = false
+                            } else {
+                                Toasty.warning(this@DynamicActivity, getString(R.string.over_operation_warning)).show()
                             }
-                        })
-                        dynamic_warning.visibility = View.GONE
-                        dynamic_comments.visibility = View.VISIBLE
-                        dynamic_comments.adapter = adapter
-                        dynamic_comments.layoutManager = LinearLayoutManager(this@DynamicActivity)
-                    }
+                        }
+                    })
+                    dynamic_warning.visibility = View.GONE
+                    dynamic_recycler.visibility = View.VISIBLE
+                    dynamic_recycler.adapter = adapter
+                    dynamic_recycler.layoutManager = LinearLayoutManager(this@DynamicActivity)
                 } else {
                     Toasty.error(this@DynamicActivity, p1.message!!) .show()
                 }

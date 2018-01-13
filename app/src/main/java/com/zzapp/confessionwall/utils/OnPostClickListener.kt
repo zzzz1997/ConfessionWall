@@ -108,7 +108,7 @@ class OnPostClickListener(private val context: Context, private val user: User?,
                     true
                 }
                 else -> {
-                    Toasty.info(context, context.getString(R.string.collection)).show()
+                    Toasty.info(context, context.getString(R.string.delete)).show()
                     true
                 }
             }
@@ -194,7 +194,7 @@ class OnPostClickListener(private val context: Context, private val user: User?,
                     override fun done(p0: MutableList<User>?, p1: BmobException?) {
                         if(p1 == null){
                             val likes = BmobRelation()
-                            val isLike = p0 != null && p0.any { it.objectId == user.objectId }
+                            val isLike = p0!!.any { it.objectId == user.objectId }
                             if(isLike){
                                 likes.remove(user)
                                 posts[position].likesNum--
@@ -207,11 +207,10 @@ class OnPostClickListener(private val context: Context, private val user: User?,
                                 override fun done(p0: BmobException?) {
                                     if (p0 == null){
                                         if(isLike){
-                                            Toasty.success(context, context.getString(R.string.success_liked)).show()
-                                            like.text = context.getString(R.string.liked) + posts[position].likesNum
-                                        } else {
-                                            Toasty.info(context, context.getString(R.string.cancel_like)).show()
                                             like.text = context.getString(R.string.like) + posts[position].likesNum
+                                        } else {
+                                            like.text = context.getString(R.string.liked) + posts[position].likesNum
+                                            Toasty.success(context, context.getString(R.string.success_liked)).show()
                                         }
                                     } else {
                                         Toasty.error(context, p0.message!!).show()

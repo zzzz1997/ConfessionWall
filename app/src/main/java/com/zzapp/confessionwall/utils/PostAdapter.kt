@@ -65,14 +65,10 @@ class PostAdapter(private val context: Context, private val posts: MutableList<P
         query.findObjects(object: FindListener<User>(){
             override fun done(p0: MutableList<User>?, p1: BmobException?) {
                 if(p1 == null){
-                    if(p0 == null){
-                        holder.like.text = context.getString(R.string.like) + posts[position].likesNum
+                    if(user != null && p0!!.any { it.objectId == user.objectId }){
+                        holder.like.text = context.getString(R.string.liked) + posts[position].likesNum
                     } else {
-                        if(user != null && p0.any { it.objectId == user.objectId }){
-                            holder.like.text = context.getString(R.string.liked) + posts[position].likesNum
-                        } else {
-                            holder.like.text = context.getString(R.string.like) + posts[position].likesNum
-                        }
+                        holder.like.text = context.getString(R.string.like) + posts[position].likesNum
                     }
                 } else {
                     holder.like.text = context.getString(R.string.like) + posts[position].likesNum
@@ -117,6 +113,18 @@ class PostAdapter(private val context: Context, private val posts: MutableList<P
 
     fun setOnPostClickListener(onPostClickListener: MyOnPostClickListener){
         this.onPostClickListener = onPostClickListener
+    }
+
+    fun insert(post: Post, position: Int){
+        posts.add(position, post)
+        notifyItemInserted(position)
+        notifyItemRangeChanged(position, posts.size - position)
+    }
+
+    fun delete(position: Int){
+        posts.removeAt(position)
+        notifyItemRemoved(position)
+        notifyItemRangeChanged(position, posts.size - position)
     }
 
     class PostViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){

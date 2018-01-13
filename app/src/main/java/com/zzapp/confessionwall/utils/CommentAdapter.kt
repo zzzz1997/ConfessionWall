@@ -48,7 +48,7 @@ class CommentAdapter(private val context: Context, private val comments: Mutable
             query.findObjects(object: FindListener<User>(){
                 override fun done(p0: MutableList<User>?, p1: BmobException?) {
                     if(p1 == null){
-                        if (p0 != null && p0.any { it.objectId == user.objectId }){
+                        if (p0!!.any { it.objectId == user.objectId }){
                             holder.like.setImageDrawable(context.getDrawable(R.drawable.liked))
                         } else {
                             holder.like.setImageDrawable(context.getDrawable(R.drawable.like))
@@ -81,6 +81,18 @@ class CommentAdapter(private val context: Context, private val comments: Mutable
 
     fun setOnCommentClickListener(onCommentClickListener: MyOnCommentClickListener){
         this.onCommentClickListener = onCommentClickListener
+    }
+
+    fun insert(comment: Comment, position: Int){
+        comments.add(position, comment)
+        notifyItemInserted(position)
+        notifyItemRangeChanged(position, comments.size - position)
+    }
+
+    fun delete(position: Int){
+        comments.removeAt(position)
+        notifyItemRemoved(position)
+        notifyItemRangeChanged(position, comments.size - position)
     }
 
     class CommentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){

@@ -24,7 +24,8 @@
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/dynamic_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -71,7 +72,7 @@
                 android:visibility="gone"/>
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/dynamic_comments"
+                android:id="@+id/dynamic_recycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -80,5 +81,38 @@
         </LinearLayout>
 
     </android.support.v4.widget.SwipeRefreshLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_width"
+        android:background="@color/colorDivider"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/dynamic_comment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/comment"/>
+
+        <ImageView
+            android:layout_width="@dimen/divider_width"
+            android:layout_height="match_parent"
+            android:background="@color/colorDivider"/>
+
+        <TextView
+            android:id="@+id/dynamic_like"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/like"/>
+
+    </LinearLayout>
 
 </LinearLayout>
