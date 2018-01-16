@@ -1,12 +1,13 @@
 package com.zzapp.confessionwall.ui
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import cn.bmob.v3.BmobQuery
 import cn.bmob.v3.BmobUser
 import cn.bmob.v3.datatype.BmobPointer
@@ -28,15 +29,37 @@ import kotlinx.android.synthetic.main.follow_frag.*
  */
 class FollowFragment : Fragment() {
 
+    private lateinit var adapter: PostAdapter
+
+    private val ADD_POST = 0
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.follow_frag, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        setHasOptionsMenu(true)
+        (activity!! as AppCompatActivity).setSupportActionBar(follow_toolbar)
+        (activity!! as AppCompatActivity).supportActionBar!!.title = null
 
         Log.e("follow", "created")
         val user = BmobUser.getCurrentUser(User::class.java)
+
+        follow_toolbar.setOnMenuItemClickListener {
+            when(it.itemId){
+                R.id.follow_menu_add -> {
+                    if(user != null) {
+                        startActivityForResult(Intent(context, AddPostActivity::class.java), ADD_POST)
+                    } else {
+                        startActivity(Intent(context, LoginActivity::class.java))
+                    }
+                    true
+                }
+                else -> false
+            }
+        }
+
         follow_refresh.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light,
                 android.R.color.holo_orange_light, android.R.color.holo_green_light)
         follow_refresh.setOnRefreshListener {
@@ -47,6 +70,30 @@ class FollowFragment : Fragment() {
         refresh(user)
 
         follow_recycler.layoutManager = LinearLayoutManager(context)
+    }
+
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater!!.inflate(R.menu.follow_menu, menu)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            ADD_POST -> {
+                if(resultCode == Activity.RESULT_OK){
+                    val post = data!!.getSerializableExtra("post") as Post
+                    try {
+                        adapter.insert(post, 0)
+                        follow_recycler.scrollToPosition(0)
+                        Toasty.success(context!!, getString(R.string.success_published)).show()
+                    } catch (e: Exception){
+                        Toasty.error(context!!, e.message!!).show()
+                    }
+                }
+            }
+        }
     }
 
     private fun refresh(user: User?){
@@ -82,7 +129,7 @@ class FollowFragment : Fragment() {
                                     } else {
                                         follow_warning.visibility = View.GONE
                                         follow_recycler.visibility = View.VISIBLE
-                                        val adapter = PostAdapter(context!!, p0, user)
+                                        adapter = PostAdapter(context!!, p0, user)
                                         adapter.setOnPostClickListener(OnPostClickListener(context!!, user, p0))
                                         follow_recycler.adapter = adapter
                                         follow_recycler.layoutManager = LinearLayoutManager(context)

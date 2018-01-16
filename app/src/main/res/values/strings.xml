@@ -56,4 +56,9 @@
     <string name="collection">收藏</string>
     <string name="delete">删除</string>
     <string name="find_no_comment">没有评论哦，评价一下吧</string>
+    <string name="add">添加</string>
+    <string name="add_post">添加动态</string>
+    <string name="share_dynamic">分享你的动态</string>
+    <string name="content_cannot_be_null">内容不能为空</string>
+    <string name="success_published">发表成功</string>
 </resources>

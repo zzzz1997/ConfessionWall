@@ -29,6 +29,7 @@
         <activity android:name=".ui.RegisterActivity"/>
         <activity android:name=".ui.UserActivity"/>
         <activity android:name=".ui.DynamicActivity"/>
+        <activity android:name=".ui.AddPostActivity"/>
     </application>
 
 </manifest>

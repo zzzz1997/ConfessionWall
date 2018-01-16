@@ -11,7 +11,7 @@
         android:padding="@dimen/elevation"
         android:gravity="center_vertical">
 
-        <ImageView
+        <com.zzapp.confessionwall.view.CircleImageView
             android:id="@+id/comment_icon"
             android:layout_width="@dimen/comment_user_icon_width"
             android:layout_height="@dimen/comment_user_icon_width"/>
