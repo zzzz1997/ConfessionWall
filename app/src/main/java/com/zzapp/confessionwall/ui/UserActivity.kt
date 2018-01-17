@@ -168,21 +168,6 @@ class UserActivity : AppCompatActivity() {
 
         //收藏
         user_create.setOnLongClickListener {
-            val post = Post()
-            post.objectId = "32c3d29268"
-            val relation = BmobRelation()
-            relation.add(user)
-            post.collections = relation
-            post.update(object: UpdateListener(){
-                override fun done(p0: BmobException?) {
-                    if(p0 == null){
-                        Toasty.success(this@UserActivity, "成功").show()
-                    } else {
-                        Toasty.error(this@UserActivity, p0.message!!).show()
-                    }
-                }
-            })
-
             true
         }
     }

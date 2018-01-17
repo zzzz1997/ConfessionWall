@@ -2,9 +2,8 @@ package com.zzapp.confessionwall.ui
 
 import android.content.Intent
 import android.net.Uri
-import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.*
 import cn.bmob.v3.BmobUser
 import cn.bmob.v3.datatype.BmobFile
@@ -12,7 +11,7 @@ import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.DownloadFileListener
 import com.zzapp.confessionwall.R
 import com.zzapp.confessionwall.utils.User
-import com.zzapp.confessionwall.view.IBaseView
+import com.zzapp.confessionwall.view.BaseFragment
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.me_frag.*
 import java.io.File
@@ -23,16 +22,21 @@ import java.io.File
  *
  * @author zzzz
  */
-class MeFragment : Fragment(), IBaseView {
+class MeFragment : BaseFragment() {
 
-    private var user: User? = null
+    private lateinit var user: User
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.me_frag, container, false)
+    override fun setContentView(): Int {
+        return R.layout.me_frag
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun initOnce() {
+        setHasOptionsMenu(true)
+        (activity!! as AppCompatActivity).setSupportActionBar(me_toolbar)
+        (activity!! as AppCompatActivity).supportActionBar!!.title = null
+        Log.e("me", "init")
+
+        user = BmobUser.getCurrentUser(User::class.java)
 
         me_image.setOnClickListener {
             startActivityForResult(Intent(activity, UserActivity::class.java), 0)
@@ -44,14 +48,13 @@ class MeFragment : Fragment(), IBaseView {
 
         exit_login.setOnClickListener {
             BmobUser.logOut()
-            fresh()
+            refresh(user)
         }
 
-        fresh()
+        refresh(user)
     }
 
-    override fun fresh() {
-        user = BmobUser.getCurrentUser(User::class.java)
+    override fun refresh(user: User?) {
 
         if(user != null){
             me_image.visibility = View.VISIBLE
@@ -59,15 +62,15 @@ class MeFragment : Fragment(), IBaseView {
             start_login.visibility = View.GONE
             exit_login.visibility = View.VISIBLE
 
-            me_name.text = user!!.username
+            me_name.text = user.username
 
-            val icon = if(user!!.icon == getString(R.string.default_icon)){
+            val icon = if(user.icon == getString(R.string.default_icon)){
                 File(activity!!.cacheDir.absolutePath + "/bmob/default.png")
             } else {
-                File(activity!!.cacheDir.absolutePath + "/bmob/${user!!.username}.png")
+                File(activity!!.cacheDir.absolutePath + "/bmob/${user.username}.png")
             }
             if(!icon.exists()){
-                BmobFile(icon.name, null, user!!.icon)
+                BmobFile(icon.name, null, user.icon)
                         .download(icon, object : DownloadFileListener(){
                     override fun onProgress(p0: Int?, p1: Long) {}
 
@@ -92,7 +95,7 @@ class MeFragment : Fragment(), IBaseView {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if(requestCode == 1 && resultCode == AppCompatActivity.RESULT_OK) {
-            fresh()
+            refresh(user)
         }
     }
 }

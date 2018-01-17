@@ -1,11 +1,11 @@
 package com.zzapp.confessionwall.ui
 
-import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import com.zzapp.confessionwall.R
+import com.zzapp.confessionwall.utils.User
+import com.zzapp.confessionwall.view.BaseFragment
+import kotlinx.android.synthetic.main.message_frag.*
 
 /**
  * Project ConfessionWall
@@ -13,9 +13,18 @@ import com.zzapp.confessionwall.R
  *
  * @author zzzz
  */
-class MessageFragment : Fragment() {
+class MessageFragment : BaseFragment() {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.message_frag, container, false)
+    override fun setContentView(): Int {
+        return R.layout.message_frag
     }
+
+    override fun initOnce() {
+        setHasOptionsMenu(true)
+        (activity!! as AppCompatActivity).setSupportActionBar(message_toolbar)
+        (activity!! as AppCompatActivity).supportActionBar!!.title = null
+        Log.e("message", "init")
+    }
+
+    override fun refresh(user: User?) {}
 }

@@ -13,4 +13,5 @@ class User : BmobUser() {
     var icon: String? = null
     var follow: BmobRelation? = null
     var followNum = 0
+    var collections : BmobRelation? = null
 }

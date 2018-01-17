@@ -14,7 +14,6 @@ import java.io.Serializable
 class Post : BmobObject(), Serializable{
     var content : String? = null
     var author : User? = null
-    var collections : BmobRelation? = null
     var commentsNum = 0
     var likes : BmobRelation? = null
     var likesNum = 0

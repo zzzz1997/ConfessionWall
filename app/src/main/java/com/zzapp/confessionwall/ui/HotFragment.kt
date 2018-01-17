@@ -1,13 +1,8 @@
 package com.zzapp.confessionwall.ui
 
-import android.os.Bundle
-import android.os.Handler
-import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import cn.bmob.v3.BmobQuery
 import cn.bmob.v3.BmobUser
 import cn.bmob.v3.exception.BmobException
@@ -17,6 +12,7 @@ import com.zzapp.confessionwall.data.Post
 import com.zzapp.confessionwall.utils.OnPostClickListener
 import com.zzapp.confessionwall.utils.PostAdapter
 import com.zzapp.confessionwall.utils.User
+import com.zzapp.confessionwall.view.BaseFragment
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.hot_frag.*
 
@@ -26,16 +22,17 @@ import kotlinx.android.synthetic.main.hot_frag.*
  *
  * @author zzzz
  */
-class HotFragment : Fragment() {
+class HotFragment : BaseFragment() {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.hot_frag, container, false)
+    override fun setContentView(): Int {
+        return R.layout.hot_frag
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        Log.e("hot", "created")
+    override fun initOnce() {
+        setHasOptionsMenu(true)
+        (activity!! as AppCompatActivity).setSupportActionBar(hot_toolbar)
+        (activity!! as AppCompatActivity).supportActionBar!!.title = null
+        Log.e("hot", "init")
 
         val user = BmobUser.getCurrentUser(User::class.java)
 
@@ -49,7 +46,7 @@ class HotFragment : Fragment() {
         refresh(user)
     }
 
-    private fun refresh(user: User?){
+    override fun refresh(user: User?){
         val query = BmobQuery<Post>()
         query.order("-updatedAt")
         query.include("author")
@@ -57,7 +54,7 @@ class HotFragment : Fragment() {
             override fun done(p0: MutableList<Post>?, p1: BmobException?) {
                 if(p1 == null){
                     val adapter = PostAdapter(context!!, p0!!, user)
-                    adapter.setOnPostClickListener(OnPostClickListener(context!!, user, p0))
+                    adapter.setOnPostClickListener(OnPostClickListener(context!!, user, p0, adapter))
                     hot_recycler.adapter = adapter
                     hot_recycler.layoutManager = LinearLayoutManager(context)
                 } else {

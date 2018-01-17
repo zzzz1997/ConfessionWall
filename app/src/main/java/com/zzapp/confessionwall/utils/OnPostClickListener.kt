@@ -31,7 +31,8 @@ import es.dmoral.toasty.Toasty
  *
  * @author zzzz
  */
-class OnPostClickListener(private val context: Context, private val user: User?, private val posts: MutableList<Post>) : PostAdapter.MyOnPostClickListener{
+class OnPostClickListener(private val context: Context, private val user: User?, private val posts: MutableList<Post>,
+                          private val adapter: PostAdapter) : PostAdapter.MyOnPostClickListener{
 
     var isOperation = false
 
@@ -104,11 +105,42 @@ class OnPostClickListener(private val context: Context, private val user: User?,
         popup.setOnMenuItemClickListener {
             when(it.title){
                 context.getString(R.string.collection) -> {
-                    Toasty.info(context, context.getString(R.string.collection)).show()
+                    if(user == null){
+                        Toasty.warning(context, context.getString(R.string.please_login)).show()
+                    } else {
+                        val collections = BmobRelation()
+                        collections.add(posts[position])
+                        user.collections = collections
+                        user.update(object: UpdateListener(){
+                            override fun done(p0: BmobException?) {
+                                if(p0 == null){
+                                    Toasty.success(context, context.getString(R.string.success_collection)).show()
+                                } else {
+                                    Toasty.error(context, p0.message!!).show()
+                                }
+                            }
+                        })
+                    }
                     true
                 }
                 else -> {
-                    Toasty.info(context, context.getString(R.string.delete)).show()
+                    AlertDialog.Builder(context)
+                            .setTitle(R.string.delete_dynamic)
+                            .setMessage(R.string.confirm_delete)
+                            .setPositiveButton(R.string.yes) { _, _ ->
+                                posts[position].delete(object: UpdateListener(){
+                                    override fun done(p0: BmobException?) {
+                                        if(p0 == null){
+                                            adapter.delete(position)
+                                            Toasty.success(context, context.getString(R.string.success_delete)).show()
+                                        } else {
+                                            Toasty.error(context, p0.message!!).show()
+                                        }
+                                    }
+                                })
+                            }
+                            .setNegativeButton(R.string.cancel) {_, _ -> }
+                            .show()
                     true
                 }
             }
