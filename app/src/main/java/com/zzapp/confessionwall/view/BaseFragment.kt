@@ -2,8 +2,6 @@ package com.zzapp.confessionwall.view
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,21 +15,50 @@ import com.zzapp.confessionwall.utils.User
  */
 abstract class BaseFragment : Fragment() {
 
-    private var isOnce = true
+    private var v: View? = null
+
+    private var isInit = false
+    private var isLoad = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(setContentView(), container, false)
+        v = inflater.inflate(setContentView(), container, false)
+        initView()
+        isInit = true
+        toLoad()
+        return v
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        if(isOnce){
-            initOnce()
-            isOnce = false
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        super.setUserVisibleHint(isVisibleToUser)
+        toLoad()
+    }
+
+    private fun toLoad(){
+        if(isInit){
+            if(userVisibleHint){
+                loadView()
+                isLoad = true
+            } else {
+                if(isLoad){
+                    stopLoad()
+                }
+            }
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        isInit = false
+        isLoad = false
+    }
+
+    fun findViewById(id: Int) : View{
+        return v!!.findViewById(id)
+    }
+
     abstract fun setContentView() : Int
-    abstract fun initOnce()
+    abstract fun initView()
+    abstract fun loadView()
+    abstract fun stopLoad()
     abstract fun refresh(user: User?)
 }

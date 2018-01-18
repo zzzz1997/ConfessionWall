@@ -3,8 +3,12 @@ package com.zzapp.confessionwall.ui
 import android.content.Intent
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.*
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
 import cn.bmob.v3.BmobUser
 import cn.bmob.v3.datatype.BmobFile
 import cn.bmob.v3.exception.BmobException
@@ -13,7 +17,6 @@ import com.zzapp.confessionwall.R
 import com.zzapp.confessionwall.utils.User
 import com.zzapp.confessionwall.view.BaseFragment
 import es.dmoral.toasty.Toasty
-import kotlinx.android.synthetic.main.me_frag.*
 import java.io.File
 
 /**
@@ -24,45 +27,63 @@ import java.io.File
  */
 class MeFragment : BaseFragment() {
 
+    private lateinit var toolbar: Toolbar
+    private lateinit var image: ImageView
+    private lateinit var name: TextView
+    private lateinit var login: Button
+    private lateinit var exit: Button
+
     private lateinit var user: User
 
     override fun setContentView(): Int {
         return R.layout.me_frag
     }
 
-    override fun initOnce() {
+    override fun initView() {
+        toolbar = findViewById(R.id.me_toolbar) as Toolbar
+        image = findViewById(R.id.me_image) as ImageView
+        name = findViewById(R.id.me_name) as TextView
+        login = findViewById(R.id.start_login) as Button
+        exit = findViewById(R.id.exit_login) as Button
+
         setHasOptionsMenu(true)
-        (activity!! as AppCompatActivity).setSupportActionBar(me_toolbar)
+        (activity!! as AppCompatActivity).setSupportActionBar(toolbar)
         (activity!! as AppCompatActivity).supportActionBar!!.title = null
         Log.e("me", "init")
 
         user = BmobUser.getCurrentUser(User::class.java)
 
-        me_image.setOnClickListener {
+        image.setOnClickListener {
             startActivityForResult(Intent(activity, UserActivity::class.java), 0)
         }
 
-        start_login.setOnClickListener {
+        login.setOnClickListener {
             startActivityForResult(Intent(activity, LoginActivity::class.java), 1)
         }
 
-        exit_login.setOnClickListener {
+        exit.setOnClickListener {
             BmobUser.logOut()
             refresh(user)
         }
+    }
 
+    override fun loadView() {
         refresh(user)
+    }
+
+    override fun stopLoad() {
+
     }
 
     override fun refresh(user: User?) {
 
         if(user != null){
-            me_image.visibility = View.VISIBLE
-            me_name.visibility = View.VISIBLE
-            start_login.visibility = View.GONE
-            exit_login.visibility = View.VISIBLE
+            image.visibility = View.VISIBLE
+            name.visibility = View.VISIBLE
+            login.visibility = View.GONE
+            exit.visibility = View.VISIBLE
 
-            me_name.text = user.username
+            name.text = user.username
 
             val icon = if(user.icon == getString(R.string.default_icon)){
                 File(activity!!.cacheDir.absolutePath + "/bmob/default.png")
@@ -76,20 +97,20 @@ class MeFragment : BaseFragment() {
 
                     override fun done(p0: String?, p1: BmobException?) {
                         if(p1 == null){
-                            me_image.setImageURI(Uri.fromFile(icon))
+                            image.setImageURI(Uri.fromFile(icon))
                         } else {
                             Toasty.error(context!!, getString(R.string.load_icon_failed)).show()
                         }
                     }
                 })
             } else {
-                me_image.setImageURI(Uri.fromFile(icon))
+                image.setImageURI(Uri.fromFile(icon))
             }
         } else {
-            me_image.visibility = View.GONE
-            me_name.visibility = View.GONE
-            start_login.visibility = View.VISIBLE
-            exit_login.visibility = View.GONE
+            image.visibility = View.GONE
+            name.visibility = View.GONE
+            login.visibility = View.VISIBLE
+            exit.visibility = View.GONE
         }
     }
 

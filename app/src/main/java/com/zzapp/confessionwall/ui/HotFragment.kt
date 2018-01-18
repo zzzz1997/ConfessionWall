@@ -1,7 +1,10 @@
 package com.zzapp.confessionwall.ui
 
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.Toolbar
 import android.util.Log
 import cn.bmob.v3.BmobQuery
 import cn.bmob.v3.BmobUser
@@ -14,7 +17,6 @@ import com.zzapp.confessionwall.utils.PostAdapter
 import com.zzapp.confessionwall.utils.User
 import com.zzapp.confessionwall.view.BaseFragment
 import es.dmoral.toasty.Toasty
-import kotlinx.android.synthetic.main.hot_frag.*
 
 /**
  * Project ConfessionWall
@@ -24,26 +26,42 @@ import kotlinx.android.synthetic.main.hot_frag.*
  */
 class HotFragment : BaseFragment() {
 
+    private lateinit var toolbar: Toolbar
+    private lateinit var refresh: SwipeRefreshLayout
+    private lateinit var recycler: RecyclerView
+
+    private var user: User? = null
+
     override fun setContentView(): Int {
         return R.layout.hot_frag
     }
 
-    override fun initOnce() {
+    override fun initView() {
+        toolbar = findViewById(R.id.hot_toolbar) as Toolbar
+        refresh = findViewById(R.id.hot_refresh) as SwipeRefreshLayout
+        recycler = findViewById(R.id.hot_recycler) as RecyclerView
+
         setHasOptionsMenu(true)
-        (activity!! as AppCompatActivity).setSupportActionBar(hot_toolbar)
+        (activity!! as AppCompatActivity).setSupportActionBar(toolbar)
         (activity!! as AppCompatActivity).supportActionBar!!.title = null
         Log.e("hot", "init")
 
-        val user = BmobUser.getCurrentUser(User::class.java)
+        user = BmobUser.getCurrentUser(User::class.java)
 
-        hot_refresh.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light,
+        refresh.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light,
                 android.R.color.holo_orange_light, android.R.color.holo_green_light)
-        hot_refresh.setOnRefreshListener {
+        refresh.setOnRefreshListener {
             refresh(user)
         }
+    }
 
-        hot_refresh.isRefreshing = true
+    override fun loadView() {
+        refresh.isRefreshing = true
         refresh(user)
+    }
+
+    override fun stopLoad() {
+
     }
 
     override fun refresh(user: User?){
@@ -55,13 +73,13 @@ class HotFragment : BaseFragment() {
                 if(p1 == null){
                     val adapter = PostAdapter(context!!, p0!!, user)
                     adapter.setOnPostClickListener(OnPostClickListener(context!!, user, p0, adapter))
-                    hot_recycler.adapter = adapter
-                    hot_recycler.layoutManager = LinearLayoutManager(context)
+                    recycler.adapter = adapter
+                    recycler.layoutManager = LinearLayoutManager(context)
                 } else {
                     Toasty.error(context!!, p1.message!!).show()
                 }
             }
         })
-        hot_refresh.isRefreshing = false
+        refresh.isRefreshing = false
     }
 }
