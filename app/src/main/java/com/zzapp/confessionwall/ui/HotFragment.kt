@@ -1,11 +1,9 @@
 package com.zzapp.confessionwall.ui
 
 import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
-import android.util.Log
 import cn.bmob.v3.BmobQuery
 import cn.bmob.v3.BmobUser
 import cn.bmob.v3.exception.BmobException
@@ -40,11 +38,6 @@ class HotFragment : BaseFragment() {
         toolbar = findViewById(R.id.hot_toolbar) as Toolbar
         refresh = findViewById(R.id.hot_refresh) as SwipeRefreshLayout
         recycler = findViewById(R.id.hot_recycler) as RecyclerView
-
-        setHasOptionsMenu(true)
-        (activity!! as AppCompatActivity).setSupportActionBar(toolbar)
-        (activity!! as AppCompatActivity).supportActionBar!!.title = null
-        Log.e("hot", "init")
 
         user = BmobUser.getCurrentUser(User::class.java)
 

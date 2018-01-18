@@ -2,10 +2,15 @@ package com.zzapp.confessionwall
 
 import android.os.Bundle
 import android.support.design.widget.TabLayout
+import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.KeyEvent
 import cn.bmob.v3.Bmob
+import com.zzapp.confessionwall.ui.FollowFragment
+import com.zzapp.confessionwall.ui.HotFragment
+import com.zzapp.confessionwall.ui.MeFragment
+import com.zzapp.confessionwall.ui.MessageFragment
 import com.zzapp.confessionwall.utils.MyFragmentPagerAdapter
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_main.*
@@ -21,6 +26,7 @@ class MainActivity : AppCompatActivity() {
     val appkey = "0609b5cda2401bf3d1c4bae43b834950"
 
     private val titles: ArrayList<String> = ArrayList()
+    private val fragments: ArrayList<Fragment> = ArrayList()
     private var first = 0L
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +43,12 @@ class MainActivity : AppCompatActivity() {
         titles.add(getString(R.string.message))
         titles.add(getString(R.string.hot))
         titles.add(getString(R.string.me))
-        view_pager.adapter = MyFragmentPagerAdapter(supportFragmentManager, titles)
+        fragments.add(FollowFragment())
+        fragments.add(MessageFragment())
+        fragments.add(HotFragment())
+        fragments.add(MeFragment())
+        view_pager.adapter = MyFragmentPagerAdapter(supportFragmentManager, titles, fragments)
+        view_pager.offscreenPageLimit = 3
         tab_layout.setupWithViewPager(view_pager)
         tab_layout.getTabAt(0)!!.icon = ContextCompat.getDrawable(this, R.drawable.follow_selected)
         tab_layout.getTabAt(1)!!.icon = ContextCompat.getDrawable(this, R.drawable.message_normal)

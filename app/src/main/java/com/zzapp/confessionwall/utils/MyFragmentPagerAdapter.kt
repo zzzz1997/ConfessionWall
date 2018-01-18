@@ -3,10 +3,6 @@ package com.zzapp.confessionwall.utils
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
-import com.zzapp.confessionwall.ui.FollowFragment
-import com.zzapp.confessionwall.ui.HotFragment
-import com.zzapp.confessionwall.ui.MeFragment
-import com.zzapp.confessionwall.ui.MessageFragment
 
 /**
  * Project ConfessionWall
@@ -14,15 +10,10 @@ import com.zzapp.confessionwall.ui.MessageFragment
  *
  * @author zzzz
  */
-class MyFragmentPagerAdapter(fragmentManager: FragmentManager, private val titles : List<String>) : FragmentPagerAdapter(fragmentManager) {
+class MyFragmentPagerAdapter(fragmentManager: FragmentManager, private val titles : List<String>, private val fragments: ArrayList<Fragment>) : FragmentPagerAdapter(fragmentManager) {
 
     override fun getItem(position: Int): Fragment {
-        return when(position){
-            0 -> FollowFragment()
-            1 -> MessageFragment()
-            2 -> HotFragment()
-            else -> MeFragment()
-        }
+        return fragments[position]
     }
 
     override fun getCount(): Int {

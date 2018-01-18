@@ -3,11 +3,9 @@ package com.zzapp.confessionwall.ui
 import android.app.Activity
 import android.content.Intent
 import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
-import android.util.Log
 import android.view.*
 import android.widget.TextView
 import cn.bmob.v3.BmobQuery
@@ -51,10 +49,7 @@ class FollowFragment : BaseFragment() {
         recycler = findViewById(R.id.follow_recycler) as RecyclerView
         warning = findViewById(R.id.follow_warning) as TextView
 
-        setHasOptionsMenu(true)
-        (activity!! as AppCompatActivity).setSupportActionBar(toolbar)
-        (activity!! as AppCompatActivity).supportActionBar!!.title = null
-        Log.e("follow", "init")
+        toolbar.inflateMenu(R.menu.follow_menu)
 
         user = BmobUser.getCurrentUser(User::class.java)
 

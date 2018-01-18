@@ -4,7 +4,6 @@ import android.content.Intent
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
-import android.util.Log
 import android.view.*
 import android.widget.Button
 import android.widget.ImageView
@@ -45,11 +44,6 @@ class MeFragment : BaseFragment() {
         name = findViewById(R.id.me_name) as TextView
         login = findViewById(R.id.start_login) as Button
         exit = findViewById(R.id.exit_login) as Button
-
-        setHasOptionsMenu(true)
-        (activity!! as AppCompatActivity).setSupportActionBar(toolbar)
-        (activity!! as AppCompatActivity).supportActionBar!!.title = null
-        Log.e("me", "init")
 
         user = BmobUser.getCurrentUser(User::class.java)
 
