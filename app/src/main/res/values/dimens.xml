@@ -17,4 +17,5 @@
     <dimen name="text_title_size">15sp</dimen>
     <dimen name="post_user_icon_width">40dp</dimen>
     <dimen name="comment_user_icon_width">30dp</dimen>
+    <dimen name="fork_size">20dp</dimen>
 </resources>

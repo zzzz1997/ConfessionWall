@@ -61,4 +61,5 @@ abstract class BaseFragment : Fragment() {
     abstract fun loadView()
     abstract fun stopLoad()
     abstract fun refresh(user: User?)
+    abstract fun push()
 }

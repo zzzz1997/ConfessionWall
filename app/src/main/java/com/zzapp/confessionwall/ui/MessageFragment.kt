@@ -32,4 +32,8 @@ class MessageFragment : BaseFragment() {
     }
 
     override fun refresh(user: User?) {}
+
+    override fun push() {
+
+    }
 }

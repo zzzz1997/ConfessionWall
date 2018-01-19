@@ -66,4 +66,7 @@
     <string name="share_dynamic">分享你的动态</string>
     <string name="content_cannot_be_null">内容不能为空</string>
     <string name="success_published">发表成功</string>
+    <string name="data_preference">data</string>
+    <string name="my_msg">my_msg</string>
+    <string name="is_closed">is_closed</string>
 </resources>

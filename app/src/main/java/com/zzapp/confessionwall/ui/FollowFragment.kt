@@ -1,12 +1,15 @@
 package com.zzapp.confessionwall.ui
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.support.v4.widget.SwipeRefreshLayout
+import android.support.v7.widget.CardView
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.view.*
+import android.widget.ImageView
 import android.widget.TextView
 import cn.bmob.v3.BmobQuery
 import cn.bmob.v3.BmobUser
@@ -29,10 +32,15 @@ import es.dmoral.toasty.Toasty
  */
 class FollowFragment : BaseFragment() {
 
+    private val preferences by lazy { context!!.getSharedPreferences(context!!.getString(R.string.data_preference), Context.MODE_PRIVATE) }
+
     private lateinit var toolbar: Toolbar
+    private lateinit var warning: TextView
+    private lateinit var layout: CardView
+    private lateinit var broadcast: TextView
+    private lateinit var close: ImageView
     private lateinit var refresh: SwipeRefreshLayout
     private lateinit var recycler: RecyclerView
-    private lateinit var warning: TextView
 
     private var user: User? = null
     private lateinit var adapter: PostAdapter
@@ -44,14 +52,26 @@ class FollowFragment : BaseFragment() {
     }
 
     override fun initView() {
+
         toolbar = findViewById(R.id.follow_toolbar) as Toolbar
+        warning = findViewById(R.id.follow_warning) as TextView
+        layout = findViewById(R.id.my_broadcast) as CardView
+        broadcast = findViewById(R.id.my_broadcast_text) as TextView
+        close = findViewById(R.id.my_broadcast_close) as ImageView
         refresh = findViewById(R.id.follow_refresh) as SwipeRefreshLayout
         recycler = findViewById(R.id.follow_recycler) as RecyclerView
-        warning = findViewById(R.id.follow_warning) as TextView
 
         toolbar.inflateMenu(R.menu.follow_menu)
 
         user = BmobUser.getCurrentUser(User::class.java)
+
+        val msg = preferences.getString(context!!.getString(R.string.my_msg), null)
+        val isClosed = preferences.getBoolean(context!!.getString(R.string.is_closed), false)
+
+        if(msg != null && !isClosed){
+            layout.visibility = View.VISIBLE
+            broadcast.text = msg
+        }
 
         toolbar.setOnMenuItemClickListener {
             when(it.itemId){
@@ -65,6 +85,17 @@ class FollowFragment : BaseFragment() {
                 }
                 else -> false
             }
+        }
+
+        broadcast.setOnClickListener {
+            Toasty.info(context!!, broadcast.text).show()
+        }
+
+        close.setOnClickListener {
+            layout.visibility = View.GONE
+            val editor = preferences.edit()
+            editor.putBoolean(context!!.getString(R.string.is_closed), true)
+            editor.apply()
         }
 
         refresh.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light,
@@ -137,9 +168,14 @@ class FollowFragment : BaseFragment() {
         refresh.isRefreshing = false
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater!!.inflate(R.menu.follow_menu, menu)
+    override fun push() {
+        val msg = preferences.getString(context!!.getString(R.string.my_msg), null)
+        val isClosed = preferences.getBoolean(context!!.getString(R.string.is_closed), false)
+
+        if(msg != null && !isClosed){
+            layout.visibility = View.VISIBLE
+            broadcast.text = msg
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

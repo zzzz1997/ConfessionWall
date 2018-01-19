@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-    android:orientation="vertical">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/follow_toolbar"
@@ -18,6 +19,45 @@
             android:textColor="@android:color/white"/>
 
     </android.support.v7.widget.Toolbar>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/my_broadcast"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/elevation"
+        android:padding="@dimen/elevation"
+        app:cardCornerRadius="@dimen/elevation"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="@dimen/comment_user_icon_width"
+                android:layout_height="@dimen/comment_user_icon_width"
+                android:src="@drawable/horn"/>
+
+            <TextView
+                android:id="@+id/my_broadcast_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:ellipsize="marquee"
+                android:focusable="true"
+                android:focusableInTouchMode="true"/>
+
+            <ImageView
+                android:id="@+id/my_broadcast_close"
+                android:layout_width="@dimen/fork_size"
+                android:layout_height="@dimen/fork_size"
+                android:src="@drawable/fork"/>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
 
     <TextView
         android:id="@+id/follow_warning"

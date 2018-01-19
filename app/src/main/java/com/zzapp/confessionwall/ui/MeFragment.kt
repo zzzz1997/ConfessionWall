@@ -108,6 +108,10 @@ class MeFragment : BaseFragment() {
         }
     }
 
+    override fun push() {
+
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if(requestCode == 1 && resultCode == AppCompatActivity.RESULT_OK) {
             refresh(user)

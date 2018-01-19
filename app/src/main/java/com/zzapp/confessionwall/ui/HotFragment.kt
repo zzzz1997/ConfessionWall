@@ -75,4 +75,8 @@ class HotFragment : BaseFragment() {
         })
         refresh.isRefreshing = false
     }
+
+    override fun push() {
+
+    }
 }

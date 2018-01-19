@@ -6,12 +6,18 @@ import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.KeyEvent
+import cn.bmob.push.BmobPush
 import cn.bmob.v3.Bmob
+import cn.bmob.v3.BmobInstallation
+import cn.bmob.v3.BmobInstallationManager
+import cn.bmob.v3.InstallationListener
+import cn.bmob.v3.exception.BmobException
 import com.zzapp.confessionwall.ui.FollowFragment
 import com.zzapp.confessionwall.ui.HotFragment
 import com.zzapp.confessionwall.ui.MeFragment
 import com.zzapp.confessionwall.ui.MessageFragment
 import com.zzapp.confessionwall.utils.MyFragmentPagerAdapter
+import com.zzapp.confessionwall.view.BaseFragment
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -26,7 +32,11 @@ class MainActivity : AppCompatActivity() {
     val appkey = "0609b5cda2401bf3d1c4bae43b834950"
 
     private val titles: ArrayList<String> = ArrayList()
-    private val fragments: ArrayList<Fragment> = ArrayList()
+
+    companion object {
+        val fragments: ArrayList<BaseFragment> = ArrayList()
+    }
+
     private var first = 0L
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,6 +48,16 @@ class MainActivity : AppCompatActivity() {
 
     private fun initView() {
         Bmob.initialize(this, appkey)
+        BmobInstallationManager.getInstance().initialize(object: InstallationListener<BmobInstallation>(){
+            override fun done(p0: BmobInstallation?, p1: BmobException?) {
+                if(p1 == null){
+
+                } else {
+                    Toasty.error(this@MainActivity, p1.message!!).show()
+                }
+            }
+        })
+        BmobPush.startWork(this)
 
         titles.add(getString(R.string.follow))
         titles.add(getString(R.string.message))
