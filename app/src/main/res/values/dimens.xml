@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="toolbar_height">58dp</dimen>
     <dimen name="elevation">5dp</dimen>
     <dimen name="tablayout_height">58dp</dimen>
     <dimen name="textinputlayout_paddingtop">10dp</dimen>
@@ -18,4 +17,5 @@
     <dimen name="post_user_icon_width">40dp</dimen>
     <dimen name="comment_user_icon_width">30dp</dimen>
     <dimen name="fork_size">20dp</dimen>
+    <dimen name="text_size">14sp</dimen>
 </resources>

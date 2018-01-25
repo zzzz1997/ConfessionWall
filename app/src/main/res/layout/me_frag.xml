@@ -1,49 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center_horizontal">
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                 xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                 android:layout_width="match_parent"
+                                                 android:layout_height="match_parent">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/me_toolbar"
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/toolbar_height"
-        android:background="@color/colorPrimary"
-        android:elevation="@dimen/elevation">
+        android:layout_height="200dp"
+        android:fitsSystemWindows="true">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/me"
-            android:textColor="@android:color/white"/>
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/me_toolbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:contentScrim="?attr/colorPrimary"
+            app:expandedTitleMarginEnd="@dimen/text_padding"
+            app:expandedTitleMarginStart="@dimen/text_padding"
+            app:collapsedTitleTextAppearance="@style/CollapsedStyle"
+            app:expandedTitleTextAppearance="@style/ExpandedStyle"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:title="@string/me">
 
-    </android.support.v7.widget.Toolbar>
 
-    <com.zzapp.confessionwall.view.CircleImageView
-        android:id="@+id/me_image"
-        android:layout_width="@dimen/me_image_size"
-        android:layout_height="@dimen/me_image_size"/>
+            <ImageView
+                android:id="@+id/me_background"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/me_back"
+                app:layout_collapseMode="parallax"
+                app:layout_collapseParallaxMultiplier="0.5"/>
 
-    <TextView
-        android:id="@+id/me_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/me_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin">
 
-    <Button
-        android:id="@+id/start_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/login"
-        android:textColor="@color/colorAccent"
-        android:background="?android:attr/selectableItemBackground"/>
+            </android.support.v7.widget.Toolbar>
 
-    <Button
-        android:id="@+id/exit_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/exit_login"
-        android:textColor="@color/colorAccent"
-        android:background="?android:attr/selectableItemBackground"/>
+    </android.support.design.widget.CollapsingToolbarLayout>
 
-</LinearLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+
+            <com.zzapp.confessionwall.view.CircleImageView
+                android:id="@+id/me_image"
+                android:layout_width="@dimen/me_image_size"
+                android:layout_height="@dimen/me_image_size"/>
+
+            <Button
+                android:id="@+id/start_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/login"
+                android:textColor="@color/colorAccent"
+                android:background="?android:attr/selectableItemBackground"/>
+
+            <Button
+                android:id="@+id/exit_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/exit_login"
+                android:textColor="@color/colorAccent"
+                android:background="?android:attr/selectableItemBackground"/>
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</android.support.design.widget.CoordinatorLayout>

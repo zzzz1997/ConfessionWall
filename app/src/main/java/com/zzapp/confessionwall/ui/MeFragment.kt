@@ -2,12 +2,12 @@ package com.zzapp.confessionwall.ui
 
 import android.content.Intent
 import android.net.Uri
+import android.support.design.widget.CollapsingToolbarLayout
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.*
 import android.widget.Button
 import android.widget.ImageView
-import android.widget.TextView
 import cn.bmob.v3.BmobUser
 import cn.bmob.v3.datatype.BmobFile
 import cn.bmob.v3.exception.BmobException
@@ -26,9 +26,9 @@ import java.io.File
  */
 class MeFragment : BaseFragment() {
 
+    private lateinit var layout: CollapsingToolbarLayout
     private lateinit var toolbar: Toolbar
     private lateinit var image: ImageView
-    private lateinit var name: TextView
     private lateinit var login: Button
     private lateinit var exit: Button
 
@@ -39,11 +39,13 @@ class MeFragment : BaseFragment() {
     }
 
     override fun initView() {
+        layout = findViewById(R.id.me_toolbar_layout) as CollapsingToolbarLayout
         toolbar = findViewById(R.id.me_toolbar) as Toolbar
         image = findViewById(R.id.me_image) as ImageView
-        name = findViewById(R.id.me_name) as TextView
         login = findViewById(R.id.start_login) as Button
         exit = findViewById(R.id.exit_login) as Button
+
+        (activity!! as AppCompatActivity).setSupportActionBar(toolbar)
 
         user = BmobUser.getCurrentUser(User::class.java)
 
@@ -73,11 +75,10 @@ class MeFragment : BaseFragment() {
 
         if(user != null){
             image.visibility = View.VISIBLE
-            name.visibility = View.VISIBLE
             login.visibility = View.GONE
             exit.visibility = View.VISIBLE
 
-            name.text = user.username
+            layout.title = user.username
 
             val icon = if(user.icon == getString(R.string.default_icon)){
                 File(activity!!.cacheDir.absolutePath + "/bmob/default.png")
@@ -102,7 +103,6 @@ class MeFragment : BaseFragment() {
             }
         } else {
             image.visibility = View.GONE
-            name.visibility = View.GONE
             login.visibility = View.VISIBLE
             exit.visibility = View.GONE
         }

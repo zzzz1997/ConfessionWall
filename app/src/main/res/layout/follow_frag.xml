@@ -8,7 +8,7 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/follow_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/toolbar_height"
+        android:layout_height="?attr/actionBarSize"
         android:background="@color/colorPrimary"
         android:elevation="@dimen/elevation">
 
@@ -64,7 +64,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:paddingTop="@dimen/toolbar_height"
+        android:paddingTop="?attr/actionBarSize"
         android:visibility="gone"/>
 
     <android.support.v4.widget.SwipeRefreshLayout

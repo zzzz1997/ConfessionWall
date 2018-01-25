@@ -9,7 +9,7 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/register_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/toolbar_height"
+        android:layout_height="?attr/actionBarSize"
         android:background="@color/colorPrimary"
         android:elevation="@dimen/elevation"
         app:navigationIcon="@drawable/left_arrow">
