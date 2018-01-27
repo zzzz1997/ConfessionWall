@@ -8,6 +8,7 @@ import android.widget.TextView
 import com.zzapp.confessionwall.R
 import kotlinx.android.synthetic.main.login.*
 import com.zzapp.confessionwall.presenter.UserPresenter
+import com.zzapp.confessionwall.utils.User
 import com.zzapp.confessionwall.view.IUserView
 import es.dmoral.toasty.Toasty
 
@@ -68,9 +69,11 @@ class LoginActivity : AppCompatActivity(), IUserView {
         }
     }
 
-    override fun onSuccess() {
+    override fun onSuccess(user: User?) {
         Toasty.success(this@LoginActivity, getString(R.string.login_success)).show()
-        setResult(AppCompatActivity.RESULT_OK)
+        val intent = Intent()
+        intent.putExtra("user", user)
+        setResult(AppCompatActivity.RESULT_OK, intent)
         finish()
     }
 

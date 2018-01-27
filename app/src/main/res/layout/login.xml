@@ -31,7 +31,8 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/edit_textsize"/>
+            android:textSize="@dimen/edit_textsize"
+            android:text="zzzz"/>
 
     </android.support.design.widget.TextInputLayout>
 
@@ -44,7 +45,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="@dimen/edit_textsize"
-            android:inputType="textPassword"/>
+            android:inputType="textPassword"
+            android:text="123456"/>
 
     </android.support.design.widget.TextInputLayout>
 

@@ -1,21 +1,20 @@
 package com.zzapp.confessionwall
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.KeyEvent
 import cn.bmob.push.BmobPush
-import cn.bmob.v3.Bmob
-import cn.bmob.v3.BmobInstallation
-import cn.bmob.v3.BmobInstallationManager
-import cn.bmob.v3.InstallationListener
+import cn.bmob.v3.*
 import cn.bmob.v3.exception.BmobException
 import com.zzapp.confessionwall.ui.FollowFragment
 import com.zzapp.confessionwall.ui.HotFragment
 import com.zzapp.confessionwall.ui.MeFragment
 import com.zzapp.confessionwall.ui.MessageFragment
 import com.zzapp.confessionwall.utils.MyFragmentPagerAdapter
+import com.zzapp.confessionwall.utils.User
 import com.zzapp.confessionwall.view.BaseFragment
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_main.*
@@ -28,11 +27,14 @@ import kotlinx.android.synthetic.main.activity_main.*
  */
 class MainActivity : AppCompatActivity() {
 
-    val appkey = "0609b5cda2401bf3d1c4bae43b834950"
+    private val appkey = "0609b5cda2401bf3d1c4bae43b834950"
 
     private val titles: ArrayList<String> = ArrayList()
 
     companion object {
+        val REQUEST_LOGIN = 0
+        val REQUEST_ICON = 1
+
         val fragments: ArrayList<BaseFragment> = ArrayList()
     }
 
@@ -98,6 +100,16 @@ class MainActivity : AppCompatActivity() {
                         ContextCompat.getColor(this@MainActivity, R.color.colorAccent))
             }
         })
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if(requestCode == REQUEST_LOGIN && resultCode == AppCompatActivity.RESULT_OK) {
+            val user = data!!.getSerializableExtra("user") as User
+            for(fragment in fragments){
+                fragment.user = user
+                fragment.refresh()
+            }
+        }
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {

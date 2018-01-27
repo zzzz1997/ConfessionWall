@@ -18,8 +18,7 @@
             app:expandedTitleMarginStart="@dimen/text_padding"
             app:collapsedTitleTextAppearance="@style/CollapsedStyle"
             app:expandedTitleTextAppearance="@style/ExpandedStyle"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:title="@string/me">
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
 
             <ImageView

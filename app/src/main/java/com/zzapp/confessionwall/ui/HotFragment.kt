@@ -5,14 +5,12 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import cn.bmob.v3.BmobQuery
-import cn.bmob.v3.BmobUser
 import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.FindListener
 import com.zzapp.confessionwall.R
 import com.zzapp.confessionwall.data.Post
 import com.zzapp.confessionwall.utils.OnPostClickListener
 import com.zzapp.confessionwall.utils.PostAdapter
-import com.zzapp.confessionwall.utils.User
 import com.zzapp.confessionwall.view.BaseFragment
 import es.dmoral.toasty.Toasty
 
@@ -28,8 +26,6 @@ class HotFragment : BaseFragment() {
     private lateinit var refresh: SwipeRefreshLayout
     private lateinit var recycler: RecyclerView
 
-    private var user: User? = null
-
     override fun setContentView(): Int {
         return R.layout.hot_frag
     }
@@ -39,25 +35,23 @@ class HotFragment : BaseFragment() {
         refresh = findViewById(R.id.hot_refresh) as SwipeRefreshLayout
         recycler = findViewById(R.id.hot_recycler) as RecyclerView
 
-        user = BmobUser.getCurrentUser(User::class.java)
-
         refresh.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light,
                 android.R.color.holo_orange_light, android.R.color.holo_green_light)
         refresh.setOnRefreshListener {
-            refresh(user)
+            refresh()
         }
     }
 
     override fun loadView() {
         refresh.isRefreshing = true
-        refresh(user)
+        refresh()
     }
 
     override fun stopLoad() {
 
     }
 
-    override fun refresh(user: User?){
+    override fun refresh(){
         val query = BmobQuery<Post>()
         query.order("-updatedAt")
         query.include("author")

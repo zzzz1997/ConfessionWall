@@ -12,7 +12,6 @@ import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
 import cn.bmob.v3.BmobQuery
-import cn.bmob.v3.BmobUser
 import cn.bmob.v3.datatype.BmobPointer
 import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.FindListener
@@ -42,7 +41,6 @@ class FollowFragment : BaseFragment() {
     private lateinit var refresh: SwipeRefreshLayout
     private lateinit var recycler: RecyclerView
 
-    private var user: User? = null
     private lateinit var adapter: PostAdapter
 
     private val ADD_POST = 0
@@ -62,8 +60,6 @@ class FollowFragment : BaseFragment() {
         recycler = findViewById(R.id.follow_recycler) as RecyclerView
 
         toolbar.inflateMenu(R.menu.follow_menu)
-
-        user = BmobUser.getCurrentUser(User::class.java)
 
         val msg = preferences.getString(context!!.getString(R.string.my_msg), null)
         val isClosed = preferences.getBoolean(context!!.getString(R.string.is_closed), false)
@@ -101,7 +97,7 @@ class FollowFragment : BaseFragment() {
         refresh.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light,
                 android.R.color.holo_orange_light, android.R.color.holo_green_light)
         refresh.setOnRefreshListener {
-            refresh(user)
+            refresh()
         }
 
         recycler.layoutManager = LinearLayoutManager(context)
@@ -109,14 +105,14 @@ class FollowFragment : BaseFragment() {
 
     override fun loadView() {
         refresh.isRefreshing = true
-        refresh(user)
+        refresh()
     }
 
     override fun stopLoad() {
 
     }
 
-    override fun refresh(user: User?) {
+    override fun refresh() {
         if(user == null){
             warning.visibility = View.VISIBLE
             warning.text = getString(R.string.please_login)
@@ -128,7 +124,7 @@ class FollowFragment : BaseFragment() {
                 override fun done(p0: MutableList<User>?, p1: BmobException?) {
                     if(p1 == null){
                         var list: List<String> = emptyList()
-                        list += user.objectId
+                        list += user!!.objectId
                         if (p0 != null) {
                             for(i in p0){
                                 list += i.objectId
@@ -179,7 +175,6 @@ class FollowFragment : BaseFragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
             ADD_POST -> {
                 if(resultCode == Activity.RESULT_OK){

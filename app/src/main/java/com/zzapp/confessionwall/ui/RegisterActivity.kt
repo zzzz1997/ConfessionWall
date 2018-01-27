@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
 import com.zzapp.confessionwall.R
 import com.zzapp.confessionwall.presenter.UserPresenter
+import com.zzapp.confessionwall.utils.User
 import com.zzapp.confessionwall.view.IUserView
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.register.*
@@ -80,7 +81,7 @@ class RegisterActivity : AppCompatActivity(), IUserView {
         }
     }
 
-    override fun onSuccess() {
+    override fun onSuccess(user: User?) {
         Toasty.success(this@RegisterActivity, getString(R.string.register_success)).show()
         finish()
     }

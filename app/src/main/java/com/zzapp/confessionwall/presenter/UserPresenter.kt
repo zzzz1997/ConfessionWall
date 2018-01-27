@@ -22,7 +22,7 @@ class UserPresenter(private val activity: IUserView) : IUserPresenter {
                     override fun done(user: User?, e: BmobException?) {
                         activity.dismissDialog()
                         if (e == null) {
-                            activity.onSuccess()
+                            activity.onSuccess(user)
                         } else {
                             activity.onFailure(e.message!!)
                         }
@@ -40,7 +40,7 @@ class UserPresenter(private val activity: IUserView) : IUserPresenter {
         bmobUser.signUp(object : SaveListener<User>() {
             override fun done(user: User?, e: BmobException?) {
                 if (e == null) {
-                    activity.onSuccess()
+                    activity.onSuccess(user)
                 } else {
                     activity.onFailure(e.message!!)
                 }
@@ -53,7 +53,7 @@ class UserPresenter(private val activity: IUserView) : IUserPresenter {
         BmobUser.resetPasswordByEmail(email, object : UpdateListener(){
             override fun done(e: BmobException?) {
                 if(e == null){
-                    activity.onSuccess()
+                    activity.onSuccess(null)
                 } else {
                     activity.onFailure(e.message!!)
                 }

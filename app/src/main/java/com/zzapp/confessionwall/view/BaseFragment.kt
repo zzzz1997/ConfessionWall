@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import cn.bmob.v3.BmobUser
 import com.zzapp.confessionwall.utils.User
 
 /**
@@ -17,11 +18,14 @@ abstract class BaseFragment : Fragment() {
 
     private var v: View? = null
 
+    var user: User? = null
+
     private var isInit = false
     private var isLoad = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         v = inflater.inflate(setContentView(), container, false)
+        user = BmobUser.getCurrentUser(User::class.java)
         initView()
         isInit = true
         toLoad()
@@ -60,6 +64,6 @@ abstract class BaseFragment : Fragment() {
     abstract fun initView()
     abstract fun loadView()
     abstract fun stopLoad()
-    abstract fun refresh(user: User?)
+    abstract fun refresh()
     abstract fun push()
 }

@@ -1,5 +1,7 @@
 package com.zzapp.confessionwall.view
 
+import com.zzapp.confessionwall.utils.User
+
 /**
  * Project ConfessionWall
  * Date 2017-12-11
@@ -11,7 +13,7 @@ interface IUserView {
     /**
      * 登录成功
      */
-    fun onSuccess()
+    fun onSuccess(user: User?)
 
     /**
      * 登录失败

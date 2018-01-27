@@ -29,6 +29,9 @@ import java.io.FileOutputStream
  */
 class UserActivity : AppCompatActivity() {
 
+    private val REQUEST_ICON = 0
+    private val REQUEST_UPLOAD = 1
+
     private val UPLOAD_CACHE_PYTH = Uri.parse("file:///" + Environment.getExternalStorageDirectory().absolutePath + "/head_portrait.png")
 
     private lateinit var user: User
@@ -66,12 +69,12 @@ class UserActivity : AppCompatActivity() {
         user_icon_layout.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
             intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*")
-            startActivityForResult(intent, 0)
+            startActivityForResult(intent, REQUEST_ICON)
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if(requestCode == 0){
+        if(requestCode == REQUEST_ICON){
             if(data != null){
                 val intent = Intent("com.android.camera.action.CROP")
                 intent.setDataAndType(data.data, "image/*")
@@ -84,9 +87,9 @@ class UserActivity : AppCompatActivity() {
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, UPLOAD_CACHE_PYTH)
                 intent.putExtra("outputFormat", Bitmap.CompressFormat.PNG.toString())
                 intent.putExtra("noFaceDetection", true)
-                startActivityForResult(intent, 1)
+                startActivityForResult(intent, REQUEST_UPLOAD)
             }
-        } else if(requestCode == 1) {
+        } else if(requestCode == REQUEST_UPLOAD) {
             val image = File(UPLOAD_CACHE_PYTH.path)
             if (image.exists()){
                 val file = BmobFile(image)

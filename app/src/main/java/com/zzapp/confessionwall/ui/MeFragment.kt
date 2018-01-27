@@ -12,8 +12,8 @@ import cn.bmob.v3.BmobUser
 import cn.bmob.v3.datatype.BmobFile
 import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.DownloadFileListener
+import com.zzapp.confessionwall.MainActivity
 import com.zzapp.confessionwall.R
-import com.zzapp.confessionwall.utils.User
 import com.zzapp.confessionwall.view.BaseFragment
 import es.dmoral.toasty.Toasty
 import java.io.File
@@ -32,8 +32,6 @@ class MeFragment : BaseFragment() {
     private lateinit var login: Button
     private lateinit var exit: Button
 
-    private lateinit var user: User
-
     override fun setContentView(): Int {
         return R.layout.me_frag
     }
@@ -47,46 +45,44 @@ class MeFragment : BaseFragment() {
 
         (activity!! as AppCompatActivity).setSupportActionBar(toolbar)
 
-        user = BmobUser.getCurrentUser(User::class.java)
-
         image.setOnClickListener {
-            startActivityForResult(Intent(activity, UserActivity::class.java), 0)
+            activity!!.startActivityForResult(Intent(activity, UserActivity::class.java), MainActivity.REQUEST_ICON)
         }
 
         login.setOnClickListener {
-            startActivityForResult(Intent(activity, LoginActivity::class.java), 1)
+            activity!!.startActivityForResult(Intent(activity, LoginActivity::class.java), MainActivity.REQUEST_LOGIN)
         }
 
         exit.setOnClickListener {
             BmobUser.logOut()
-            refresh(user)
+            user = null
+            refresh()
         }
     }
 
     override fun loadView() {
-        refresh(user)
+        refresh()
     }
 
     override fun stopLoad() {
 
     }
 
-    override fun refresh(user: User?) {
-
+    override fun refresh() {
         if(user != null){
             image.visibility = View.VISIBLE
             login.visibility = View.GONE
             exit.visibility = View.VISIBLE
 
-            layout.title = user.username
+            layout.title = user!!.username
 
-            val icon = if(user.icon == getString(R.string.default_icon)){
+            val icon = if(user!!.icon == getString(R.string.default_icon)){
                 File(activity!!.cacheDir.absolutePath + "/bmob/default.png")
             } else {
-                File(activity!!.cacheDir.absolutePath + "/bmob/${user.username}.png")
+                File(activity!!.cacheDir.absolutePath + "/bmob/${user!!.username}.png")
             }
             if(!icon.exists()){
-                BmobFile(icon.name, null, user.icon)
+                BmobFile(icon.name, null, user!!.icon)
                         .download(icon, object : DownloadFileListener(){
                     override fun onProgress(p0: Int?, p1: Long) {}
 
@@ -102,6 +98,7 @@ class MeFragment : BaseFragment() {
                 image.setImageURI(Uri.fromFile(icon))
             }
         } else {
+            layout.title = getString(R.string.me)
             image.visibility = View.GONE
             login.visibility = View.VISIBLE
             exit.visibility = View.GONE
@@ -110,11 +107,5 @@ class MeFragment : BaseFragment() {
 
     override fun push() {
 
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if(requestCode == 1 && resultCode == AppCompatActivity.RESULT_OK) {
-            refresh(user)
-        }
     }
 }
