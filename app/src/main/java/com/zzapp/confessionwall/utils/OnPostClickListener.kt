@@ -1,5 +1,6 @@
 package com.zzapp.confessionwall.utils
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -29,10 +30,12 @@ import es.dmoral.toasty.Toasty
  * Project ConfessionWall
  * Date 2018-01-10
  *
+ * 动态的点击监听器实现类
+ *
  * @author zzzz
  */
 class OnPostClickListener(private val context: Context, private val user: User?, private val posts: MutableList<Post>,
-                          private val adapter: PostAdapter) : PostAdapter.MyOnPostClickListener{
+                          private val adapter: PostAdapter) : PostAdapter.OnPostClickListener{
 
     var isOperation = false
 
@@ -156,6 +159,7 @@ class OnPostClickListener(private val context: Context, private val user: User?,
         context.startActivity(intent)
     }
 
+    @SuppressLint("InflateParams")
     override fun onCommentClicked(view: View, position: Int) {
         if(user != null){
             val text = view.findViewById<TextView>(R.id.post_comment)

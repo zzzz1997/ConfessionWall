@@ -9,6 +9,8 @@ import com.zzapp.confessionwall.view.BaseFragment
  * Project ConfessionWall
  * Date 2017-12-11
  *
+ * 切换fragment的适配器
+ *
  * @author zzzz
  */
 class MyFragmentPagerAdapter(fragmentManager: FragmentManager, private val titles : List<String>, private val fragments: ArrayList<BaseFragment>) : FragmentPagerAdapter(fragmentManager) {

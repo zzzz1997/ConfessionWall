@@ -12,7 +12,6 @@ import cn.bmob.v3.BmobUser
 import cn.bmob.v3.datatype.BmobFile
 import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.DownloadFileListener
-import com.zzapp.confessionwall.MainActivity
 import com.zzapp.confessionwall.R
 import com.zzapp.confessionwall.view.BaseFragment
 import es.dmoral.toasty.Toasty
@@ -21,6 +20,8 @@ import java.io.File
 /**
  * Project ConfessionWall
  * Date 2017-12-11
+ *
+ * 用户界面的fragment
  *
  * @author zzzz
  */

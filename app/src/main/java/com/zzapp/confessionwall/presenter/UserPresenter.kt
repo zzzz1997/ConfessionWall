@@ -12,6 +12,8 @@ import com.zzapp.confessionwall.view.IUserView
  * Project ConfessionWall
  * Date 2017-12-11
  *
+ * presenter的实体类
+ *
  * @author zzzz
  */
 class UserPresenter(private val activity: IUserView) : IUserPresenter {

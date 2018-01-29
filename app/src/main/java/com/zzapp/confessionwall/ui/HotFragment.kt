@@ -18,6 +18,8 @@ import es.dmoral.toasty.Toasty
  * Project ConfessionWall
  * Date 2017-12-11
  *
+ * 热门界面的fragment
+ *
  * @author zzzz
  */
 class HotFragment : BaseFragment() {
@@ -59,7 +61,7 @@ class HotFragment : BaseFragment() {
             override fun done(p0: MutableList<Post>?, p1: BmobException?) {
                 if(p1 == null){
                     val adapter = PostAdapter(context!!, p0!!, user)
-                    adapter.setOnPostClickListener(OnPostClickListener(context!!, user, p0, adapter))
+                    adapter.setOnBaseClickListener(OnPostClickListener(context!!, user, p0, adapter))
                     recycler.adapter = adapter
                     recycler.layoutManager = LinearLayoutManager(context)
                 } else {

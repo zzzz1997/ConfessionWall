@@ -25,6 +25,8 @@ import java.io.FileOutputStream
  * Project ConfessionWall
  * Date 2017-12-12
  *
+ * 用户界面的活动
+ *
  * @author zzzz
  */
 class UserActivity : AppCompatActivity() {

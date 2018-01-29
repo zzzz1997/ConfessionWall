@@ -15,7 +15,10 @@ import android.support.v7.widget.AppCompatImageView
  * Project ConfessionWall
  * Date 2017-12-11
  *
- * @author caizhiming
+ * 一个圆形的图片控件
+ * 参考@caizhiming的java代码
+ *
+ * @author zzzz
  */
 
 class CircleImageView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0) :
@@ -23,16 +26,12 @@ class CircleImageView @JvmOverloads constructor(context: Context, attrs: Attribu
 
     private val paint: Paint = Paint()
 
-    /**
-     * 绘制圆形图片
-     * @author caizhiming
-     */
     override fun onDraw(canvas: Canvas) {
 
         val drawable = drawable
         if (null != drawable) {
             val bitmap = (drawable as BitmapDrawable).bitmap
-            val b = getCircleBitmap(bitmap, 14)
+            val b = getCircleBitmap(bitmap)
             val rectSrc = Rect(0, 0, b.width, b.height)
             val rectDest = Rect(0, 0, width, height)
             paint.reset()
@@ -45,12 +44,11 @@ class CircleImageView @JvmOverloads constructor(context: Context, attrs: Attribu
 
     /**
      * 获取圆形图片方法
-     * @param bitmap
-     * @param pixels
-     * @return Bitmap
-     * @author caizhiming
+     *
+     * @param bitmap 传入原始图像
+     * @return 返回圆形bitmap
      */
-    private fun getCircleBitmap(bitmap: Bitmap, pixels: Int): Bitmap {
+    private fun getCircleBitmap(bitmap: Bitmap): Bitmap {
         val output = Bitmap.createBitmap(bitmap.width,
                 bitmap.height, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(output)

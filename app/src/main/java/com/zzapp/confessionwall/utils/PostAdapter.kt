@@ -1,7 +1,6 @@
 package com.zzapp.confessionwall.utils
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,14 +20,22 @@ import com.zzapp.confessionwall.view.CircleImageView
  * Project ConfessionWall
  * Date 2018-01-09
  *
+ * 动态列表适配器
+ *
  * @author zzzz
  */
 class PostAdapter(private val context: Context, private val posts: MutableList<Post>, private val user: User?)
-    : RecyclerView.Adapter<PostAdapter.PostViewHolder>(), View.OnClickListener {
+    : BaseAdapter<Post, PostAdapter.PostViewHolder, PostAdapter.OnPostClickListener>(posts), View.OnClickListener {
 
-    private lateinit var onPostClickListener: MyOnPostClickListener
+    private lateinit var onPostClickListener: OnPostClickListener
 
     private var query = BmobQuery<User>()
+
+    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): PostViewHolder {
+        val view: View = LayoutInflater.from(context).inflate(R.layout.post, parent, false)
+        view.setOnClickListener(this)
+        return PostViewHolder(view)
+    }
 
     override fun onBindViewHolder(holder: PostViewHolder?, position: Int) {
         Glide.with(context)
@@ -90,16 +97,6 @@ class PostAdapter(private val context: Context, private val posts: MutableList<P
         holder.like.setOnClickListener(this)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): PostViewHolder {
-        val view: View = LayoutInflater.from(context).inflate(R.layout.post, parent, false)
-        view.setOnClickListener(this)
-        return PostViewHolder(view)
-    }
-
-    override fun getItemCount(): Int {
-        return posts.size
-    }
-
     override fun onClick(p0: View?) {
         when(p0!!.id){
             R.id.post_user -> onPostClickListener.onUserClicked(p0, p0.tag as Int)
@@ -111,23 +108,24 @@ class PostAdapter(private val context: Context, private val posts: MutableList<P
         }
     }
 
-    fun setOnPostClickListener(onPostClickListener: MyOnPostClickListener){
-        this.onPostClickListener = onPostClickListener
+
+    override fun setOnBaseClickListener(onBaseClickListener: OnPostClickListener) {
+        this.onPostClickListener = onBaseClickListener
     }
 
-    fun insert(post: Post, position: Int){
-        posts.add(position, post)
+    override fun insert(bmobObject: Post, position: Int){
+        posts.add(position, bmobObject)
         notifyItemInserted(position)
         notifyItemRangeChanged(position, posts.size - position)
     }
 
-    fun delete(position: Int){
+    override fun delete(position: Int){
         posts.removeAt(position)
         notifyItemRemoved(position)
         notifyItemRangeChanged(position, posts.size - position)
     }
 
-    class PostViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+    class PostViewHolder(itemView: View) : BaseAdapter.BaseViewHolder(itemView){
         val user = itemView.findViewById<LinearLayout>(R.id.post_user)!!
         val icon = itemView.findViewById<CircleImageView>(R.id.post_icon)!!
         val name = itemView.findViewById<TextView>(R.id.post_name)!!
@@ -138,7 +136,7 @@ class PostAdapter(private val context: Context, private val posts: MutableList<P
         val like = itemView.findViewById<TextView>(R.id.post_like)!!
     }
 
-    interface MyOnPostClickListener{
+    interface OnPostClickListener : BaseAdapter.OnBaseClickListener{
         fun onUserClicked(view: View, position: Int)
         fun onFollowClicked(view: View, position: Int)
         fun onMenuClicked(view: View, position: Int)

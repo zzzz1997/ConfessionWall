@@ -12,12 +12,15 @@ import com.zzapp.confessionwall.utils.User
  * Project ConfessionWall
  * Date 2018-01-17
  *
+ * fragment的基类
+ *
  * @author zzzz
  */
 abstract class BaseFragment : Fragment() {
 
     private var v: View? = null
 
+    //用户对象
     var user: User? = null
 
     private var isInit = false
@@ -37,6 +40,9 @@ abstract class BaseFragment : Fragment() {
         toLoad()
     }
 
+    /**
+     * 载入界面
+     */
     private fun toLoad(){
         if(isInit){
             if(userVisibleHint){
@@ -56,14 +62,39 @@ abstract class BaseFragment : Fragment() {
         isLoad = false
     }
 
+    /**
+     * 获取控件对象
+     *
+     * @param id 控件的id
+     * @return 控件对象
+     */
     fun findViewById(id: Int) : View{
         return v!!.findViewById(id)
     }
 
+    /**
+     * 设置界面资源
+     * @return 界面资源
+     */
     abstract fun setContentView() : Int
+    /**
+     * 初始化界面
+     */
     abstract fun initView()
+    /**
+     * 载入界面
+     */
     abstract fun loadView()
+    /**
+     * 结束载入
+     */
     abstract fun stopLoad()
+    /**
+     * 刷新界面
+     */
     abstract fun refresh()
+    /**
+     * 界面推送
+     */
     abstract fun push()
 }

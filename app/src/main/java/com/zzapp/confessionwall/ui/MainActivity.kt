@@ -1,4 +1,4 @@
-package com.zzapp.confessionwall
+package com.zzapp.confessionwall.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,10 +9,7 @@ import android.view.KeyEvent
 import cn.bmob.push.BmobPush
 import cn.bmob.v3.*
 import cn.bmob.v3.exception.BmobException
-import com.zzapp.confessionwall.ui.FollowFragment
-import com.zzapp.confessionwall.ui.HotFragment
-import com.zzapp.confessionwall.ui.MeFragment
-import com.zzapp.confessionwall.ui.MessageFragment
+import com.zzapp.confessionwall.R
 import com.zzapp.confessionwall.utils.MyFragmentPagerAdapter
 import com.zzapp.confessionwall.utils.User
 import com.zzapp.confessionwall.view.BaseFragment
@@ -23,6 +20,8 @@ import kotlinx.android.synthetic.main.activity_main.*
  * Project MeiZhi
  * Date 2017-12-10
  *
+ * 主界面函数
+ *
  * @author zzzz
  */
 class MainActivity : AppCompatActivity() {
@@ -32,9 +31,12 @@ class MainActivity : AppCompatActivity() {
     private val titles: ArrayList<String> = ArrayList()
 
     companion object {
+        //请求登录的requesCode
         val REQUEST_LOGIN = 0
+        //请求更换头像的requesCode
         val REQUEST_ICON = 1
 
+        //存储fragment的列表
         val fragments: ArrayList<BaseFragment> = ArrayList()
     }
 
@@ -48,6 +50,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initView() {
+        //初始化应用
         Bmob.initialize(this, appkey)
         BmobInstallationManager.getInstance().initialize(object: InstallationListener<BmobInstallation>(){
             override fun done(p0: BmobInstallation?, p1: BmobException?) {

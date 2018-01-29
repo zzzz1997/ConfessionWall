@@ -1,11 +1,11 @@
 package com.zzapp.confessionwall.ui
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.Message
 import android.view.KeyEvent
-import com.zzapp.confessionwall.MainActivity
 import com.zzapp.confessionwall.R
 import kotlinx.android.synthetic.main.welcome.*
 import java.util.*
@@ -13,6 +13,8 @@ import java.util.*
 /**
  * Project ConfessionWall
  * Date 2018-01-02
+ *
+ * 欢迎界面的活动
  *
  * @author zzzz
  */
@@ -45,10 +47,11 @@ class WelcomeActivity : Activity(){
         }
     }
 
-    private val handler = object: android.os.Handler(){
+    private val handler = @SuppressLint("HandlerLeak")
+    object: android.os.Handler(){
         override fun handleMessage(msg: Message?) {
             if(msg!!.what > 0){
-                count_down.text = "" + msg!!.what + getString(R.string.skip)
+                count_down.text = "" + msg.what + getString(R.string.skip)
             } else {
                 timer.cancel()
                 startActivity(Intent(this@WelcomeActivity, MainActivity::class.java))

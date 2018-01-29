@@ -16,6 +16,8 @@ import es.dmoral.toasty.Toasty
  * Project ConfessionWall
  * Date 2017-12-11
  *
+ * 登录的活动
+ *
  * @author zzzz
  */
 class LoginActivity : AppCompatActivity(), IUserView {

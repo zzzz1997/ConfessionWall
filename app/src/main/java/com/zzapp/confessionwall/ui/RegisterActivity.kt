@@ -16,6 +16,8 @@ import java.util.regex.Pattern
  * Project ConfessionWall
  * Date 2017-12-11
  *
+ * 注册的活动
+ *
  * @author zzzz
  */
 class RegisterActivity : AppCompatActivity(), IUserView {

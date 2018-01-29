@@ -16,6 +16,8 @@ import java.util.regex.Pattern
  * Project ConfessionWall
  * Date 2017-12-11
  *
+ * 重置密码的活动
+ *
  * @author zzzz
  */
 class ForgetActivity : AppCompatActivity(), IUserView {

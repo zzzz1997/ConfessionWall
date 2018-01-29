@@ -1,5 +1,6 @@
 package com.zzapp.confessionwall.ui
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
@@ -33,6 +34,8 @@ import kotlinx.android.synthetic.main.dynamic.*
  * Project ConfessionWall
  * Date 2018-01-09
  *
+ * 单个动态的显示界面
+ *
  * @author zzzz
  */
 class DynamicActivity : AppCompatActivity() {
@@ -48,6 +51,7 @@ class DynamicActivity : AppCompatActivity() {
         initView()
     }
 
+    @SuppressLint("InflateParams")
     private fun initView(){
         val user = BmobUser.getCurrentUser(User::class.java)
         val post = intent.getSerializableExtra("post") as Post
@@ -200,7 +204,7 @@ class DynamicActivity : AppCompatActivity() {
                         dynamic_recycler.visibility = View.GONE
                     }
                     adapter = CommentAdapter(this@DynamicActivity, comments, user)
-                    adapter.setOnCommentClickListener(object : CommentAdapter.MyOnCommentClickListener {
+                    adapter.setOnBaseClickListener(object : CommentAdapter.OnCommentClickListener {
                         override fun onUserClicked(view: View, position: Int) {
                             Toasty.info(this@DynamicActivity, "点击用户" + comments[position].author!!.username).show()
                         }

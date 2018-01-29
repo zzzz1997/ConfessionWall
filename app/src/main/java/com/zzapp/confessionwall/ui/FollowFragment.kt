@@ -27,6 +27,8 @@ import es.dmoral.toasty.Toasty
  * Project ConfessionWall
  * Date 2017-12-11
  *
+ * 关注界面的fragment
+ *
  * @author zzzz
  */
 class FollowFragment : BaseFragment() {
@@ -50,7 +52,6 @@ class FollowFragment : BaseFragment() {
     }
 
     override fun initView() {
-
         toolbar = findViewById(R.id.follow_toolbar) as Toolbar
         warning = findViewById(R.id.follow_warning) as TextView
         layout = findViewById(R.id.my_broadcast) as CardView
@@ -146,7 +147,7 @@ class FollowFragment : BaseFragment() {
                                         warning.visibility = View.GONE
                                         recycler.visibility = View.VISIBLE
                                         adapter = PostAdapter(context!!, p0, user)
-                                        adapter.setOnPostClickListener(OnPostClickListener(context!!, user, p0, adapter))
+                                        adapter.setOnBaseClickListener(OnPostClickListener(context!!, user, p0, adapter))
                                         recycler.adapter = adapter
                                         recycler.layoutManager = LinearLayoutManager(context)
                                     }
@@ -175,18 +176,14 @@ class FollowFragment : BaseFragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        when (requestCode) {
-            ADD_POST -> {
-                if(resultCode == Activity.RESULT_OK){
-                    val post = data!!.getSerializableExtra("post") as Post
-                    try {
-                        adapter.insert(post, 0)
-                        recycler.scrollToPosition(0)
-                        Toasty.success(context!!, getString(R.string.success_published)).show()
-                    } catch (e: Exception){
-                        Toasty.error(context!!, e.message!!).show()
-                    }
-                }
+        if(requestCode == ADD_POST && resultCode == Activity.RESULT_OK){
+            val post = data!!.getSerializableExtra("post") as Post
+            try {
+                adapter.insert(post, 0)
+                recycler.scrollToPosition(0)
+                Toasty.success(context!!, getString(R.string.success_published)).show()
+            } catch (e: Exception){
+                Toasty.error(context!!, e.message!!).show()
             }
         }
     }

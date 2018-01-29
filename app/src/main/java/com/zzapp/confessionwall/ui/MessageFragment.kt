@@ -9,6 +9,8 @@ import com.zzapp.confessionwall.view.BaseFragment
  * Project ConfessionWall
  * Date 2018-01-06
  *
+ * 消息界面的fragment
+ *
  * @author zzzz
  */
 class MessageFragment : BaseFragment() {

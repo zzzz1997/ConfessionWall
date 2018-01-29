@@ -4,6 +4,8 @@ package com.zzapp.confessionwall.presenter
  * Project ConfessionWall
  * Date 2017-12-11
  *
+ * MVP的presenter层，管理用户登录注册等
+ *
  * @author zzzz
  */
 interface IUserPresenter {

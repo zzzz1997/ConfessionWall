@@ -1,7 +1,6 @@
 package com.zzapp.confessionwall.utils
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,12 +19,14 @@ import com.zzapp.confessionwall.data.Comment
  * Project ConfessionWall
  * Date 2018-01-12
  *
+ * 评论消息的适配器
+ *
  * @author zzzz
  */
 class CommentAdapter(private val context: Context, private val comments: MutableList<Comment>, private val user: User?)
-    : RecyclerView.Adapter<CommentAdapter.CommentViewHolder>(), View.OnClickListener {
+    : BaseAdapter<Comment, CommentAdapter.CommentViewHolder, CommentAdapter.OnCommentClickListener>(comments), View.OnClickListener {
 
-    private lateinit var onCommentClickListener: MyOnCommentClickListener
+    private lateinit var onCommentClickListener: OnCommentClickListener
 
     private var query = BmobQuery<User>()
 
@@ -68,10 +69,6 @@ class CommentAdapter(private val context: Context, private val comments: Mutable
         holder.like.setOnClickListener(this)
     }
 
-    override fun getItemCount(): Int {
-        return comments.size
-    }
-
     override fun onClick(p0: View?) {
         when(p0!!.id){
             R.id.comment_like -> onCommentClickListener.onLikeClicked(p0, p0.tag as Int)
@@ -79,32 +76,32 @@ class CommentAdapter(private val context: Context, private val comments: Mutable
         }
     }
 
-    fun setOnCommentClickListener(onCommentClickListener: MyOnCommentClickListener){
-        this.onCommentClickListener = onCommentClickListener
+    override fun setOnBaseClickListener(onBaseClickListener: OnCommentClickListener) {
+        this.onCommentClickListener = onBaseClickListener
     }
 
-    fun insert(comment: Comment, position: Int){
-        comments.add(position, comment)
+    override fun insert(bmobObject: Comment, position: Int){
+        comments.add(position, bmobObject)
         notifyItemInserted(position)
         notifyItemRangeChanged(position, comments.size - position)
     }
 
-    fun delete(position: Int){
+    override fun delete(position: Int){
         comments.removeAt(position)
         notifyItemRemoved(position)
         notifyItemRangeChanged(position, comments.size - position)
     }
 
-    class CommentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        val user = itemView.findViewById<LinearLayout>(R.id.comment_user)
-        val icon = itemView.findViewById<ImageView>(R.id.comment_icon)
-        val name = itemView.findViewById<TextView>(R.id.comment_name)
-        val like = itemView.findViewById<ImageView>(R.id.comment_like)
-        val likeNum = itemView.findViewById<TextView>(R.id.comment_liked_num)
-        val content = itemView.findViewById<TextView>(R.id.comment_content)
+    class CommentViewHolder(itemView: View) : BaseAdapter.BaseViewHolder(itemView){
+        val user = itemView.findViewById<LinearLayout>(R.id.comment_user)!!
+        val icon = itemView.findViewById<ImageView>(R.id.comment_icon)!!
+        val name = itemView.findViewById<TextView>(R.id.comment_name)!!
+        val like = itemView.findViewById<ImageView>(R.id.comment_like)!!
+        val likeNum = itemView.findViewById<TextView>(R.id.comment_liked_num)!!
+        val content = itemView.findViewById<TextView>(R.id.comment_content)!!
     }
 
-    interface MyOnCommentClickListener{
+    interface OnCommentClickListener : BaseAdapter.OnBaseClickListener{
         fun onUserClicked(view: View, position: Int)
         fun onLikeClicked(view: View, position: Int)
     }

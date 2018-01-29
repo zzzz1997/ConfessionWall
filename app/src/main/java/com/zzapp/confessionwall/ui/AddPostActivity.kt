@@ -18,6 +18,8 @@ import kotlinx.android.synthetic.main.add_post.*
  * Project ConfessionWall
  * Date 2018-01-16
  *
+ * 新建动态的活动
+ *
  * @author zzzz
  */
 class AddPostActivity : AppCompatActivity() {
