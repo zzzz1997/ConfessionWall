@@ -1,6 +1,5 @@
 package com.zzapp.confessionwall.ui
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -10,7 +9,7 @@ import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.SaveListener
 import com.zzapp.confessionwall.R
 import com.zzapp.confessionwall.data.Post
-import com.zzapp.confessionwall.utils.User
+import com.zzapp.confessionwall.data.User
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.add_post.*
 
@@ -53,7 +52,7 @@ class AddPostActivity : AppCompatActivity() {
                                 if(p1 == null){
                                     val intent = Intent()
                                     intent.putExtra("post", post)
-                                    setResult(Activity.RESULT_OK, intent)
+                                    setResult(AppCompatActivity.RESULT_OK, intent)
                                 } else {
                                     Toasty.error(this@AddPostActivity, p1.message!!).show()
                                 }

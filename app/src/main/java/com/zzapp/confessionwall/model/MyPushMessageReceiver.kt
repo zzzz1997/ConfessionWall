@@ -6,6 +6,7 @@ import android.content.Intent
 import cn.bmob.push.PushConstants
 import com.zzapp.confessionwall.ui.MainActivity
 import com.zzapp.confessionwall.R
+import com.zzapp.confessionwall.utils.MyCode
 import org.json.JSONObject
 
 /**
@@ -32,7 +33,7 @@ class MyPushMessageReceiver : BroadcastReceiver() {
             editor.putBoolean(p0.getString(R.string.is_closed), false)
             editor.apply()
 
-            MainActivity.fragments[0].push()
+            MainActivity.fragments[0].push(MyCode.PUSH_MESSAGE, null)
         }
     }
 }

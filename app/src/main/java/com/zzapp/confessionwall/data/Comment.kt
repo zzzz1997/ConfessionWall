@@ -2,7 +2,6 @@ package com.zzapp.confessionwall.data
 
 import cn.bmob.v3.BmobObject
 import cn.bmob.v3.datatype.BmobRelation
-import com.zzapp.confessionwall.utils.User
 
 /**
  * Project ConfessionWall

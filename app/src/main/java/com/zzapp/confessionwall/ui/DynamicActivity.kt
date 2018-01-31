@@ -26,7 +26,7 @@ import com.zzapp.confessionwall.R
 import com.zzapp.confessionwall.data.Comment
 import com.zzapp.confessionwall.data.Post
 import com.zzapp.confessionwall.utils.CommentAdapter
-import com.zzapp.confessionwall.utils.User
+import com.zzapp.confessionwall.data.User
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.dynamic.*
 
@@ -206,7 +206,9 @@ class DynamicActivity : AppCompatActivity() {
                     adapter = CommentAdapter(this@DynamicActivity, comments, user)
                     adapter.setOnBaseClickListener(object : CommentAdapter.OnCommentClickListener {
                         override fun onUserClicked(view: View, position: Int) {
-                            Toasty.info(this@DynamicActivity, "点击用户" + comments[position].author!!.username).show()
+                            val intent = Intent(this@DynamicActivity, DetailsActivity::class.java)
+                            intent.putExtra("user", comments[position].author)
+                            startActivity(intent)
                         }
 
                         override fun onLikeClicked(view: View, position: Int) {

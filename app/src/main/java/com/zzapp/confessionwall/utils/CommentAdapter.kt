@@ -14,6 +14,7 @@ import cn.bmob.v3.listener.FindListener
 import com.bumptech.glide.Glide
 import com.zzapp.confessionwall.R
 import com.zzapp.confessionwall.data.Comment
+import com.zzapp.confessionwall.data.User
 
 /**
  * Project ConfessionWall

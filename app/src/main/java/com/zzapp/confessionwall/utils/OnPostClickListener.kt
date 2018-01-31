@@ -22,6 +22,8 @@ import cn.bmob.v3.listener.UpdateListener
 import com.zzapp.confessionwall.R
 import com.zzapp.confessionwall.data.Comment
 import com.zzapp.confessionwall.data.Post
+import com.zzapp.confessionwall.data.User
+import com.zzapp.confessionwall.ui.DetailsActivity
 import com.zzapp.confessionwall.ui.DynamicActivity
 import com.zzapp.confessionwall.ui.LoginActivity
 import es.dmoral.toasty.Toasty
@@ -40,7 +42,9 @@ class OnPostClickListener(private val context: Context, private val user: User?,
     var isOperation = false
 
     override fun onUserClicked(view: View, position: Int) {
-        Toasty.info(context, "点击用户" + posts[position].author!!.username).show()
+        val intent = Intent(context, DetailsActivity::class.java)
+        intent.putExtra("user", posts[position].author)
+        context.startActivity(intent)
     }
 
     override fun onFollowClicked(view: View, position: Int) {

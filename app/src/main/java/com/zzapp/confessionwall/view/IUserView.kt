@@ -1,6 +1,6 @@
 package com.zzapp.confessionwall.view
 
-import com.zzapp.confessionwall.utils.User
+import com.zzapp.confessionwall.data.User
 
 /**
  * Project ConfessionWall

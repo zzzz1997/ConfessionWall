@@ -1,4 +1,4 @@
-package com.zzapp.confessionwall.utils
+package com.zzapp.confessionwall.data
 
 import cn.bmob.v3.BmobUser
 import cn.bmob.v3.datatype.BmobRelation
@@ -20,4 +20,6 @@ class User : BmobUser() {
     var followNum = 0
     //用户收集的动态关系
     var collections : BmobRelation? = null
+    //用户个性签名
+    var signature: String? = null
 }

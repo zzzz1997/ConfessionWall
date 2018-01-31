@@ -18,4 +18,6 @@
     <dimen name="comment_user_icon_width">30dp</dimen>
     <dimen name="fork_size">20dp</dimen>
     <dimen name="text_size">14sp</dimen>
+    <dimen name="title_margin_start">60dp</dimen>
+    <dimen name="title_margin_bottom">120dp</dimen>
 </resources>

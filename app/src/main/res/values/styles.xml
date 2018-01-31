@@ -21,4 +21,8 @@
         <item name="android:textColor">@color/colorText</item>
     </style>
 
+    <style name="ExpandedHeightStyle" parent="@style/TextAppearance.AppCompat.Title">
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
 </resources>

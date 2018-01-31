@@ -11,7 +11,8 @@ import cn.bmob.v3.*
 import cn.bmob.v3.exception.BmobException
 import com.zzapp.confessionwall.R
 import com.zzapp.confessionwall.utils.MyFragmentPagerAdapter
-import com.zzapp.confessionwall.utils.User
+import com.zzapp.confessionwall.data.User
+import com.zzapp.confessionwall.utils.MyCode
 import com.zzapp.confessionwall.view.BaseFragment
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_main.*
@@ -31,11 +32,6 @@ class MainActivity : AppCompatActivity() {
     private val titles: ArrayList<String> = ArrayList()
 
     companion object {
-        //请求登录的requesCode
-        val REQUEST_LOGIN = 0
-        //请求更换头像的requesCode
-        val REQUEST_ICON = 1
-
         //存储fragment的列表
         val fragments: ArrayList<BaseFragment> = ArrayList()
     }
@@ -106,12 +102,22 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if(requestCode == REQUEST_LOGIN && resultCode == AppCompatActivity.RESULT_OK) {
-            val user = data!!.getSerializableExtra("user") as User
-            for(fragment in fragments){
-                fragment.user = user
-                fragment.refresh()
+        when(requestCode){
+            MyCode.REQUEST_LOGIN -> {
+                if(resultCode == AppCompatActivity.RESULT_OK){
+                    val user = data!!.getSerializableExtra("user") as User
+                    for(fragment in fragments){
+                        fragment.user = user
+                        fragment.refresh()
+                    }
+                }
             }
+            MyCode.REQUEST_ADD_POST -> {
+                if(resultCode == AppCompatActivity.RESULT_OK) {
+                    fragments[0].push(MyCode.REQUEST_ADD_POST, data)
+                }
+            }
+            else -> return
         }
     }
 

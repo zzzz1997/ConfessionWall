@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
 import com.zzapp.confessionwall.R
 import com.zzapp.confessionwall.presenter.UserPresenter
-import com.zzapp.confessionwall.utils.User
+import com.zzapp.confessionwall.data.User
 import com.zzapp.confessionwall.view.IUserView
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.register.*

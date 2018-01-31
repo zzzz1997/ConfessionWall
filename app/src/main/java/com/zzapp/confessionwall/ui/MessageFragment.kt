@@ -1,8 +1,8 @@
 package com.zzapp.confessionwall.ui
 
+import android.content.Intent
 import android.support.v7.widget.Toolbar
 import com.zzapp.confessionwall.R
-import com.zzapp.confessionwall.utils.User
 import com.zzapp.confessionwall.view.BaseFragment
 
 /**
@@ -35,7 +35,7 @@ class MessageFragment : BaseFragment() {
 
     override fun refresh() {}
 
-    override fun push() {
+    override fun push(code: Int, data: Intent?) {
 
     }
 }

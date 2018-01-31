@@ -1,12 +1,13 @@
 package com.zzapp.confessionwall.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import cn.bmob.v3.BmobUser
-import com.zzapp.confessionwall.utils.User
+import com.zzapp.confessionwall.data.User
 
 /**
  * Project ConfessionWall
@@ -95,6 +96,9 @@ abstract class BaseFragment : Fragment() {
     abstract fun refresh()
     /**
      * 界面推送
+     *
+     * @param code 消息的标识
+     * @param data 推送消息的内容
      */
-    abstract fun push()
+    abstract fun push(code: Int, data: Intent?)
 }

@@ -13,6 +13,7 @@ import cn.bmob.v3.datatype.BmobFile
 import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.DownloadFileListener
 import com.zzapp.confessionwall.R
+import com.zzapp.confessionwall.utils.MyCode
 import com.zzapp.confessionwall.view.BaseFragment
 import es.dmoral.toasty.Toasty
 import java.io.File
@@ -47,11 +48,11 @@ class MeFragment : BaseFragment() {
         (activity!! as AppCompatActivity).setSupportActionBar(toolbar)
 
         image.setOnClickListener {
-            activity!!.startActivityForResult(Intent(activity, UserActivity::class.java), MainActivity.REQUEST_ICON)
+            activity!!.startActivityForResult(Intent(activity, UserActivity::class.java), MyCode.REQUEST_ICON)
         }
 
         login.setOnClickListener {
-            activity!!.startActivityForResult(Intent(activity, LoginActivity::class.java), MainActivity.REQUEST_LOGIN)
+            activity!!.startActivityForResult(Intent(activity, LoginActivity::class.java), MyCode.REQUEST_LOGIN)
         }
 
         exit.setOnClickListener {
@@ -106,7 +107,7 @@ class MeFragment : BaseFragment() {
         }
     }
 
-    override fun push() {
+    override fun push(code: Int, data: Intent?) {
 
     }
 }

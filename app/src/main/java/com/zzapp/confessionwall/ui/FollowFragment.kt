@@ -1,6 +1,5 @@
 package com.zzapp.confessionwall.ui
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.support.v4.widget.SwipeRefreshLayout
@@ -19,7 +18,8 @@ import com.zzapp.confessionwall.R
 import com.zzapp.confessionwall.data.Post
 import com.zzapp.confessionwall.utils.OnPostClickListener
 import com.zzapp.confessionwall.utils.PostAdapter
-import com.zzapp.confessionwall.utils.User
+import com.zzapp.confessionwall.data.User
+import com.zzapp.confessionwall.utils.MyCode
 import com.zzapp.confessionwall.view.BaseFragment
 import es.dmoral.toasty.Toasty
 
@@ -44,8 +44,6 @@ class FollowFragment : BaseFragment() {
     private lateinit var recycler: RecyclerView
 
     private lateinit var adapter: PostAdapter
-
-    private val ADD_POST = 0
 
     override fun setContentView(): Int {
         return R.layout.follow_frag
@@ -74,9 +72,9 @@ class FollowFragment : BaseFragment() {
             when(it.itemId){
                 R.id.follow_menu_add -> {
                     if(user != null) {
-                        startActivityForResult(Intent(context, AddPostActivity::class.java), ADD_POST)
+                        activity!!.startActivityForResult(Intent(context, AddPostActivity::class.java), MyCode.REQUEST_ADD_POST)
                     } else {
-                        startActivity(Intent(context, LoginActivity::class.java))
+                        activity!!.startActivity(Intent(context, LoginActivity::class.java))
                     }
                     true
                 }
@@ -100,8 +98,6 @@ class FollowFragment : BaseFragment() {
         refresh.setOnRefreshListener {
             refresh()
         }
-
-        recycler.layoutManager = LinearLayoutManager(context)
     }
 
     override fun loadView() {
@@ -136,6 +132,7 @@ class FollowFragment : BaseFragment() {
                         val postQuery = BmobQuery<Post>()
                         postQuery.addWhereMatchesQuery("author", "_User", innerQuery)
                         postQuery.include("author")
+                        postQuery.order("-updatedAt")
                         postQuery.findObjects(object: FindListener<Post>(){
                             override fun done(p0: MutableList<Post>?, p1: BmobException?) {
                                 if(p1 == null){
@@ -165,26 +162,28 @@ class FollowFragment : BaseFragment() {
         refresh.isRefreshing = false
     }
 
-    override fun push() {
-        val msg = preferences.getString(context!!.getString(R.string.my_msg), null)
-        val isClosed = preferences.getBoolean(context!!.getString(R.string.is_closed), false)
-
-        if(msg != null && !isClosed){
-            layout.visibility = View.VISIBLE
-            broadcast.text = msg
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if(requestCode == ADD_POST && resultCode == Activity.RESULT_OK){
-            val post = data!!.getSerializableExtra("post") as Post
-            try {
-                adapter.insert(post, 0)
-                recycler.scrollToPosition(0)
-                Toasty.success(context!!, getString(R.string.success_published)).show()
-            } catch (e: Exception){
-                Toasty.error(context!!, e.message!!).show()
+    override fun push(code: Int, data: Intent?) {
+        when(code){
+            MyCode.REQUEST_ADD_POST -> {
+                val post = data!!.getSerializableExtra("post") as Post
+                try {
+                    adapter.insert(post, 0)
+                    recycler.scrollToPosition(0)
+                    Toasty.success(context!!, getString(R.string.success_published)).show()
+                } catch (e: Exception){
+                    Toasty.error(context!!, e.message!!).show()
+                }
             }
+            MyCode.PUSH_MESSAGE -> {
+                val msg = preferences.getString(context!!.getString(R.string.my_msg), null)
+                val isClosed = preferences.getBoolean(context!!.getString(R.string.is_closed), false)
+
+                if(msg != null && !isClosed){
+                    layout.visibility = View.VISIBLE
+                    broadcast.text = msg
+                }
+            }
+            else -> return
         }
     }
 }

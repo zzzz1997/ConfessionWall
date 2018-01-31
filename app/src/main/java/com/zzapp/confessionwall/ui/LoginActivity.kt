@@ -8,7 +8,7 @@ import android.widget.TextView
 import com.zzapp.confessionwall.R
 import kotlinx.android.synthetic.main.login.*
 import com.zzapp.confessionwall.presenter.UserPresenter
-import com.zzapp.confessionwall.utils.User
+import com.zzapp.confessionwall.data.User
 import com.zzapp.confessionwall.view.IUserView
 import es.dmoral.toasty.Toasty
 
