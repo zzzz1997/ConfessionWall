@@ -1,7 +1,8 @@
-package com.zzapp.confessionwall.data
+package com.zzapp.confessionwall.entity
 
 import cn.bmob.v3.BmobObject
 import cn.bmob.v3.datatype.BmobRelation
+import com.zzapp.confessionwall.entity.User
 import java.io.Serializable
 
 /**

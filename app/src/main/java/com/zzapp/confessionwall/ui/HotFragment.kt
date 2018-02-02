@@ -9,7 +9,7 @@ import cn.bmob.v3.BmobQuery
 import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.FindListener
 import com.zzapp.confessionwall.R
-import com.zzapp.confessionwall.data.Post
+import com.zzapp.confessionwall.entity.Post
 import com.zzapp.confessionwall.utils.OnPostClickListener
 import com.zzapp.confessionwall.utils.PostAdapter
 import com.zzapp.confessionwall.view.BaseFragment

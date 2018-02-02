@@ -7,7 +7,7 @@ import android.provider.MediaStore
 import android.support.v7.app.AppCompatActivity
 import cn.bmob.v3.BmobUser
 import com.zzapp.confessionwall.R
-import com.zzapp.confessionwall.data.User
+import com.zzapp.confessionwall.entity.User
 import kotlinx.android.synthetic.main.user.*
 import java.io.File
 import android.graphics.Bitmap

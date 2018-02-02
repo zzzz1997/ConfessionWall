@@ -5,7 +5,7 @@ import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.LogInListener
 import cn.bmob.v3.listener.SaveListener
 import cn.bmob.v3.listener.UpdateListener
-import com.zzapp.confessionwall.data.User
+import com.zzapp.confessionwall.entity.User
 import com.zzapp.confessionwall.view.IUserView
 
 /**

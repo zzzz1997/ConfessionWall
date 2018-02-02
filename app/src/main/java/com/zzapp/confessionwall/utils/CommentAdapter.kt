@@ -13,8 +13,8 @@ import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.FindListener
 import com.bumptech.glide.Glide
 import com.zzapp.confessionwall.R
-import com.zzapp.confessionwall.data.Comment
-import com.zzapp.confessionwall.data.User
+import com.zzapp.confessionwall.entity.Comment
+import com.zzapp.confessionwall.entity.User
 
 /**
  * Project ConfessionWall
@@ -64,9 +64,12 @@ class CommentAdapter(private val context: Context, private val comments: Mutable
         holder.likeNum.text = comments[position].likesNum.toString()
         holder.content.text = comments[position].content
 
+
         holder.user.tag = position
-        holder.user.setOnClickListener(this)
         holder.like.tag = position
+        holder.likeNum.tag = position
+        holder.content.tag = position
+        holder.user.setOnClickListener(this)
         holder.like.setOnClickListener(this)
     }
 

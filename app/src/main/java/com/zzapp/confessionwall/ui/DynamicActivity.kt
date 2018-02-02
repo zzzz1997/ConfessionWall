@@ -23,10 +23,10 @@ import cn.bmob.v3.listener.SaveListener
 import cn.bmob.v3.listener.UpdateListener
 import com.bumptech.glide.Glide
 import com.zzapp.confessionwall.R
-import com.zzapp.confessionwall.data.Comment
-import com.zzapp.confessionwall.data.Post
+import com.zzapp.confessionwall.entity.Comment
+import com.zzapp.confessionwall.entity.Post
 import com.zzapp.confessionwall.utils.CommentAdapter
-import com.zzapp.confessionwall.data.User
+import com.zzapp.confessionwall.entity.User
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.dynamic.*
 

@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import cn.bmob.v3.BmobUser
-import com.zzapp.confessionwall.data.User
+import com.zzapp.confessionwall.entity.User
 
 /**
  * Project ConfessionWall

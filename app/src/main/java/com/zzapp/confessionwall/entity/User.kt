@@ -1,4 +1,4 @@
-package com.zzapp.confessionwall.data
+package com.zzapp.confessionwall.entity
 
 import cn.bmob.v3.BmobUser
 import cn.bmob.v3.datatype.BmobRelation

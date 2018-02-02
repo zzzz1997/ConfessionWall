@@ -2,16 +2,23 @@ package com.zzapp.confessionwall.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.TabLayout
-import android.support.v4.content.ContextCompat
+import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.view.KeyEvent
+import cn.bmob.newim.BmobIM
+import cn.bmob.newim.bean.BmobIMUserInfo
+import cn.bmob.newim.core.ConnectionStatus
+import cn.bmob.newim.listener.ConnectListener
+import cn.bmob.newim.listener.ConnectStatusChangeListener
 import cn.bmob.push.BmobPush
 import cn.bmob.v3.*
 import cn.bmob.v3.exception.BmobException
+import com.flyco.tablayout.listener.CustomTabEntity
+import com.flyco.tablayout.listener.OnTabSelectListener
 import com.zzapp.confessionwall.R
 import com.zzapp.confessionwall.utils.MyFragmentPagerAdapter
-import com.zzapp.confessionwall.data.User
+import com.zzapp.confessionwall.entity.User
+import com.zzapp.confessionwall.entity.TabEntity
 import com.zzapp.confessionwall.utils.MyCode
 import com.zzapp.confessionwall.view.BaseFragment
 import es.dmoral.toasty.Toasty
@@ -30,6 +37,12 @@ class MainActivity : AppCompatActivity() {
     private val appkey = "0609b5cda2401bf3d1c4bae43b834950"
 
     private val titles: ArrayList<String> = ArrayList()
+    private val selectedIcons = listOf(R.drawable.follow_selected, R.drawable.message_selected,
+            R.drawable.hot_selected, R.drawable.me_selected)
+    private val unSelectIcons = listOf(R.drawable.follow_normal, R.drawable.message_normal,
+            R.drawable.hot_normal, R.drawable.me_normal)
+
+    private val tabEntities: ArrayList<CustomTabEntity> = ArrayList()
 
     companion object {
         //存储fragment的列表
@@ -47,6 +60,23 @@ class MainActivity : AppCompatActivity() {
 
     private fun initView() {
         //初始化应用
+        val user = BmobUser.getCurrentUser(User::class.java)
+        if(user != null){
+            BmobIM.connect(user.objectId, object: ConnectListener(){
+                override fun done(p0: String?, p1: BmobException?) {
+                    if(p1 == null){
+                        BmobIM.getInstance().updateUserInfo(BmobIMUserInfo(user.objectId, user.username, user.icon))
+                    } else {
+                        Toasty.error(this@MainActivity, p1.message!!).show()
+                    }
+                }
+            })
+            BmobIM.getInstance().setOnConnectStatusChangeListener(object: ConnectStatusChangeListener(){
+                override fun onChange(p0: ConnectionStatus?) {
+                    Toasty.info(this@MainActivity, p0!!.msg).show()
+                }
+            })
+        }
         Bmob.initialize(this, appkey)
         BmobInstallationManager.getInstance().initialize(object: InstallationListener<BmobInstallation>(){
             override fun done(p0: BmobInstallation?, p1: BmobException?) {
@@ -63,40 +93,34 @@ class MainActivity : AppCompatActivity() {
         titles.add(getString(R.string.message))
         titles.add(getString(R.string.hot))
         titles.add(getString(R.string.me))
+        (0 until titles.size).mapTo(tabEntities) { TabEntity(titles[it], selectedIcons[it], unSelectIcons[it]) }
+
         fragments.add(FollowFragment())
         fragments.add(MessageFragment())
         fragments.add(HotFragment())
         fragments.add(MeFragment())
         view_pager.adapter = MyFragmentPagerAdapter(supportFragmentManager, titles, fragments)
         view_pager.offscreenPageLimit = 3
-        tab_layout.setupWithViewPager(view_pager)
-        tab_layout.getTabAt(0)!!.icon = ContextCompat.getDrawable(this, R.drawable.follow_selected)
-        tab_layout.getTabAt(1)!!.icon = ContextCompat.getDrawable(this, R.drawable.message_normal)
-        tab_layout.getTabAt(2)!!.icon = ContextCompat.getDrawable(this, R.drawable.hot_normal)
-        tab_layout.getTabAt(3)!!.icon = ContextCompat.getDrawable(this, R.drawable.me_normal)
-        tab_layout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
-            override fun onTabReselected(tab: TabLayout.Tab?) {}
+        view_pager.addOnPageChangeListener(object: ViewPager.OnPageChangeListener{
+            override fun onPageScrollStateChanged(state: Int) {}
 
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-                tab!!.icon = ContextCompat.getDrawable(this@MainActivity, when(tab.text){
-                    getString(R.string.follow) -> R.drawable.follow_normal
-                    getString(R.string.message) -> R.drawable.message_normal
-                    getString(R.string.hot) -> R.drawable.hot_normal
-                    else -> R.drawable.me_normal
-                })
-                tab_layout.setTabTextColors(ContextCompat.getColor(this@MainActivity, R.color.colorText),
-                        ContextCompat.getColor(this@MainActivity, R.color.colorAccent))
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
+
+            override fun onPageSelected(position: Int) {
+                common_tab_layout.currentTab = position
+            }
+        })
+
+        common_tab_layout.setTabData(tabEntities)
+        common_tab_layout.setOnTabSelectListener(object: OnTabSelectListener{
+            override fun onTabSelect(position: Int) {
+                view_pager.currentItem = position
             }
 
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                tab!!.icon = ContextCompat.getDrawable(this@MainActivity, when(tab.text){
-                    getString(R.string.follow) -> R.drawable.follow_selected
-                    getString(R.string.message) -> R.drawable.message_selected
-                    getString(R.string.hot) -> R.drawable.hot_selected
-                    else -> R.drawable.me_selected
-                })
-                tab_layout.setTabTextColors(ContextCompat.getColor(this@MainActivity, R.color.colorText),
-                        ContextCompat.getColor(this@MainActivity, R.color.colorAccent))
+            override fun onTabReselect(position: Int) {
+                if(position == 1){
+                    common_tab_layout.showMsg(1, ((Math.random() * 200).toInt()))
+                }
             }
         })
     }
@@ -134,5 +158,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         return super.onKeyDown(keyCode, event)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        BmobIM.getInstance().clear()
     }
 }

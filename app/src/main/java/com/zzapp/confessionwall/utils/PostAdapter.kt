@@ -13,8 +13,8 @@ import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.FindListener
 import com.bumptech.glide.Glide
 import com.zzapp.confessionwall.R
-import com.zzapp.confessionwall.data.Post
-import com.zzapp.confessionwall.data.User
+import com.zzapp.confessionwall.entity.Post
+import com.zzapp.confessionwall.entity.User
 import com.zzapp.confessionwall.view.CircleImageView
 
 /**

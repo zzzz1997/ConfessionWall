@@ -20,9 +20,9 @@ import cn.bmob.v3.listener.FindListener
 import cn.bmob.v3.listener.SaveListener
 import cn.bmob.v3.listener.UpdateListener
 import com.zzapp.confessionwall.R
-import com.zzapp.confessionwall.data.Comment
-import com.zzapp.confessionwall.data.Post
-import com.zzapp.confessionwall.data.User
+import com.zzapp.confessionwall.entity.Comment
+import com.zzapp.confessionwall.entity.Post
+import com.zzapp.confessionwall.entity.User
 import com.zzapp.confessionwall.ui.DetailsActivity
 import com.zzapp.confessionwall.ui.DynamicActivity
 import com.zzapp.confessionwall.ui.LoginActivity

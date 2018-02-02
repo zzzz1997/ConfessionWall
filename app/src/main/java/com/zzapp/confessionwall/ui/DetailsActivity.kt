@@ -13,8 +13,8 @@ import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions.bitmapTransform
 import com.zzapp.confessionwall.R
-import com.zzapp.confessionwall.data.Post
-import com.zzapp.confessionwall.data.User
+import com.zzapp.confessionwall.entity.Post
+import com.zzapp.confessionwall.entity.User
 import com.zzapp.confessionwall.utils.OnPostClickListener
 import com.zzapp.confessionwall.utils.PostAdapter
 import es.dmoral.toasty.Toasty

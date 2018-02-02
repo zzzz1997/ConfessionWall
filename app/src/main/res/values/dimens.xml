@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="elevation">5dp</dimen>
-    <dimen name="tablayout_height">58dp</dimen>
     <dimen name="textinputlayout_paddingtop">10dp</dimen>
     <dimen name="tips_size">12sp</dimen>
     <dimen name="edit_textsize">15sp</dimen>
@@ -20,4 +19,5 @@
     <dimen name="text_size">14sp</dimen>
     <dimen name="title_margin_start">60dp</dimen>
     <dimen name="title_margin_bottom">120dp</dimen>
+    <dimen name="tab_icon_size">24dp</dimen>
 </resources>

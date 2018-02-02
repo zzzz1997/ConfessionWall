@@ -8,8 +8,8 @@ import cn.bmob.v3.BmobUser
 import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.SaveListener
 import com.zzapp.confessionwall.R
-import com.zzapp.confessionwall.data.Post
-import com.zzapp.confessionwall.data.User
+import com.zzapp.confessionwall.entity.Post
+import com.zzapp.confessionwall.entity.User
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.add_post.*
 
