@@ -7,7 +7,7 @@ import android.os.Bundle
 import android.os.Message
 import android.view.KeyEvent
 import com.zzapp.confessionwall.R
-import kotlinx.android.synthetic.main.welcome.*
+import kotlinx.android.synthetic.main.splash.*
 import java.util.*
 
 /**
@@ -18,7 +18,7 @@ import java.util.*
  *
  * @author zzzz
  */
-class WelcomeActivity : Activity(){
+class SplashActivity : Activity(){
 
     private val COUNT_TIME = 3
     private val INTERVAL_TIME = 1000L
@@ -27,7 +27,7 @@ class WelcomeActivity : Activity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.welcome)
+        setContentView(R.layout.splash)
         initView()
     }
 
@@ -42,8 +42,8 @@ class WelcomeActivity : Activity(){
 
         count_down.setOnClickListener {
             timer.cancel()
-            startActivity(Intent(this@WelcomeActivity, MainActivity::class.java))
-            this@WelcomeActivity.finish()
+            startActivity(Intent(this@SplashActivity, MainActivity::class.java))
+            this@SplashActivity.finish()
         }
     }
 
@@ -54,8 +54,8 @@ class WelcomeActivity : Activity(){
                 count_down.text = "" + msg.what + getString(R.string.skip)
             } else {
                 timer.cancel()
-                startActivity(Intent(this@WelcomeActivity, MainActivity::class.java))
-                this@WelcomeActivity.finish()
+                startActivity(Intent(this@SplashActivity, MainActivity::class.java))
+                this@SplashActivity.finish()
             }
         }
     }

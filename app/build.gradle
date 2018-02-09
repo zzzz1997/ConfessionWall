@@ -38,4 +38,5 @@ dependencies {
     implementation files('libs/bmob-sdk-3.5.8.aar')
     implementation files('libs/Bmob_Push_1.0.1_20170907.jar')
     implementation files('libs/BmobNewIM_2.0.9_20170731.jar')
+    implementation files('libs/androidasync-2.1.6.jar')
 }

@@ -1,4 +1,4 @@
-package com.zzapp.confessionwall.model
+package com.zzapp.confessionwall.service
 
 import android.content.BroadcastReceiver
 import android.content.Context

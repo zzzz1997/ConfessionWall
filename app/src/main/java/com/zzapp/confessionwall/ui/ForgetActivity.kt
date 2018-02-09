@@ -1,12 +1,13 @@
 package com.zzapp.confessionwall.ui
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
 import com.zzapp.confessionwall.R
-import com.zzapp.confessionwall.presenter.UserPresenter
 import com.zzapp.confessionwall.entity.User
+import com.zzapp.confessionwall.model.UserModel
 import com.zzapp.confessionwall.view.IUserView
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.forget.*
@@ -22,7 +23,6 @@ import java.util.regex.Pattern
  */
 class ForgetActivity : AppCompatActivity(), IUserView {
 
-    private lateinit var userPresenter: UserPresenter
     private lateinit var dialog : AlertDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,7 +33,6 @@ class ForgetActivity : AppCompatActivity(), IUserView {
     }
 
     private fun initView(){
-        userPresenter = UserPresenter(this)
 
         forget_toolbar.setNavigationOnClickListener {
             finish()
@@ -52,7 +51,7 @@ class ForgetActivity : AppCompatActivity(), IUserView {
             }
             forget_email.isErrorEnabled = false
 
-            userPresenter.reset(emailEdit.text.toString())
+            UserModel.getInstance().reset(this, emailEdit.text.toString())
         }
     }
 
@@ -65,6 +64,7 @@ class ForgetActivity : AppCompatActivity(), IUserView {
         Toasty.error(this@ForgetActivity, string).show()
     }
 
+    @SuppressLint("InflateParams")
     override fun newDialog() {
         val view  = layoutInflater.inflate(R.layout.progress_dialog, null)
         view.findViewById<TextView>(R.id.progress_dialog_text).text = getString(R.string.resetting)

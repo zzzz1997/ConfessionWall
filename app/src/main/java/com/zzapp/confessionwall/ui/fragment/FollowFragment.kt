@@ -1,4 +1,4 @@
-package com.zzapp.confessionwall.ui
+package com.zzapp.confessionwall.ui.fragment
 
 import android.content.Context
 import android.content.Intent
@@ -19,6 +19,8 @@ import com.zzapp.confessionwall.entity.Post
 import com.zzapp.confessionwall.utils.OnPostClickListener
 import com.zzapp.confessionwall.utils.PostAdapter
 import com.zzapp.confessionwall.entity.User
+import com.zzapp.confessionwall.ui.AddPostActivity
+import com.zzapp.confessionwall.ui.LoginActivity
 import com.zzapp.confessionwall.utils.MyCode
 import com.zzapp.confessionwall.view.BaseFragment
 import es.dmoral.toasty.Toasty

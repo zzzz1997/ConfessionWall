@@ -1,5 +1,6 @@
 package com.zzapp.confessionwall.ui
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
@@ -7,8 +8,8 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
 import com.zzapp.confessionwall.R
 import kotlinx.android.synthetic.main.login.*
-import com.zzapp.confessionwall.presenter.UserPresenter
 import com.zzapp.confessionwall.entity.User
+import com.zzapp.confessionwall.model.UserModel
 import com.zzapp.confessionwall.view.IUserView
 import es.dmoral.toasty.Toasty
 
@@ -22,7 +23,6 @@ import es.dmoral.toasty.Toasty
  */
 class LoginActivity : AppCompatActivity(), IUserView {
 
-    private lateinit var userPresenter: UserPresenter
     private lateinit var dialog : AlertDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,8 +33,6 @@ class LoginActivity : AppCompatActivity(), IUserView {
     }
 
     private fun initView(){
-        userPresenter = UserPresenter(this)
-
         login_toolbar.setNavigationOnClickListener {
             finish()
         }
@@ -67,7 +65,7 @@ class LoginActivity : AppCompatActivity(), IUserView {
             }
             login_password.isErrorEnabled = false
 
-            userPresenter.login(login_name.editText!!.text.toString(), login_password.editText!!.text.toString())
+            UserModel.getInstance().login(this, login_name.editText!!.text.toString(), login_password.editText!!.text.toString())
         }
     }
 
@@ -83,6 +81,7 @@ class LoginActivity : AppCompatActivity(), IUserView {
         Toasty.error(this@LoginActivity, string).show()
     }
 
+    @SuppressLint("InflateParams")
     override fun newDialog() {
         val view  = layoutInflater.inflate(R.layout.progress_dialog, null)
         view.findViewById<TextView>(R.id.progress_dialog_text).text = getString(R.string.log_in)

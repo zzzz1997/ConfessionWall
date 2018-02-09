@@ -1,4 +1,4 @@
-package com.zzapp.confessionwall.ui
+package com.zzapp.confessionwall.ui.fragment
 
 import android.content.Intent
 import android.net.Uri
@@ -13,6 +13,8 @@ import cn.bmob.v3.datatype.BmobFile
 import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.DownloadFileListener
 import com.zzapp.confessionwall.R
+import com.zzapp.confessionwall.ui.LoginActivity
+import com.zzapp.confessionwall.ui.UserActivity
 import com.zzapp.confessionwall.utils.MyCode
 import com.zzapp.confessionwall.view.BaseFragment
 import es.dmoral.toasty.Toasty

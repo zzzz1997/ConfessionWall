@@ -19,4 +19,11 @@
 
     </android.support.v7.widget.Toolbar>
 
+    <TextView
+        android:id="@+id/message_test"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="发送消息"/>
+
 </LinearLayout>

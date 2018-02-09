@@ -1,4 +1,4 @@
-package com.zzapp.confessionwall.ui
+package com.zzapp.confessionwall.ui.fragment
 
 import android.content.Intent
 import android.support.v4.widget.SwipeRefreshLayout

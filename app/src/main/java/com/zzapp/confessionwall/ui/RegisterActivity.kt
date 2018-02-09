@@ -1,12 +1,13 @@
 package com.zzapp.confessionwall.ui
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
 import com.zzapp.confessionwall.R
-import com.zzapp.confessionwall.presenter.UserPresenter
 import com.zzapp.confessionwall.entity.User
+import com.zzapp.confessionwall.model.UserModel
 import com.zzapp.confessionwall.view.IUserView
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.register.*
@@ -22,7 +23,6 @@ import java.util.regex.Pattern
  */
 class RegisterActivity : AppCompatActivity(), IUserView {
 
-    private lateinit var userPresenter: UserPresenter
     private lateinit var dialog : AlertDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,8 +33,6 @@ class RegisterActivity : AppCompatActivity(), IUserView {
     }
 
     private fun initView(){
-        userPresenter = UserPresenter(this)
-
         register_toolbar.setNavigationOnClickListener {
             finish()
         }
@@ -79,7 +77,7 @@ class RegisterActivity : AppCompatActivity(), IUserView {
             }
             register_email.isErrorEnabled = false
 
-            userPresenter.register(nameEdit.text.toString(), passwordEdit.text.toString(), emailEdit.text.toString(), getString(R.string.default_icon))
+            UserModel.getInstance().register(this, nameEdit.text.toString(), passwordEdit.text.toString(), emailEdit.text.toString(), getString(R.string.default_icon))
         }
     }
 
@@ -92,6 +90,7 @@ class RegisterActivity : AppCompatActivity(), IUserView {
         Toasty.error(this@RegisterActivity, string).show()
     }
 
+    @SuppressLint("InflateParams")
     override fun newDialog() {
         val view  = layoutInflater.inflate(R.layout.progress_dialog, null)
         view.findViewById<TextView>(R.id.progress_dialog_text).text = getString(R.string.registering)

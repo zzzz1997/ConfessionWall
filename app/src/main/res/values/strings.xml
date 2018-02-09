@@ -71,4 +71,5 @@
     <string name="is_closed">is_closed</string>
     <string name="blur_background">毛玻璃效果背景</string>
     <string name="me_background">我的背景</string>
+    <string name="splash_imageview">splash界面过度背景</string>
 </resources>

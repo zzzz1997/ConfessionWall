@@ -8,8 +8,10 @@ import android.view.KeyEvent
 import cn.bmob.newim.BmobIM
 import cn.bmob.newim.bean.BmobIMUserInfo
 import cn.bmob.newim.core.ConnectionStatus
+import cn.bmob.newim.event.MessageEvent
 import cn.bmob.newim.listener.ConnectListener
 import cn.bmob.newim.listener.ConnectStatusChangeListener
+import cn.bmob.newim.notification.BmobNotificationManager
 import cn.bmob.push.BmobPush
 import cn.bmob.v3.*
 import cn.bmob.v3.exception.BmobException
@@ -19,6 +21,10 @@ import com.zzapp.confessionwall.R
 import com.zzapp.confessionwall.utils.MyFragmentPagerAdapter
 import com.zzapp.confessionwall.entity.User
 import com.zzapp.confessionwall.entity.TabEntity
+import com.zzapp.confessionwall.ui.fragment.FollowFragment
+import com.zzapp.confessionwall.ui.fragment.HotFragment
+import com.zzapp.confessionwall.ui.fragment.MeFragment
+import com.zzapp.confessionwall.ui.fragment.MessageFragment
 import com.zzapp.confessionwall.utils.MyCode
 import com.zzapp.confessionwall.view.BaseFragment
 import es.dmoral.toasty.Toasty
@@ -60,6 +66,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun initView() {
         //初始化应用
+        Bmob.initialize(this, appkey)
+
         val user = BmobUser.getCurrentUser(User::class.java)
         if(user != null){
             BmobIM.connect(user.objectId, object: ConnectListener(){
@@ -77,7 +85,7 @@ class MainActivity : AppCompatActivity() {
                 }
             })
         }
-        Bmob.initialize(this, appkey)
+
         BmobInstallationManager.getInstance().initialize(object: InstallationListener<BmobInstallation>(){
             override fun done(p0: BmobInstallation?, p1: BmobException?) {
                 if(p1 == null){
@@ -123,6 +131,8 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
+
+        //BmobNotificationManager.getInstance(this).showNotification(MessageEvent(), Intent())
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -149,6 +159,7 @@ class MainActivity : AppCompatActivity() {
         val second = System.currentTimeMillis()
         if(keyCode == KeyEvent.KEYCODE_BACK){
             if(second - first < 2000){
+                BmobIM.getInstance().disConnect()
                 System.exit(0)
             } else {
                 Toasty.warning(this, "再点一次退出程序哦").show()
@@ -163,5 +174,6 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         BmobIM.getInstance().clear()
+        BmobIM.getInstance().disConnect()
     }
 }
