@@ -10,8 +10,8 @@ import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.FindListener
 import com.zzapp.confessionwall.R
 import com.zzapp.confessionwall.entity.Post
-import com.zzapp.confessionwall.utils.OnPostClickListener
-import com.zzapp.confessionwall.utils.PostAdapter
+import com.zzapp.confessionwall.adapter.OnPostClickListener
+import com.zzapp.confessionwall.adapter.PostAdapter
 import com.zzapp.confessionwall.view.BaseFragment
 import es.dmoral.toasty.Toasty
 
@@ -65,12 +65,13 @@ class HotFragment : BaseFragment() {
                     adapter.setOnBaseClickListener(OnPostClickListener(context!!, user, p0, adapter))
                     recycler.adapter = adapter
                     recycler.layoutManager = LinearLayoutManager(context)
+                    refresh.isRefreshing = false
                 } else {
                     Toasty.error(context!!, p1.message!!).show()
+                    refresh.isRefreshing = false
                 }
             }
         })
-        refresh.isRefreshing = false
     }
 
     override fun push(code: Int, data: Intent?) {

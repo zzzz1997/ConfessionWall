@@ -22,8 +22,22 @@
     <TextView
         android:id="@+id/message_test"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:text="发送消息"/>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/message_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/message_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </android.support.v7.widget.RecyclerView>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </LinearLayout>

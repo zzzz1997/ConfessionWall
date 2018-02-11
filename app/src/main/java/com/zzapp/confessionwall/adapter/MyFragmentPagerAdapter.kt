@@ -1,4 +1,4 @@
-package com.zzapp.confessionwall.utils
+package com.zzapp.confessionwall.adapter
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager

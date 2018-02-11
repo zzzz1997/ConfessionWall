@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:gravity="center_horizontal"
@@ -31,8 +32,9 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/edit_textsize"
-            android:text="zzzz"/>
+            android:textSize="@dimen/edit_text_size"
+            android:text="zzzz"
+            tools:ignore="LabelFor"/>
 
     </android.support.design.widget.TextInputLayout>
 
@@ -44,9 +46,10 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/edit_textsize"
+            android:textSize="@dimen/edit_text_size"
             android:inputType="textPassword"
-            android:text="123456"/>
+            android:text="123456"
+            tools:ignore="LabelFor"/>
 
     </android.support.design.widget.TextInputLayout>
 
@@ -61,7 +64,7 @@
             android:layout_height="wrap_content"
             android:text="@string/retrieve"
             android:textColor="@color/colorAccent"
-            android:textSize="@dimen/small_button_textsize"
+            android:textSize="@dimen/small_button_text_size"
             android:background="?android:attr/selectableItemBackground"/>
 
         <View
@@ -75,7 +78,7 @@
             android:layout_height="wrap_content"
             android:text="@string/quick_register"
             android:textColor="@color/colorAccent"
-            android:textSize="@dimen/small_button_textsize"
+            android:textSize="@dimen/small_button_text_size"
             android:background="?android:attr/selectableItemBackground"/>
 
     </LinearLayout>

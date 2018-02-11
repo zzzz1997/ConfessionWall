@@ -1,4 +1,4 @@
-package com.zzapp.confessionwall.utils
+package com.zzapp.confessionwall.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -32,9 +32,7 @@ class CommentAdapter(private val context: Context, private val comments: Mutable
     private var query = BmobQuery<User>()
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): CommentViewHolder {
-        val view: View = LayoutInflater.from(context).inflate(R.layout.comment, parent, false)
-        view.setOnClickListener(this)
-        return CommentViewHolder(view)
+        return CommentViewHolder(LayoutInflater.from(context).inflate(R.layout.comment, parent, false))
     }
 
     override fun onBindViewHolder(holder: CommentViewHolder?, position: Int) {
@@ -65,10 +63,12 @@ class CommentAdapter(private val context: Context, private val comments: Mutable
         holder.content.text = comments[position].content
 
 
+        holder.itemView.tag = position
         holder.user.tag = position
         holder.like.tag = position
         holder.likeNum.tag = position
         holder.content.tag = position
+        holder.itemView.setOnClickListener(this)
         holder.user.setOnClickListener(this)
         holder.like.setOnClickListener(this)
     }
@@ -84,19 +84,7 @@ class CommentAdapter(private val context: Context, private val comments: Mutable
         this.onCommentClickListener = onBaseClickListener
     }
 
-    override fun insert(bmobObject: Comment, position: Int){
-        comments.add(position, bmobObject)
-        notifyItemInserted(position)
-        notifyItemRangeChanged(position, comments.size - position)
-    }
-
-    override fun delete(position: Int){
-        comments.removeAt(position)
-        notifyItemRemoved(position)
-        notifyItemRangeChanged(position, comments.size - position)
-    }
-
-    class CommentViewHolder(itemView: View) : BaseAdapter.BaseViewHolder(itemView){
+    class CommentViewHolder(itemView: View) : BaseViewHolder(itemView){
         val user = itemView.findViewById<LinearLayout>(R.id.comment_user)!!
         val icon = itemView.findViewById<ImageView>(R.id.comment_icon)!!
         val name = itemView.findViewById<TextView>(R.id.comment_name)!!
@@ -105,7 +93,7 @@ class CommentAdapter(private val context: Context, private val comments: Mutable
         val content = itemView.findViewById<TextView>(R.id.comment_content)!!
     }
 
-    interface OnCommentClickListener : BaseAdapter.OnBaseClickListener{
+    interface OnCommentClickListener : OnBaseClickListener {
         fun onUserClicked(view: View, position: Int)
         fun onLikeClicked(view: View, position: Int)
     }

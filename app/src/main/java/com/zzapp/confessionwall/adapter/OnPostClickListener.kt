@@ -1,4 +1,4 @@
-package com.zzapp.confessionwall.utils
+package com.zzapp.confessionwall.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context

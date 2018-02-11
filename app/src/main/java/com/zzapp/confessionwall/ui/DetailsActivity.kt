@@ -15,8 +15,8 @@ import com.bumptech.glide.request.RequestOptions.bitmapTransform
 import com.zzapp.confessionwall.R
 import com.zzapp.confessionwall.entity.Post
 import com.zzapp.confessionwall.entity.User
-import com.zzapp.confessionwall.utils.OnPostClickListener
-import com.zzapp.confessionwall.utils.PostAdapter
+import com.zzapp.confessionwall.adapter.OnPostClickListener
+import com.zzapp.confessionwall.adapter.PostAdapter
 import es.dmoral.toasty.Toasty
 import jp.wasabeef.glide.transformations.BlurTransformation
 import jp.wasabeef.glide.transformations.CropTransformation

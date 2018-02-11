@@ -3,10 +3,10 @@
     <dimen name="elevation">5dp</dimen>
     <dimen name="textinputlayout_paddingtop">10dp</dimen>
     <dimen name="tips_size">12sp</dimen>
-    <dimen name="edit_textsize">15sp</dimen>
-    <dimen name="encryption_textsize">12sp</dimen>
+    <dimen name="edit_text_size">15sp</dimen>
+    <dimen name="encryption_text_size">12sp</dimen>
     <dimen name="text_padding">10dp</dimen>
-    <dimen name="small_button_textsize">12sp</dimen>
+    <dimen name="small_button_text_size">12sp</dimen>
     <dimen name="progressbar_padding">10dp</dimen>
     <dimen name="detailed_image_size">50dp</dimen>
     <dimen name="detailed_image_margin">5dp</dimen>
@@ -20,4 +20,10 @@
     <dimen name="title_margin_start">60dp</dimen>
     <dimen name="title_margin_bottom">120dp</dimen>
     <dimen name="tab_icon_size">24dp</dimen>
+    <dimen name="message_image_width">50dp</dimen>
+    <dimen name="message_image_margin">10dp</dimen>
+    <dimen name="time_text_size">12sp</dimen>
+    <dimen name="name_text_size">16sp</dimen>
+    <dimen name="badge_width">30dp</dimen>
+    <dimen name="message_item_top">10dp</dimen>
 </resources>

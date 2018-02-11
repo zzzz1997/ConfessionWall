@@ -8,17 +8,15 @@ import android.view.KeyEvent
 import cn.bmob.newim.BmobIM
 import cn.bmob.newim.bean.BmobIMUserInfo
 import cn.bmob.newim.core.ConnectionStatus
-import cn.bmob.newim.event.MessageEvent
 import cn.bmob.newim.listener.ConnectListener
 import cn.bmob.newim.listener.ConnectStatusChangeListener
-import cn.bmob.newim.notification.BmobNotificationManager
 import cn.bmob.push.BmobPush
 import cn.bmob.v3.*
 import cn.bmob.v3.exception.BmobException
 import com.flyco.tablayout.listener.CustomTabEntity
 import com.flyco.tablayout.listener.OnTabSelectListener
 import com.zzapp.confessionwall.R
-import com.zzapp.confessionwall.utils.MyFragmentPagerAdapter
+import com.zzapp.confessionwall.adapter.MyFragmentPagerAdapter
 import com.zzapp.confessionwall.entity.User
 import com.zzapp.confessionwall.entity.TabEntity
 import com.zzapp.confessionwall.ui.fragment.FollowFragment
@@ -125,14 +123,22 @@ class MainActivity : AppCompatActivity() {
                 view_pager.currentItem = position
             }
 
-            override fun onTabReselect(position: Int) {
-                if(position == 1){
-                    common_tab_layout.showMsg(1, ((Math.random() * 200).toInt()))
-                }
-            }
+            override fun onTabReselect(position: Int) {}
         })
 
+        refreshCount()
+
         //BmobNotificationManager.getInstance(this).showNotification(MessageEvent(), Intent())
+    }
+
+    /**
+     * 刷新总未读消息界面显示
+     */
+    private fun refreshCount(){
+        val count = BmobIM.getInstance().allUnReadCount.toInt()
+        if(count > 0){
+            common_tab_layout.showMsg(1, count)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

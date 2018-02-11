@@ -1,5 +1,6 @@
-package com.zzapp.confessionwall.utils
+package com.zzapp.confessionwall.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -33,12 +34,10 @@ class PostAdapter(private val context: Context, private val posts: MutableList<P
     private var query = BmobQuery<User>()
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): PostViewHolder {
-        val view: View = LayoutInflater.from(context).inflate(R.layout.post, parent, false)
-        view.setOnClickListener(this)
-        return PostViewHolder(view)
+        return PostViewHolder(LayoutInflater.from(context).inflate(R.layout.post, parent, false))
     }
 
-    override fun onBindViewHolder(holder: PostViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: PostViewHolder?, @SuppressLint("RecyclerView") position: Int) {
         Glide.with(context)
                 .load(posts[position].author!!.icon)
                 .into(holder!!.icon)
@@ -84,17 +83,19 @@ class PostAdapter(private val context: Context, private val posts: MutableList<P
             }
         })
 
+        holder.itemView.tag = position
         holder.user.tag = position
-        holder.user.setOnClickListener(this)
         holder.follow.tag = position
-        holder.follow.setOnClickListener(this)
         holder.menu.tag = position
-        holder.menu.setOnClickListener(this)
         holder.content.tag = position
-        holder.content.setOnClickListener(this)
         holder.comment.tag = position
-        holder.comment.setOnClickListener(this)
         holder.like.tag = position
+        holder.itemView.setOnClickListener(this)
+        holder.user.setOnClickListener(this)
+        holder.follow.setOnClickListener(this)
+        holder.menu.setOnClickListener(this)
+        holder.content.setOnClickListener(this)
+        holder.comment.setOnClickListener(this)
         holder.like.setOnClickListener(this)
     }
 
@@ -112,18 +113,6 @@ class PostAdapter(private val context: Context, private val posts: MutableList<P
 
     override fun setOnBaseClickListener(onBaseClickListener: OnPostClickListener) {
         this.onPostClickListener = onBaseClickListener
-    }
-
-    override fun insert(bmobObject: Post, position: Int){
-        posts.add(position, bmobObject)
-        notifyItemInserted(position)
-        notifyItemRangeChanged(position, posts.size - position)
-    }
-
-    override fun delete(position: Int){
-        posts.removeAt(position)
-        notifyItemRemoved(position)
-        notifyItemRangeChanged(position, posts.size - position)
     }
 
     class PostViewHolder(itemView: View) : BaseAdapter.BaseViewHolder(itemView){

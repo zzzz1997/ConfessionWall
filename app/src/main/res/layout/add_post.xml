@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/text_padding"
         android:hint="@string/share_dynamic"
-        android:textSize="@dimen/edit_textsize"
+        android:textSize="@dimen/edit_text_size"
         android:background="@null"/>
 
 </LinearLayout>

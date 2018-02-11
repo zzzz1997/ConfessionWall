@@ -20,12 +20,16 @@
             android:id="@+id/comment_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:padding="@dimen/text_padding"
+            android:textSize="@dimen/name_text_size"
+            android:textColor="@android:color/black"/>
 
         <ImageView
             android:id="@+id/comment_like"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/like_image"/>
 
         <TextView
             android:id="@+id/comment_liked_num"

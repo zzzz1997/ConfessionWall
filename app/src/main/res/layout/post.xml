@@ -29,7 +29,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:padding="@dimen/elevation"/>
+                android:padding="@dimen/text_padding"
+                android:textSize="@dimen/name_text_size"
+                android:textColor="@android:color/black"/>
 
             <TextView
                 android:id="@+id/post_follow"
@@ -42,7 +44,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/down_arrow"
-                android:layout_margin="@dimen/elevation"/>
+                android:layout_margin="@dimen/elevation"
+                android:contentDescription="@string/menu_button"/>
 
         </LinearLayout>
 
@@ -53,7 +56,7 @@
             android:padding="@dimen/text_padding"
             android:textIsSelectable="true"/>
 
-        <ImageView
+        <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/divider_width"
             android:background="@color/colorDivider"/>
@@ -70,7 +73,7 @@
                 android:layout_weight="1"
                 android:gravity="center"/>
 
-            <ImageView
+            <View
                 android:layout_width="@dimen/divider_width"
                 android:layout_height="match_parent"
                 android:background="@color/colorDivider"/>

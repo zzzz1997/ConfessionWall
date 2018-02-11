@@ -73,7 +73,7 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/text_padding"
                     android:textIsSelectable="true"
-                    android:textSize="@dimen/small_button_textsize"/>
+                    android:textSize="@dimen/small_button_text_size"/>
 
             </LinearLayout>
 
