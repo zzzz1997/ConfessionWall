@@ -6,6 +6,8 @@ import com.zzapp.confessionwall.entity.User
  * Project ConfessionWall
  * Date 2017-12-11
  *
+ * 处理用户操作的接口
+ *
  * @author zzzz
  */
 interface IUserView {

@@ -44,6 +44,11 @@ class MyMessageHandler(private val context: Context) : BmobIMMessageHandler(){
         }
     }
 
+    /**
+     * 分类处理消息
+     *
+     * @param event 消息事件
+     */
     private fun executeMessage(event: MessageEvent){
         UserModel.getInstance().updateUserInfo(event, object: UpdateCacheListener(){
             override fun done(e: BmobException?) {
@@ -57,6 +62,12 @@ class MyMessageHandler(private val context: Context) : BmobIMMessageHandler(){
         })
     }
 
+    /**
+     * 处理系统类型消息
+     *
+     * @param msg 消息对象
+     * @param event 消息事件
+     */
     private fun processSDKMessage(msg: BmobIMMessage, event: MessageEvent){
         if(BmobNotificationManager.getInstance(context).isShowNotification){
             val pendingIntent = Intent(context, MainActivity::class.java)

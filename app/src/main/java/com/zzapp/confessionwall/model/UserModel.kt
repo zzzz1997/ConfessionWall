@@ -27,6 +27,9 @@ class UserModel {
     companion object{
         private val INSTANCE = UserModel()
 
+        /**
+         * 获取单例对象
+         */
         fun getInstance(): UserModel{
             return INSTANCE
         }
