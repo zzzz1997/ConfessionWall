@@ -32,6 +32,9 @@ class ForgetActivity : AppCompatActivity(), IUserView {
         initView()
     }
 
+    /**
+     * 初始化界面
+     */
     private fun initView(){
 
         forget_toolbar.setNavigationOnClickListener {

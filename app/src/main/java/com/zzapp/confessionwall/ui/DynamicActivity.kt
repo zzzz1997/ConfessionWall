@@ -51,6 +51,9 @@ class DynamicActivity : AppCompatActivity() {
         initView()
     }
 
+    /**
+     * 初始化界面
+     */
     @SuppressLint("InflateParams")
     private fun initView(){
         val user = BmobUser.getCurrentUser(User::class.java)
@@ -184,6 +187,12 @@ class DynamicActivity : AppCompatActivity() {
         refresh(post, user)
     }
 
+    /**
+     * 界面刷新
+     *
+     * @param post 动态对象
+     * @param user 用户对象
+     */
     private fun refresh(post: Post, user: User?){
         Glide.with(this)
                 .load(post.author!!.icon)

@@ -44,6 +44,9 @@ class DetailsActivity : AppCompatActivity() {
         initView()
     }
 
+    /**
+     * 初始化界面
+     */
     private fun initView(){
         user = intent.getSerializableExtra("user") as User
 
@@ -76,6 +79,9 @@ class DetailsActivity : AppCompatActivity() {
         refresh()
     }
 
+    /**
+     * 界面刷新
+     */
     private fun refresh(){
         val query = BmobQuery<Post>()
         query.addWhereEqualTo("author", BmobPointer(user))

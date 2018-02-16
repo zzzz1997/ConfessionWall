@@ -1,8 +1,7 @@
-package com.zzapp.confessionwall.adapter
+package com.zzapp.confessionwall.adapter.base
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import cn.bmob.v3.BmobObject
 
 /**
  * Project ConfessionWall

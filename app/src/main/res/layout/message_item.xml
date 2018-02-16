@@ -1,66 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content">
-
-    <com.zzapp.confessionwall.view.CircleImageView
-        android:id="@+id/message_item_icon"
-        android:layout_width="@dimen/message_image_width"
-        android:layout_height="@dimen/message_image_width"
-        android:layout_margin="@dimen/message_image_margin"/>
+<HorizontalScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/message_item_scroll_view"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:scrollbars="none">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingTop="@dimen/message_item_top">
+        tools:ignore="Orientation">
 
         <LinearLayout
+            android:id="@+id/message_item_in"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            tools:ignore="UselessParent">
+            android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/message_item_name"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:paddingStart="@dimen/text_padding"
-                android:paddingEnd="@dimen/text_padding"
-                android:textSize="@dimen/name_text_size"
-                android:textColor="@android:color/black"/>
+            <com.zzapp.confessionwall.view.CircleImageView
+                android:id="@+id/message_item_icon"
+                android:layout_width="@dimen/message_image_width"
+                android:layout_height="@dimen/message_image_width"
+                android:layout_margin="@dimen/message_image_margin"/>
 
-            <TextView
-                android:id="@+id/message_item_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/time_text_size"
-                android:paddingStart="@dimen/text_padding"
-                android:paddingEnd="@dimen/text_padding"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/message_item_top">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    tools:ignore="UselessParent">
+
+                    <TextView
+                        android:id="@+id/message_item_name"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingStart="@dimen/text_padding"
+                        android:paddingEnd="@dimen/text_padding"
+                        android:textSize="@dimen/name_text_size"
+                        android:textColor="@android:color/black"/>
+
+                    <TextView
+                        android:id="@+id/message_item_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/time_text_size"
+                        android:paddingStart="@dimen/text_padding"
+                        android:paddingEnd="@dimen/text_padding"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/message_item_content"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="@dimen/text_padding"/>
+
+                    <View
+                        android:id="@+id/message_item_badge"
+                        android:layout_width="@dimen/badge_width"
+                        android:layout_height="@dimen/badge_width"
+                        android:paddingEnd="@dimen/text_padding"
+                        tools:ignore="RtlSymmetry"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical">
+            android:id="@+id/message_item_out"
+            android:layout_width="@dimen/out_view_width"
+            android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/message_item_content"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="@dimen/text_padding"/>
+                android:id="@+id/message_item_top"
+                android:layout_width="@dimen/out_view_half_width"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:background="@android:color/darker_gray"
+                android:text="@string/top"/>
 
-            <View
-                android:id="@+id/message_item_badge"
-                android:layout_width="@dimen/badge_width"
-                android:layout_height="@dimen/badge_width"/>
+            <TextView
+                android:id="@+id/message_item_delete"
+                android:layout_width="@dimen/out_view_half_width"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:background="@android:color/holo_red_light"
+                android:text="@string/delete"/>
 
         </LinearLayout>
 
     </LinearLayout>
 
-</LinearLayout>
+</HorizontalScrollView>

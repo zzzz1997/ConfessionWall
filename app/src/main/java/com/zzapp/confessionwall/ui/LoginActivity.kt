@@ -32,6 +32,9 @@ class LoginActivity : AppCompatActivity(), IUserView {
         initView()
     }
 
+    /**
+     * 初始化界面
+     */
     private fun initView(){
         login_toolbar.setNavigationOnClickListener {
             finish()

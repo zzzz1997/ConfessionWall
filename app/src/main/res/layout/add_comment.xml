@@ -41,6 +41,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/text_padding"
         android:minHeight="?attr/actionBarSize"
-        android:background="@drawable/edit_background"/>
+        android:background="@drawable/comment_background"/>
 
 </LinearLayout>

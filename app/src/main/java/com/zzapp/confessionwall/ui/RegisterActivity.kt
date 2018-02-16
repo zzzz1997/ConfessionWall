@@ -32,6 +32,9 @@ class RegisterActivity : AppCompatActivity(), IUserView {
         initView()
     }
 
+    /**
+     * 初始化界面
+     */
     private fun initView(){
         register_toolbar.setNavigationOnClickListener {
             finish()

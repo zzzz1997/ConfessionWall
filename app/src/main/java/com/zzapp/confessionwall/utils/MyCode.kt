@@ -15,7 +15,9 @@ class MyCode {
         //请求添加新动态的requestCode
         val REQUEST_ADD_POST = 2
 
-        //推送广播标识
-        val PUSH_MESSAGE = 10
+        //默认广播标识
+        val PUSH_DEFAULT = 10
+        //推送广播
+        val PUSH_MESSAGE = 11
     }
 }

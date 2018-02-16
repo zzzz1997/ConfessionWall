@@ -15,4 +15,10 @@
         android:right="5dp"
         android:top="5dp" />
 
+    <stroke
+        android:width="2dp"
+        android:color="@color/colorAccent"
+        android:dashWidth="2dp"
+        android:dashGap="2dp"/>
+
 </shape>

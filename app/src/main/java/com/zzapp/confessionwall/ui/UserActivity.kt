@@ -45,6 +45,9 @@ class UserActivity : AppCompatActivity() {
         initView()
     }
 
+    /**
+     * 初始化界面
+     */
     private fun initView(){
         user_toolbar.setNavigationOnClickListener {
             finish()

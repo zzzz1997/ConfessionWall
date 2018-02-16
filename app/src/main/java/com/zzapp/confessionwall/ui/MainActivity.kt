@@ -8,6 +8,7 @@ import android.view.KeyEvent
 import cn.bmob.newim.BmobIM
 import cn.bmob.newim.bean.BmobIMUserInfo
 import cn.bmob.newim.core.ConnectionStatus
+import cn.bmob.newim.event.MessageEvent
 import cn.bmob.newim.listener.ConnectListener
 import cn.bmob.newim.listener.ConnectStatusChangeListener
 import cn.bmob.push.BmobPush
@@ -27,12 +28,14 @@ import com.zzapp.confessionwall.utils.MyCode
 import com.zzapp.confessionwall.view.BaseFragment
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_main.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 
 /**
  * Project MeiZhi
  * Date 2017-12-10
  *
- * 主界面函数
+ * 主界面活动
  *
  * @author zzzz
  */
@@ -62,8 +65,13 @@ class MainActivity : AppCompatActivity() {
         initView()
     }
 
+    /**
+     * 初始化界面
+     */
     private fun initView() {
         //初始化应用
+        EventBus.getDefault().register(this)
+
         Bmob.initialize(this, appkey)
 
         val user = BmobUser.getCurrentUser(User::class.java)
@@ -79,7 +87,18 @@ class MainActivity : AppCompatActivity() {
             })
             BmobIM.getInstance().setOnConnectStatusChangeListener(object: ConnectStatusChangeListener(){
                 override fun onChange(p0: ConnectionStatus?) {
-                    Toasty.info(this@MainActivity, p0!!.msg).show()
+                    when(p0){
+                        ConnectionStatus.CONNECTED -> {
+                            Toasty.info(this@MainActivity, p0.msg).show()
+                        }
+                        ConnectionStatus.CONNECTING -> {
+                            Toasty.info(this@MainActivity, p0.msg).show()
+                        }
+                        ConnectionStatus.DISCONNECT -> {
+                            Toasty.info(this@MainActivity, p0.msg).show()
+                        }
+                        else -> return
+                    }
                 }
             })
         }
@@ -141,6 +160,22 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * EventBus的接收器
+     *
+     * @param event 接收到的消息事件
+     */
+    @Subscribe
+    fun onEvent(event: MessageEvent){
+        fragments[1].push(MyCode.PUSH_DEFAULT, Intent().putExtra("event", event))
+        refreshCount()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        refreshCount()
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         when(requestCode){
             MyCode.REQUEST_LOGIN -> {
@@ -168,7 +203,7 @@ class MainActivity : AppCompatActivity() {
                 BmobIM.getInstance().disConnect()
                 System.exit(0)
             } else {
-                Toasty.warning(this, "再点一次退出程序哦").show()
+                Toasty.warning(this, getString(R.string.once_more_for_exit)).show()
                 first = System.currentTimeMillis()
             }
             return true
@@ -179,6 +214,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        EventBus.getDefault().unregister(this)
         BmobIM.getInstance().clear()
         BmobIM.getInstance().disConnect()
     }

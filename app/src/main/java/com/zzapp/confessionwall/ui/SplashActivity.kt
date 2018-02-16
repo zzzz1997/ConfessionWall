@@ -31,6 +31,9 @@ class SplashActivity : Activity(){
         initView()
     }
 
+    /**
+     * 初始化界面
+     */
     private fun initView(){
         var time = COUNT_TIME
         timer.schedule(object: TimerTask(){

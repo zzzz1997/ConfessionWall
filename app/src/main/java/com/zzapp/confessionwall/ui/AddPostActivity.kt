@@ -28,6 +28,9 @@ class AddPostActivity : AppCompatActivity() {
         initView()
     }
 
+    /**
+     * 初始化界面
+     */
     private fun initView(){
         setSupportActionBar(add_post_toolbar)
         supportActionBar!!.title = null

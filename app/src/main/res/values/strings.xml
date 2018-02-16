@@ -75,4 +75,7 @@
     <string name="like_image">点赞图像</string>
     <string name="menu_button">菜单按钮</string>
     <string name="date_format">yyyy-MM-dd HH:mm:ss</string>
+    <string name="once_more_for_exit">再点一次退出程序哦</string>
+    <string name="top">置顶</string>
+    <string name="send">发送</string>
 </resources>

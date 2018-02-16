@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/talk_item_user_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+
+        <com.zzapp.confessionwall.view.CircleImageView
+            android:id="@+id/talk_item_user_icon"
+            android:layout_width="@dimen/talk_item_icon_width"
+            android:layout_height="@dimen/talk_item_icon_width"
+            android:layout_margin="@dimen/talk_item_icon_margin"/>
+
+        <TextView
+            android:id="@+id/talk_item_user_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="@dimen/elevation"
+            android:background="@drawable/bubble_user"
+            android:padding="@dimen/text_padding"
+            android:paddingStart="20dp"
+            tools:ignore="RtlSymmetry"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/talk_item_me_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end|center_vertical">
+
+        <TextView
+            android:id="@+id/talk_item_me_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="@dimen/elevation"
+            android:background="@drawable/bubble_me"
+            android:padding="@dimen/text_padding"
+            android:paddingEnd="20dp"
+            tools:ignore="RtlSymmetry"/>
+
+        <com.zzapp.confessionwall.view.CircleImageView
+            android:id="@+id/talk_item_me_icon"
+            android:layout_width="@dimen/talk_item_icon_width"
+            android:layout_height="@dimen/talk_item_icon_width"
+            android:layout_margin="@dimen/talk_item_icon_margin"/>
+
+    </LinearLayout>
+
+</FrameLayout>

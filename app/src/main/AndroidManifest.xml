@@ -47,6 +47,7 @@
         <activity android:name=".ui.DynamicActivity"/>
         <activity android:name=".ui.AddPostActivity"/>
         <activity android:name=".ui.DetailsActivity"/>
+        <activity android:name=".ui.TalkActivity"/>
         <service
             android:label="PushService"
             android:name="cn.bmob.push.lib.service.PushService"
