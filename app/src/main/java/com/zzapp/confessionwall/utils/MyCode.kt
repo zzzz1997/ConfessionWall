@@ -4,6 +4,8 @@ package com.zzapp.confessionwall.utils
  * Project ConfessionWall
  * Date 2018-01-31
  *
+ * 自定义代码类
+ *
  * @author zzzz
  */
 class MyCode {
